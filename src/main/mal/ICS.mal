@@ -44,7 +44,10 @@ category System {
         & modifyParameter
             developer info: "T836"
         & spoofReportingMessage
-            developer info "T856"
+            developer info: "T856"
+        | masquerade
+            developer info: "T849"
+            //Not implemented
         # applyPasswordAuthentication
             developer info: "T809 - Mitigation"
             -> dataDestruction
@@ -178,6 +181,9 @@ category System {
             -> authenticatedAccess
         & modifyParameter
             developer info: "T836"
+        | masquerade
+            developer info: "T849"
+            //Not implemented
         # applyPasswordAuthentication
             developer info: "T809 - Mitigation"
             -> dataDestruction
