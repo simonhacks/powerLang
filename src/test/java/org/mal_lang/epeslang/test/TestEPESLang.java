@@ -61,6 +61,6 @@ public class TestEPESLang extends EPESLangTest {
     attacker.addAttackPoint(model.password123.obtain);
     attacker.attack();
 
-    model.server.access.assertUncompromised();
+    model.server.access.assertCompromisedInstantaneously();
   }
 }

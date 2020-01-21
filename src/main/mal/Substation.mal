@@ -1,0 +1,37 @@
+#id: "org.mal-lang.epeslang.substation"
+#version: "1.0.0"
+
+category System {
+    asset RTU
+    user info: "Remote Terminal Unit"
+    {
+
+    }
+
+    asset SCADA
+    user info: "Supervisory Control And Data Acquisition"
+     {
+     }
+
+     asset DPR
+     user info: "Digital Protective Relay"
+     {
+
+     }
+}
+
+category Communication {
+    asset IEC60870 {
+
+    }
+
+    asset IEC61850 {
+
+    }
+}
+
+associations {
+    SCADA [scada] * <-- NetworkAccess --> * [networks] IEC60870
+    RTU [rtu] * <-- NetworkAccess --> * [networks] IEC60870
+    DPR [dpr] * <-- NetworkAccess --> * [networks] IEC61850
+}

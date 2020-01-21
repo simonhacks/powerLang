@@ -1,0 +1,286 @@
+#id: "org.mal-lang.epeslang.ics"
+#version: "1.0.0"
+
+category System {
+    asset abstract IcsAsset {
+        | access
+        | authenticatedAccess
+        # restrictedAccessToConfigurationSettings
+            developer info: "T885 - Mitigation"
+            -> networks.assets[Firewall].commonlyUsedPort
+        # restrictiveSettings
+            developer info: "T885 - Mitigation"
+            -> networks.assets[Firewall].commonlyUsedPort
+        # assessedAndSecured
+            developer info: "T885 - Mitigation"
+            -> networks.assets[Firewall].commonlyUsedPort
+    }
+
+    asset ControlServer extends IcsAsset {
+        | access
+            +> bruteForceIO
+        | authenticatedAccess
+            +> dataDestruction
+        | automatedCollection
+            developer info: "T802"
+            -> networks.assets.access
+        | bruteForceIO
+            developer info: "T806"
+            -> restrictedOperations
+        | restrictedOperations {I,A}
+        & dataDestruction {I,A}
+            developer info: "T809"
+        | dataFromInformationRepositories {C}
+            developer info: "T811"
+        & defaultCredentials
+            developer info: "T812"
+            -> authenticatedAccess
+        | externalRemoteService
+            developer info: "T822"
+            -> access
+        & locationIdentification
+            developer info: "T825"
+            -> access
+        & modifyParameter
+            developer info: "T836"
+        & spoofReportingMessage
+            developer info "T856"
+        # applyPasswordAuthentication
+            developer info: "T809 - Mitigation"
+            -> dataDestruction
+        # applyPrincipleOfLeastPrivilege
+            developer info: "T809,T812 - Mitigation"
+            -> dataDestruction,
+                defaultCredentials
+        # applyMultiFactorAuthentication
+            developer info: "T809,T812 - Mitigation"
+            -> dataDestruction,
+                defaultCredentials
+        # restrictedPhysicalAccess
+            developer info: "T809,T825 - Mitigation"
+            -> dataDestruction,
+                locationIdentification
+        # whitelistAllowedApplications
+            developer info: "T809 - Mitigation"
+            -> dataDestruction
+        # applyPasswordRules
+            developer info: "T812 - Mitigation"
+            -> defaultCredentials
+        # keepLocationInformationSecret
+            -> locationIdentification
+    }
+
+    asset ControlSystemApplication {
+
+    }
+
+    asset EngineeringWorkstation extends IcsAsset {
+        | dataFromInformationRepositories {C}
+            developer info: "T811"
+        & defaultCredentials
+            developer info: "T812"
+            -> authenticatedAccess
+        # applyPrincipleOfLeastPrivilege
+            developer info: "T809,T812 - Mitigation"
+            -> defaultCredentials
+        # applyPasswordRules
+            developer info: "T812 - Mitigation"
+            -> defaultCredentials
+        # applyMultiFactorAuthentication
+            developer info: "T812 - Mitigation"
+            -> defaultCredentials
+    }
+
+    asset AntiVirus {
+        # maliciousFileDetectionActivated
+            developer info: "T809 - Mitigation"
+            -> observed.dataDestruction
+    }
+
+    asset Firewall extends IcsAsset {
+        | access
+           +> commonlyUsedPort
+        & commonlyUsedPort
+            developer info: "T885"
+            -> bypass
+        | bypass
+            networks.assets.access
+        # applyWhitelist
+            developer info: "T885 - Mitigation"
+            -> commonlyUsedPort
+        # justAllowVPN
+            developer info: "T885 - Mitigation"
+            -> commonlyUsedPort
+        # applyIDS
+            developer info: "T885 - Mitigation"
+            -> commonlyUsedPort
+    }
+
+    asset Controller extends IcsAsset {
+        | access
+            +> bruteForceIO
+        | authenticatedAccess
+            +> dataDestruction
+        | automatedCollection
+            developer info: "T802"
+            -> networks.assets.access
+        | bruteForceIO
+            developer info: "T806"
+            -> restrictedOperations
+        | restrictedOperations {I,A}
+        & dataDestruction {I,A}
+            developer info: "T809"
+        & defaultCredentials
+            developer info: "T812"
+            -> authenticatedAccess
+        & blockReportingMessage
+            developer info: "T804"
+        & modifyParameter
+            developer info: "T836"
+        & unauthorizedCommandMessage
+            developer info: "T855"
+        # applyPasswordAuthentication
+            developer info: "T809 - Mitigation"
+            -> dataDestruction
+        # applyPrincipleOfLeastPrivilege
+            developer info: "T809,T812 - Mitigation"
+            -> dataDestruction,
+                defaultCredentials
+        # applyMultiFactorAuthentication
+            developer info: "T809,812 - Mitigation"
+            -> dataDestruction,
+                defaultCredentials
+        # restrictedPhysicalAccess
+            developer info: "T809 - Mitigation"
+            -> dataDestruction
+        # whitelistAllowedApplications
+            developer info: "T809 - Mitigation"
+            -> dataDestruction
+        # applyPasswordRules
+            developer info: "T812 - Mitigation"
+            -> defaultCredentials
+    }
+
+    asset DataHistorian extends IcsAsset {
+        | dataFromInformationRepositories {C}
+            developer info: "T811"
+    }
+
+    asset HMI {
+        | authenticatedAccess
+            +> dataDestruction
+        & dataDestruction {I,A}
+            developer info: "T809"
+        | dataFromInformationRepositories {C}
+            developer info: "T811"
+        & defaultCredentials
+            developer info: "T812"
+            -> authenticatedAccess
+        & modifyParameter
+            developer info: "T836"
+        # applyPasswordAuthentication
+            developer info: "T809 - Mitigation"
+            -> dataDestruction
+        # applyPrincipleOfLeastPrivilege
+            developer info: "T809,T812 - Mitigation"
+            -> dataDestruction,
+                defaultCredentials
+        # applyMultiFactorAuthentication
+            developer info: "T809,812 - Mitigation"
+            -> dataDestruction,
+                defaultCredentials
+        # restrictedPhysicalAccess
+            developer info: "T809 - Mitigation"
+            -> dataDestruction
+        # whitelistAllowedApplications
+            developer info: "T809 - Mitigation"
+            -> dataDestruction
+        # applyPasswordRules
+            developer info: "T812 - Mitigation"
+            -> defaultCredentials
+    }
+
+    asset IOServer extends IcsAsset {
+        | externalRemoteService
+            developer info: "T822"
+            -> access
+        & blockReportingMessage
+            developer info: "T804"
+    }
+
+    asset SIS extends IcsAsset {
+        | automatedCollection
+            developer info: "T802"
+            -> networks.assets.access
+        & defaultCredentials
+            developer info: "T812"
+            -> authenticatedAccess
+        & modifyParameter
+            developer info: "T836"
+        # applyPrincipleOfLeastPrivilege
+            developer info: "T812 - Mitigation"
+            -> defaultCredentials
+        # applyPasswordRules
+            developer info: "T812 - Mitigation"
+            -> defaultCredentials
+        # applyMultiFactorAuthentication
+            developer info: "T812 - Mitigation"
+            -> defaultCredentials
+    }
+}
+
+category Networking {
+    asset IcsNetwork {
+        | access
+            -> MITM
+        & MITM
+            developer info: "T830"
+            -> blockReportingMessage,
+                modifyParameter,
+                unauthorizedCommandMessage,
+                spoofReportingMessage
+        | blockReportingMessage
+            -> assets[Controller \/ IOServer].blockReportingMessage
+        | modifyParameter
+            -> assets[ControlServer \/ Controller \/ SIS \/ HMI].modifyParameter
+        | unauthorizedCommandMessage
+            -> assets[Controller].unauthorizedCommandMessage
+        | spoofReportingMessage
+            -> assets[ControlServer].spoofReportingMessage
+        # encryptCommunication
+            developer info: "T830 - Mitigation"
+            -> MITM
+        # challengeResponseAuthentication
+            developer info: "T830 - Mitigation"
+            -> MITM
+        # restrictedPhysicalAccess
+            developer info: "T830 - Mitigation"
+            -> MITM
+        # IDSinPlace
+            developer info: "T830 - Mitigation"
+            -> MITM
+    }
+}
+
+category Zone {
+    asset DMZ {
+
+    }
+
+    asset Internet {
+
+    }
+}
+
+associations {
+    IcsAsset [assets] * <-- NetworkAccess --> * [networks] IcsNetwork
+    DataHistorian [historian] 1 <-- NetworkAccess --> * [dmz] DMZ
+    Internet [internet] 1 <-- NetworkAccess --> * [dmz] DMZ
+    ControlSystemApplication [applications] * <-- RunsOn --> * [host] ControlServer
+    EngineeringWorkstation [workstations] * <-- Maintain --> * [applications] ControlSystemApplication
+    EngineeringWorkstation [workstations] * <-- NetworkAccess --> * [networks] IcsNetwork
+    HMI [interfaces] * <-- GivesAccess --> 1 [application] ControlSystemApplication
+    IOServer [server] 1 <-- Controls --> * [controller] Controller
+    IOServer [servers] * <-- Communicates --> * [application] ControlSystemApplication
+    AntiVirus [av] 1 <-- Monitors --> * [assets] IcsAsset
+}

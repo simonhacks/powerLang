@@ -1,0 +1,22 @@
+#id: "org.mal-lang.epeslang.prosumer"
+#version: "1.0.0"
+
+category System {
+    asset SmartMeter {
+
+    }
+
+    asset BMS
+    user info: "Build Management System"
+    {
+
+    }
+}
+
+category Communication {
+
+}
+
+associations {
+
+}
