@@ -48,29 +48,43 @@ category System {
         & masquerade //lowProbability
             developer info: "T849"
             -> hidableAttacks
-        | dontMasquerade /highProbablity
+        | dontMasquerade //highProbablity
             developer info: "T849"
             -> hidableAttacks
-        # masqueradeInPlace
+        # masqueradeNotInPlace
             developer info: "T849"
             -> hidableAttacks
         | hidableAttacks
             //add attacks
+        & modifyAlarmSettings //lowProbability
+            developer info: "T838"
+            -> hidableAttacks
+        | dontModifyAlarmSettings //highProbabilty
+            developer info: "T838"
+            -> hidableAttacks
+        # alarmSettingsNotModified
+            -> modifyAlarmSettings
+        # regularAuditOfSystem
+            developer info: "T838 - Mitigation"
+            -> modifyAlarmSettings
+
         # applyPasswordAuthentication
             developer info: "T809 - Mitigation"
             -> dataDestruction
         # applyPrincipleOfLeastPrivilege
-            developer info: "T809,T812 - Mitigation"
+            developer info: "T809,T812,838 - Mitigation"
             -> dataDestruction,
-                defaultCredentials
+                defaultCredentials,
+                modifyAlarmSettings
         # applyMultiFactorAuthentication
             developer info: "T809,T812 - Mitigation"
             -> dataDestruction,
                 defaultCredentials
         # restrictedPhysicalAccess
-            developer info: "T809,T825 - Mitigation"
+            developer info: "T809,T825,T838 - Mitigation"
             -> dataDestruction,
-                locationIdentification
+                locationIdentification,
+                modifyAlarmSettings
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
             -> dataDestruction
@@ -78,7 +92,11 @@ category System {
             developer info: "T812 - Mitigation"
             -> defaultCredentials
         # keepLocationInformationSecret
+            developer info: "T825 - Mitigation"
             -> locationIdentification
+        # applyIDS
+            developer info: "T838 - Mitigation"
+            -> modifyAlarmSettings
     }
 
     asset ControlSystemApplication {
@@ -150,26 +168,43 @@ category System {
             developer info: "T836"
         & unauthorizedCommandMessage
             developer info: "T855"
+        | hidableAttacks
+        & modifyAlarmSettings //lowProbability
+            developer info: "T838"
+            -> hidableAttacks
+        | dontModifyAlarmSettings //highProbabilty
+            developer info: "T838"
+            -> hidableAttacks
+        # alarmSettingsNotModified
+            -> modifyAlarmSettings
+        # regularAuditOfSystem
+            developer info: "T838 - Mitigation"
+            -> modifyAlarmSettings
         # applyPasswordAuthentication
             developer info: "T809 - Mitigation"
             -> dataDestruction
         # applyPrincipleOfLeastPrivilege
-            developer info: "T809,T812 - Mitigation"
+            developer info: "T809,T812,838 - Mitigation"
             -> dataDestruction,
-                defaultCredentials
+                defaultCredentials,
+                modifyAlarmSettings
         # applyMultiFactorAuthentication
             developer info: "T809,812 - Mitigation"
             -> dataDestruction,
                 defaultCredentials
         # restrictedPhysicalAccess
-            developer info: "T809 - Mitigation"
-            -> dataDestruction
+            developer info: "T809,838 - Mitigation"
+            -> dataDestruction,
+                modifyAlarmSettings
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
             -> dataDestruction
         # applyPasswordRules
             developer info: "T812 - Mitigation"
             -> defaultCredentials
+        # applyIDS
+            developer info: "T838 - Mitigation"
+            -> modifyAlarmSettings
     }
 
     asset DataHistorian extends IcsAsset {
@@ -200,26 +235,42 @@ category System {
             -> hidableAttacks
         | hidableAttacks
             //add attacks
+        & modifyAlarmSettings //lowProbability
+            developer info: "T838"
+            -> hidableAttacks
+        | dontModifyAlarmSettings //highProbabilty
+            developer info: "T838"
+            -> hidableAttacks
+        # alarmSettingsNotModified
+            -> modifyAlarmSettings
+        # regularAuditOfSystem
+            developer info: "T838 - Mitigation"
+            -> modifyAlarmSettings
         # applyPasswordAuthentication
             developer info: "T809 - Mitigation"
             -> dataDestruction
         # applyPrincipleOfLeastPrivilege
-            developer info: "T809,T812 - Mitigation"
+            developer info: "T809,T812,T838 - Mitigation"
             -> dataDestruction,
-                defaultCredentials
+                defaultCredentials,
+                modifyAlarmSettings
         # applyMultiFactorAuthentication
             developer info: "T809,812 - Mitigation"
             -> dataDestruction,
                 defaultCredentials
         # restrictedPhysicalAccess
-            developer info: "T809 - Mitigation"
-            -> dataDestruction
+            developer info: "T809,T838 - Mitigation"
+            -> dataDestruction,
+                modifyAlarmSettings
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
             -> dataDestruction
         # applyPasswordRules
             developer info: "T812 - Mitigation"
             -> defaultCredentials
+        # applyIDS
+            developer info: "T838 - Mitigation"
+            -> modifyAlarmSettings
     }
 
     asset IOServer extends IcsAsset {
@@ -239,15 +290,34 @@ category System {
             -> authenticatedAccess
         & modifyParameter
             developer info: "T836"
+        | hidableAttacks
+        & modifyAlarmSettings //lowProbability
+            developer info: "T838"
+            -> hidableAttacks
+        | dontModifyAlarmSettings //highProbabilty
+            developer info: "T838"
+            -> hidableAttacks
+        # alarmSettingsNotModified
+            -> modifyAlarmSettings
+        # regularAuditOfSystem
+            developer info: "T838 - Mitigation"
+            -> modifyAlarmSettings
         # applyPrincipleOfLeastPrivilege
-            developer info: "T812 - Mitigation"
-            -> defaultCredentials
+            developer info: "T812,T838 - Mitigation"
+            -> defaultCredentials,
+                modifyAlarmSettings
         # applyPasswordRules
             developer info: "T812 - Mitigation"
             -> defaultCredentials
         # applyMultiFactorAuthentication
             developer info: "T812 - Mitigation"
             -> defaultCredentials
+        # restrictedPhysicalAccess
+            developer info: "T838 - Mitigation"
+            -> modifyAlarmSettings
+        # applyIDS
+            developer info: "T838 - Mitigation"
+            -> modifyAlarmSettings
     }
 }
 
