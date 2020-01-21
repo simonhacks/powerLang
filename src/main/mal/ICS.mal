@@ -45,9 +45,17 @@ category System {
             developer info: "T836"
         & spoofReportingMessage
             developer info: "T856"
-        | masquerade
+        & masquerade //lowProbability
             developer info: "T849"
-            //Not implemented
+            -> hidableAttacks
+        | dontMasquerade /highProbablity
+            developer info: "T849"
+            -> hidableAttacks
+        # masqueradeInPlace
+            developer info: "T849"
+            -> hidableAttacks
+        | hidableAttacks
+            //add attacks
         # applyPasswordAuthentication
             developer info: "T809 - Mitigation"
             -> dataDestruction
@@ -181,9 +189,17 @@ category System {
             -> authenticatedAccess
         & modifyParameter
             developer info: "T836"
-        | masquerade
+        & masquerade //lowProbability
             developer info: "T849"
-            //Not implemented
+            -> hidableAttacks
+        | dontMasquerade /highProbablity
+            developer info: "T849"
+            -> hidableAttacks
+        # masqueradeInPlace
+            developer info: "T849"
+            -> hidableAttacks
+        | hidableAttacks
+            //add attacks
         # applyPasswordAuthentication
             developer info: "T809 - Mitigation"
             -> dataDestruction
