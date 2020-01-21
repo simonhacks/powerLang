@@ -63,28 +63,34 @@ category System {
             developer info: "T838"
             -> hidableAttacks
         # alarmSettingsNotModified
+            developer info: "T838"
             -> modifyAlarmSettings
-        # regularAuditOfSystem
-            developer info: "T838 - Mitigation"
-            -> modifyAlarmSettings
+        & monitorProcessState
+            developer info: "T801"
 
+        # regularAuditOfSystem
+            developer info: "T838,T801 - Mitigation"
+            -> modifyAlarmSettings,
+                monitorProcessState
         # applyPasswordAuthentication
             developer info: "T809 - Mitigation"
             -> dataDestruction
         # applyPrincipleOfLeastPrivilege
-            developer info: "T809,T812,838 - Mitigation"
+            developer info: "T809,T812,T838,T801 - Mitigation"
             -> dataDestruction,
                 defaultCredentials,
-                modifyAlarmSettings
+                modifyAlarmSettings,
+                monitorProcessState
         # applyMultiFactorAuthentication
             developer info: "T809,T812 - Mitigation"
             -> dataDestruction,
                 defaultCredentials
         # restrictedPhysicalAccess
-            developer info: "T809,T825,T838 - Mitigation"
+            developer info: "T809,T825,T838,T801 - Mitigation"
             -> dataDestruction,
                 locationIdentification,
-                modifyAlarmSettings
+                modifyAlarmSettings,
+                monitorProcessState
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
             -> dataDestruction
@@ -177,25 +183,31 @@ category System {
             -> hidableAttacks
         # alarmSettingsNotModified
             -> modifyAlarmSettings
+        & monitorProcessState
+            developer info: "T801"
+
         # regularAuditOfSystem
-            developer info: "T838 - Mitigation"
-            -> modifyAlarmSettings
+            developer info: "T838,T801 - Mitigation"
+            -> modifyAlarmSettings,
+                monitorProcessState
         # applyPasswordAuthentication
             developer info: "T809 - Mitigation"
             -> dataDestruction
         # applyPrincipleOfLeastPrivilege
-            developer info: "T809,T812,838 - Mitigation"
+            developer info: "T809,T812,T838,T801 - Mitigation"
             -> dataDestruction,
                 defaultCredentials,
-                modifyAlarmSettings
+                modifyAlarmSettings,
+                monitorProcessState
         # applyMultiFactorAuthentication
             developer info: "T809,812 - Mitigation"
             -> dataDestruction,
                 defaultCredentials
         # restrictedPhysicalAccess
-            developer info: "T809,838 - Mitigation"
+            developer info: "T809,T838,T801 - Mitigation"
             -> dataDestruction,
-                modifyAlarmSettings
+                modifyAlarmSettings,
+                monitorProcessState
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
             -> dataDestruction
@@ -210,6 +222,18 @@ category System {
     asset DataHistorian extends IcsAsset {
         | dataFromInformationRepositories {C}
             developer info: "T811"
+        & monitorProcessState
+            developer info: "T801"
+
+        # restrictedPhysicalAccess
+            developer info: "T801 - Mitigation"
+            -> monitorProcessState
+        # applyPrincipleOfLeastPrivilege
+            developer info: "T801 - Mitigation"
+            -> monitorProcessState
+        # regularAuditOfSystem
+            developer info: "T801 - Mitigation"
+            -> monitorProcessState
     }
 
     asset HMI {
@@ -242,26 +266,33 @@ category System {
             developer info: "T838"
             -> hidableAttacks
         # alarmSettingsNotModified
+            developer info: "T801"
             -> modifyAlarmSettings
+        & monitorProcessState
+            developer info: "T801"
+
         # regularAuditOfSystem
-            developer info: "T838 - Mitigation"
-            -> modifyAlarmSettings
+            developer info: "T838,T801 - Mitigation"
+            -> modifyAlarmSettings,
+                monitorProcessState
         # applyPasswordAuthentication
             developer info: "T809 - Mitigation"
             -> dataDestruction
         # applyPrincipleOfLeastPrivilege
-            developer info: "T809,T812,T838 - Mitigation"
+            developer info: "T809,T812,T838,T801 - Mitigation"
             -> dataDestruction,
                 defaultCredentials,
-                modifyAlarmSettings
+                modifyAlarmSettings,
+                monitorProcessState
         # applyMultiFactorAuthentication
             developer info: "T809,812 - Mitigation"
             -> dataDestruction,
                 defaultCredentials
         # restrictedPhysicalAccess
-            developer info: "T809,T838 - Mitigation"
+            developer info: "T809,T838,T801 - Mitigation"
             -> dataDestruction,
-                modifyAlarmSettings
+                modifyAlarmSettings,
+                monitorProcessState
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
             -> dataDestruction
@@ -298,14 +329,20 @@ category System {
             developer info: "T838"
             -> hidableAttacks
         # alarmSettingsNotModified
+            developer info: "T838"
             -> modifyAlarmSettings
+        & monitorProcessState
+            developer info: "T801"
+
         # regularAuditOfSystem
-            developer info: "T838 - Mitigation"
-            -> modifyAlarmSettings
+            developer info: "T838,T801 - Mitigation"
+            -> modifyAlarmSettings,
+                monitorProcessState
         # applyPrincipleOfLeastPrivilege
-            developer info: "T812,T838 - Mitigation"
+            developer info: "T812,T838,T801 - Mitigation"
             -> defaultCredentials,
-                modifyAlarmSettings
+                modifyAlarmSettings,
+                monitorProcessState
         # applyPasswordRules
             developer info: "T812 - Mitigation"
             -> defaultCredentials
@@ -313,8 +350,9 @@ category System {
             developer info: "T812 - Mitigation"
             -> defaultCredentials
         # restrictedPhysicalAccess
-            developer info: "T838 - Mitigation"
-            -> modifyAlarmSettings
+            developer info: "T838,T801 - Mitigation"
+            -> modifyAlarmSettings,
+                monitorProcessState
         # applyIDS
             developer info: "T838 - Mitigation"
             -> modifyAlarmSettings
