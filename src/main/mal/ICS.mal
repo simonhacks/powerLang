@@ -67,6 +67,14 @@ category System {
             -> modifyAlarmSettings
         & monitorProcessState
             developer info: "T801"
+        | pointAndTackIdentification
+            developer info: "T861"
+        | remoteFileCopyReceive
+            developer info: "T867"
+            -> authenticatedAccess
+        | remoteFileCopySend
+            developer info: "T867"
+            -> assets[ControlServer \/ HMI \/ DataHistorian].remoteFileCopyReceive
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
@@ -224,6 +232,14 @@ category System {
             developer info: "T811"
         & monitorProcessState
             developer info: "T801"
+        | pointAndTackIdentification
+            developer info: "T861"
+        | remoteFileCopyReceive
+            developer info: "T867"
+            -> authenticatedAccess
+        | remoteFileCopySend
+            developer info: "T867"
+            -> assets[ControlServer \/ HMI \/ DataHistorian].remoteFileCopyReceive
 
         # restrictedPhysicalAccess
             developer info: "T801 - Mitigation"
@@ -270,6 +286,14 @@ category System {
             -> modifyAlarmSettings
         & monitorProcessState
             developer info: "T801"
+        | pointAndTackIdentification
+            developer info: "T861"
+        | remoteFileCopyReceive
+            developer info: "T867"
+            -> authenticatedAccess
+        | remoteFileCopySend
+            developer info: "T867"
+            -> assets[ControlServer \/ HMI \/ DataHistorian].remoteFileCopyReceive
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
