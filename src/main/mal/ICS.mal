@@ -7,32 +7,32 @@ category System {
         | authenticatedAccess
         | stealCredentials
             developer info: "T859"
-            -> validAccounts
+            +> validAccounts
         | useDefaultCredentials
             developer info: "T859"
-            -> validAccounts
+            +> validAccounts
         & validAccounts
             developer info: "T859"
-            -> authenticatedAccess
+            +> authenticatedAccess
 
         # applyPrincipleOfLeastPrivilege
             developer info: "T859 - Mitigation"
-            -> validAccounts
+            +> validAccounts
         # applyMultiFactorAuthentication
             developer info: "T859 - Mitigation"
-            -> validAccounts
+            +> validAccounts
         # restrictedPhysicalAccess
             developer info: "T859 - Mitigation"
-            -> validAccounts
+            +> validAccounts
         # restrictedAccessToConfigurationSettings
             developer info: "T885 - Mitigation"
-            -> networks.assets[Firewall].commonlyUsedPort
+            +> networks.assets[Firewall].commonlyUsedPort
         # restrictiveSettings
             developer info: "T885 - Mitigation"
-            -> networks.assets[Firewall].commonlyUsedPort
+            +> networks.assets[Firewall].commonlyUsedPort
         # assessedAndSecured
             developer info: "T885 - Mitigation"
-            -> networks.assets[Firewall].commonlyUsedPort
+            +> networks.assets[Firewall].commonlyUsedPort
     }
 
     asset ControlServer extends IcsAsset {
@@ -42,10 +42,10 @@ category System {
             +> dataDestruction
         | automatedCollection
             developer info: "T802"
-            -> networks.assets.access
+            +> networks.assets.access
         | bruteForceIO
             developer info: "T806"
-            -> restrictedOperations
+            +> restrictedOperations
         | restrictedOperations {I,A}
         & dataDestruction {I,A}
             developer info: "T809"
@@ -53,92 +53,92 @@ category System {
             developer info: "T811"
         & defaultCredentials
             developer info: "T812"
-            -> authenticatedAccess
+            +> authenticatedAccess
         | externalRemoteService
             developer info: "T822"
-            -> access
+            +> access
         & locationIdentification
             developer info: "T825"
-            -> access
+            +> access
         & modifyParameter
             developer info: "T836"
         & spoofReportingMessage {I}
             developer info: "T856"
         & masquerade //lowProbability
             developer info: "T849"
-            -> hidableAttacks
+            +> hidableAttacks
         | dontMasquerade //highProbablity
             developer info: "T849"
-            -> hidableAttacks
+            +> hidableAttacks
         # masqueradeNotInPlace
             developer info: "T849"
-            -> hidableAttacks
+            +> hidableAttacks
         | hidableAttacks
             //add attacks
         & modifyAlarmSettings //lowProbability
             developer info: "T838"
-            -> hidableAttacks
+            +> hidableAttacks
         | dontModifyAlarmSettings //highProbabilty
             developer info: "T838"
-            -> hidableAttacks
+            +> hidableAttacks
         # alarmSettingsNotModified
             developer info: "T838"
-            -> modifyAlarmSettings
+            +> modifyAlarmSettings
         & monitorProcessState
             developer info: "T801"
         | pointAndTackIdentification
             developer info: "T861"
         | remoteFileCopyReceive
             developer info: "T867"
-            -> authenticatedAccess
+            +> authenticatedAccess
         | remoteFileCopySend
             developer info: "T867"
-            -> assets[ControlServer \/ HMI \/ DataHistorian].remoteFileCopyReceive
+            +> assets[ControlServer \/ HMI \/ DataHistorian].remoteFileCopyReceive
         & remoteSystemDiscovery
             developer info: "T846"
-            -> assets.access
+            +> assets.access
         | replicationThroughRemovableMedia
             developer info: "T847"
-            -> access
+            +> access
         & rogueMasterDevice
             developer info: "T848"
-            -> assets.authenticatedAccess
+            +> assets.authenticatedAccess
         & roleIdentification
             developer info: "T850"
-            -> rogueMasterDevice,
+            +> rogueMasterDevice,
                 assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice
         | serviceStop
             developer info: "T881"
-            -> dataDestruction
+            +> dataDestruction
         | spearfishingAttachment
             developer info: "T865"
-            -> userExecution
+            +> userExecution
         | userExecution
             developer info: "T863"
-            -> authenticatedAccess
+            +> authenticatedAccess
 
         # regularAuditOfSystem
             developer info: "T838,T801,T856 - Mitigation"
-            -> modifyAlarmSettings,
+            +> modifyAlarmSettings,
                 monitorProcessState,
                 spoofReportingMessage
         # applyPasswordAuthentication
             developer info: "T809 - Mitigation"
-            -> dataDestruction
+            +> dataDestruction
         # applyPrincipleOfLeastPrivilege
             developer info: "T809,T812,T838,T801,T850 - Mitigation"
-            -> dataDestruction,
+            +> dataDestruction,
                 defaultCredentials,
                 modifyAlarmSettings,
                 monitorProcessState,
                 roleIdentification
         # applyMultiFactorAuthentication
             developer info: "T809,T812 - Mitigation"
-            -> dataDestruction,
+            +> dataDestruction,
                 defaultCredentials
         # restrictedPhysicalAccess
             developer info: "T809,T825,T838,T801,T846,T848,T850,T856 - Mitigation"
-            -> dataDestruction,
+            +> dataDestruction,
                 locationIdentification,
                 modifyAlarmSettings,
                 monitorProcessState,
@@ -147,22 +147,18 @@ category System {
                 spoofReportingMessage
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
-            -> dataDestruction
+            +> dataDestruction
         # applyPasswordRules
             developer info: "T812 - Mitigation"
-            -> defaultCredentials
+            +> defaultCredentials
         # keepLocationInformationSecret
             developer info: "T825 - Mitigation"
-            -> locationIdentification
+            +> locationIdentification
         # applyIDS
             developer info: "T838,T846,T856 - Mitigation"
-            -> modifyAlarmSettings,
+            +> modifyAlarmSettings,
                 remoteSystemDiscovery,
                 spoofReportingMessage
-    }
-
-    asset ControlSystemApplication {
-
     }
 
     asset EngineeringWorkstation extends IcsAsset {
@@ -170,37 +166,37 @@ category System {
             developer info: "T811"
         & defaultCredentials
             developer info: "T812"
-            -> authenticatedAccess
+            +> authenticatedAccess
         & rogueMasterDevice
             developer info: "T848"
-            -> assets.authenticatedAccess
+            +> assets.authenticatedAccess
         | serviceStop
             developer info: "T881"
         | spearfishingAttachment
             developer info: "T865"
-            -> userExecution
+            +> userExecution
         | userExecution
             developer info: "T863"
-            -> authenticatedAccess
+            +> authenticatedAccess
 
         # applyPrincipleOfLeastPrivilege
             developer info: "T809,T812 - Mitigation"
-            -> defaultCredentials
+            +> defaultCredentials
         # applyPasswordRules
             developer info: "T812 - Mitigation"
-            -> defaultCredentials
+            +> defaultCredentials
         # applyMultiFactorAuthentication
             developer info: "T812 - Mitigation"
-            -> defaultCredentials
+            +> defaultCredentials
         # restrictedPhysicalAccess
             developer info: "T848 - Mitigation"
-            -> rogueMasterDevice
+            +> rogueMasterDevice
     }
 
     asset AntiVirus {
         # maliciousFileDetectionActivated
             developer info: "T809,T859 - Mitigation"
-            -> observed.dataDestruction,
+            +> observed.dataDestruction,
                 observed.validAccounts
     }
 
@@ -209,18 +205,18 @@ category System {
            +> commonlyUsedPort
         & commonlyUsedPort
             developer info: "T885"
-            -> bypass
+            +> bypass
         | bypass
             networks.assets.access
         # applyWhitelist
             developer info: "T885 - Mitigation"
-            -> commonlyUsedPort
+            +> commonlyUsedPort
         # justAllowVPN
             developer info: "T885 - Mitigation"
-            -> commonlyUsedPort
+            +> commonlyUsedPort
         # applyIDS
             developer info: "T885 - Mitigation"
-            -> commonlyUsedPort
+            +> commonlyUsedPort
     }
 
     asset Controller extends IcsAsset {
@@ -230,16 +226,16 @@ category System {
             +> dataDestruction
         | automatedCollection
             developer info: "T802"
-            -> networks.assets.access
+            +> networks.assets.access
         | bruteForceIO
             developer info: "T806"
-            -> restrictedOperations
+            +> restrictedOperations
         | restrictedOperations {I,A}
         & dataDestruction {I,A}
             developer info: "T809"
         & defaultCredentials
             developer info: "T812"
-            -> authenticatedAccess
+            +> authenticatedAccess
         & blockReportingMessage
             developer info: "T804"
         & modifyParameter
@@ -249,56 +245,56 @@ category System {
         | hidableAttacks
         & modifyAlarmSettings //lowProbability
             developer info: "T838"
-            -> hidableAttacks
+            +> hidableAttacks
         | dontModifyAlarmSettings //highProbabilty
             developer info: "T838"
-            -> hidableAttacks
+            +> hidableAttacks
         # alarmSettingsNotModified
-            -> modifyAlarmSettings
+            +> modifyAlarmSettings
         & monitorProcessState
             developer info: "T801"
         & remoteSystemDiscovery
             developer info: "T846"
-            -> assets.access
+            +> assets.access
         & roleIdentification
             developer info: "T850"
-            -> rogueMasterDevice,
+            +> rogueMasterDevice,
                 assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
-            -> modifyAlarmSettings,
+            +> modifyAlarmSettings,
                 monitorProcessState
         # applyPasswordAuthentication
             developer info: "T809 - Mitigation"
-            -> dataDestruction
+            +> dataDestruction
         # applyPrincipleOfLeastPrivilege
             developer info: "T809,T812,T838,T801,T850 - Mitigation"
-            -> dataDestruction,
+            +> dataDestruction,
                 defaultCredentials,
                 modifyAlarmSettings,
                 monitorProcessState,
                 roleIdentification
         # applyMultiFactorAuthentication
             developer info: "T809,812 - Mitigation"
-            -> dataDestruction,
+            +> dataDestruction,
                 defaultCredentials
         # restrictedPhysicalAccess
             developer info: "T809,T838,T801,T846,T850 - Mitigation"
-            -> dataDestruction,
+            +> dataDestruction,
                 modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
                 roleIdentification
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
-            -> dataDestruction
+            +> dataDestruction
         # applyPasswordRules
             developer info: "T812 - Mitigation"
-            -> defaultCredentials
+            +> defaultCredentials
         # applyIDS
             developer info: "T838,T846 - Mitigation"
-            -> modifyAlarmSettings,
+            +> modifyAlarmSettings,
                 remoteSystemDiscovery
     }
 
@@ -311,44 +307,44 @@ category System {
             developer info: "T861"
         | remoteFileCopyReceive
             developer info: "T867"
-            -> authenticatedAccess
+            +> authenticatedAccess
         | remoteFileCopySend
             developer info: "T867"
-            -> assets[ControlServer \/ HMI \/ DataHistorian].remoteFileCopyReceive
+            +> assets[ControlServer \/ HMI \/ DataHistorian].remoteFileCopyReceive
         & remoteSystemDiscovery
             developer info: "T846"
-            -> assets.access
+            +> assets.access
         | replicationThroughRemovableMedia
             developer info: "T847"
-            -> access
+            +> access
         & roleIdentification
             developer info: "T850"
-            -> rogueMasterDevice,
+            +> rogueMasterDevice,
                 assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice
         | serviceStop
             developer info: "T881"
         | spearfishingAttachment
             developer info: "T865"
-            -> userExecution
+            +> userExecution
         | userExecution
             developer info: "T863"
-            -> authenticatedAccess
+            +> authenticatedAccess
 
         # restrictedPhysicalAccess
             developer info: "T801,T846,T850 - Mitigation"
-            -> monitorProcessState,
+            +> monitorProcessState,
                 remoteSystemDiscovery,
                 roleIdentification
         # applyPrincipleOfLeastPrivilege
             developer info: "T801,T850 - Mitigation"
-            -> monitorProcessState,
+            +> monitorProcessState,
                 roleIdentification
         # regularAuditOfSystem
             developer info: "T801 - Mitigation"
-            -> monitorProcessState
+            +> monitorProcessState
         # applyIDS
             developer info: "T846 - Mitigation"
-            -> remoteSystemDiscovery
+            +> remoteSystemDiscovery
     }
 
     asset HMI {
@@ -360,83 +356,83 @@ category System {
             developer info: "T811"
         & defaultCredentials
             developer info: "T812"
-            -> authenticatedAccess
+            +> authenticatedAccess
         & modifyParameter
             developer info: "T836"
         & masquerade //lowProbability
             developer info: "T849"
-            -> hidableAttacks
+            +> hidableAttacks
         | dontMasquerade /highProbablity
             developer info: "T849"
-            -> hidableAttacks
+            +> hidableAttacks
         # masqueradeInPlace
             developer info: "T849"
-            -> hidableAttacks
+            +> hidableAttacks
         | hidableAttacks
             //add attacks
         & modifyAlarmSettings //lowProbability
             developer info: "T838"
-            -> hidableAttacks
+            +> hidableAttacks
         | dontModifyAlarmSettings //highProbabilty
             developer info: "T838"
-            -> hidableAttacks
+            +> hidableAttacks
         # alarmSettingsNotModified
             developer info: "T801"
-            -> modifyAlarmSettings
+            +> modifyAlarmSettings
         & monitorProcessState
             developer info: "T801"
         | pointAndTackIdentification
             developer info: "T861"
         | remoteFileCopyReceive
             developer info: "T867"
-            -> authenticatedAccess
+            +> authenticatedAccess
         | remoteFileCopySend
             developer info: "T867"
-            -> assets[ControlServer \/ HMI \/ DataHistorian].remoteFileCopyReceive
+            +> assets[ControlServer \/ HMI \/ DataHistorian].remoteFileCopyReceive
         & remoteSystemDiscovery
             developer info: "T846"
-            -> assets.access
+            +> assets.access
         | replicationThroughRemovableMedia
             developer info: "T847"
-            -> access
+            +> access
         & rogueMasterDevice
             developer info: "T848"
-            -> assets.authenticatedAccess
+            +> assets.authenticatedAccess
         & roleIdentification
             developer info: "T850"
-            -> rogueMasterDevice,
+            +> rogueMasterDevice,
                 assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice
         | serviceStop
             developer info: "T881"
-            -> dataDestruction
+            +> dataDestruction
         | spearfishingAttachment
             developer info: "T865"
-            -> userExecution
+            +> userExecution
         | userExecution
             developer info: "T863"
-            -> authenticatedAccess
+            +> authenticatedAccess
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
-            -> modifyAlarmSettings,
+            +> modifyAlarmSettings,
                 monitorProcessState
         # applyPasswordAuthentication
             developer info: "T809 - Mitigation"
-            -> dataDestruction
+            +> dataDestruction
         # applyPrincipleOfLeastPrivilege
             developer info: "T809,T812,T838,T801,T850 - Mitigation"
-            -> dataDestruction,
+            +> dataDestruction,
                 defaultCredentials,
                 modifyAlarmSettings,
                 monitorProcessState,
                 roleIdentification
         # applyMultiFactorAuthentication
             developer info: "T809,812 - Mitigation"
-            -> dataDestruction,
+            +> dataDestruction,
                 defaultCredentials
         # restrictedPhysicalAccess
             developer info: "T809,T838,T801,T846,T848,T850 - Mitigation"
-            -> dataDestruction,
+            +> dataDestruction,
                 modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
@@ -444,20 +440,20 @@ category System {
                 roleIdentification
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
-            -> dataDestruction
+            +> dataDestruction
         # applyPasswordRules
             developer info: "T812 - Mitigation"
-            -> defaultCredentials
+            +> defaultCredentials
         # applyIDS
             developer info: "T838,T846 - Mitigation"
-            -> modifyAlarmSettings,
+            +> modifyAlarmSettings,
                 remoteSystemDiscovery
     }
 
     asset IOServer extends IcsAsset {
         | externalRemoteService
             developer info: "T822"
-            -> access
+            +> access
         & blockReportingMessage
             developer info: "T804"
     }
@@ -465,51 +461,51 @@ category System {
     asset SIS extends IcsAsset {
         | automatedCollection
             developer info: "T802"
-            -> networks.assets.access
+            +> networks.assets.access
         & defaultCredentials
             developer info: "T812"
-            -> authenticatedAccess
+            +> authenticatedAccess
         & modifyParameter
             developer info: "T836"
         | hidableAttacks
         & modifyAlarmSettings //lowProbability
             developer info: "T838"
-            -> hidableAttacks
+            +> hidableAttacks
         | dontModifyAlarmSettings //highProbabilty
             developer info: "T838"
-            -> hidableAttacks
+            +> hidableAttacks
         # alarmSettingsNotModified
             developer info: "T838"
-            -> modifyAlarmSettings
+            +> modifyAlarmSettings
         & monitorProcessState
             developer info: "T801"
         & remoteSystemDiscovery
             developer info: "T846"
-            -> assets.access
+            +> assets.access
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
-            -> modifyAlarmSettings,
+            +> modifyAlarmSettings,
                 monitorProcessState
         # applyPrincipleOfLeastPrivilege
             developer info: "T812,T838,T801 - Mitigation"
-            -> defaultCredentials,
+            +> defaultCredentials,
                 modifyAlarmSettings,
                 monitorProcessState
         # applyPasswordRules
             developer info: "T812 - Mitigation"
-            -> defaultCredentials
+            +> defaultCredentials
         # applyMultiFactorAuthentication
             developer info: "T812 - Mitigation"
-            -> defaultCredentials
+            +> defaultCredentials
         # restrictedPhysicalAccess
             developer info: "T838,T801,T846 - Mitigation"
-            -> modifyAlarmSettings,
+            +> modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery
         # applyIDS
             developer info: "T838,T846 - Mitigation"
-            -> modifyAlarmSettings,
+            +> modifyAlarmSettings,
                 remoteSystemDiscovery
     }
 }
@@ -517,41 +513,41 @@ category System {
 category Networking {
     asset IcsNetwork {
         | access
-            -> MITM
+            +> MITM
         & MITM
             developer info: "T830"
-            -> blockReportingMessage,
+            +> blockReportingMessage,
                 modifyParameter,
                 unauthorizedCommandMessage,
                 spoofReportingMessage
         | blockReportingMessage
-            -> assets[Controller \/ IOServer].blockReportingMessage
+            +> assets[Controller \/ IOServer].blockReportingMessage
         | modifyParameter
-            -> assets[ControlServer \/ Controller \/ SIS \/ HMI].modifyParameter
+            +> assets[ControlServer \/ Controller \/ SIS \/ HMI].modifyParameter
         | unauthorizedCommandMessage
-            -> assets[Controller].unauthorizedCommandMessage
+            +> assets[Controller].unauthorizedCommandMessage
         | spoofReportingMessage
-            -> assets[ControlServer].spoofReportingMessage
+            +> assets[ControlServer].spoofReportingMessage
 
         # encryptCommunication
             developer info: "T830,T848,T850,T856 - Mitigation"
-            -> MITM,
+            +> MITM,
                 assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice,
                 assets[ControlServer \/ HMI \/ DataHistorian \/ Controller].roleIdentification,
                 assets[ControlServer].spoofReportingMessage
         # challengeResponseAuthentication
             developer info: "T830,T859 - Mitigation"
-            -> MITM,
+            +> MITM,
                 assets.validAccounts
         # restrictedPhysicalAccess
             developer info: "T830- Mitigation"
-            -> MITM
+            +> MITM
         # applyIDS
             developer info: "T830,T859 - Mitigation"
-            -> MITM,
+            +> MITM,
                 assets.validAccounts
         # whitelistAllowedDevices
-            -> assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice
+            +> assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice
     }
 }
 
@@ -566,14 +562,14 @@ category Zone {
 }
 
 associations {
-    IcsAsset [assets] * <-- NetworkAccess --> * [networks] IcsNetwork
-    DataHistorian [historian] 1 <-- NetworkAccess --> * [dmz] DMZ
-    Internet [internet] 1 <-- NetworkAccess --> * [dmz] DMZ
-    ControlSystemApplication [applications] * <-- RunsOn --> * [host] ControlServer
-    EngineeringWorkstation [workstations] * <-- Maintain --> * [applications] ControlSystemApplication
-    EngineeringWorkstation [workstations] * <-- NetworkAccess --> * [networks] IcsNetwork
-    HMI [interfaces] * <-- GivesAccess --> 1 [application] ControlSystemApplication
-    IOServer [server] 1 <-- Controls --> * [controller] Controller
-    IOServer [servers] * <-- Communicates --> * [application] ControlSystemApplication
-    AntiVirus [av] 1 <-- Monitors --> * [assets] IcsAsset
+    IcsAsset [assets] * <-- NetworkAccess -+> * [networks] IcsNetwork
+    DataHistorian [historian] 1 <-- NetworkAccess -+> * [dmz] DMZ
+    Internet [internet] 1 <-- NetworkAccess -+> * [dmz] DMZ
+    ControlSystemApplication [applications] * <-- RunsOn -+> * [host] ControlServer
+    EngineeringWorkstation [workstations] * <-- Maintain -+> * [applications] ControlSystemApplication
+    EngineeringWorkstation [workstations] * <-- NetworkAccess -+> * [networks] IcsNetwork
+    HMI [interfaces] * <-- GivesAccess -+> 1 [application] ControlSystemApplication
+    IOServer [server] 1 <-- Controls -+> * [controller] Controller
+    IOServer [servers] * <-- Communicates -+> * [application] ControlSystemApplication
+    AntiVirus [av] 1 <-- Monitors -+> * [assets] IcsAsset
 }
