@@ -75,6 +75,9 @@ category System {
         | remoteFileCopySend
             developer info: "T867"
             -> assets[ControlServer \/ HMI \/ DataHistorian].remoteFileCopyReceive
+        & remoteSystemDiscovery
+            developer info: "T846"
+            -> assets.access
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
@@ -94,11 +97,12 @@ category System {
             -> dataDestruction,
                 defaultCredentials
         # restrictedPhysicalAccess
-            developer info: "T809,T825,T838,T801 - Mitigation"
+            developer info: "T809,T825,T838,T801,T846 - Mitigation"
             -> dataDestruction,
                 locationIdentification,
                 modifyAlarmSettings,
-                monitorProcessState
+                monitorProcessState,
+                remoteSystemDiscovery
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
             -> dataDestruction
@@ -109,8 +113,9 @@ category System {
             developer info: "T825 - Mitigation"
             -> locationIdentification
         # applyIDS
-            developer info: "T838 - Mitigation"
-            -> modifyAlarmSettings
+            developer info: "T838,T846 - Mitigation"
+            -> modifyAlarmSettings,
+                remoteSystemDiscovery
     }
 
     asset ControlSystemApplication {
@@ -193,6 +198,9 @@ category System {
             -> modifyAlarmSettings
         & monitorProcessState
             developer info: "T801"
+        & remoteSystemDiscovery
+            developer info: "T846"
+            -> assets.access
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
@@ -212,10 +220,11 @@ category System {
             -> dataDestruction,
                 defaultCredentials
         # restrictedPhysicalAccess
-            developer info: "T809,T838,T801 - Mitigation"
+            developer info: "T809,T838,T801,T846 - Mitigation"
             -> dataDestruction,
                 modifyAlarmSettings,
-                monitorProcessState
+                monitorProcessState,
+                remoteSystemDiscovery
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
             -> dataDestruction
@@ -223,8 +232,9 @@ category System {
             developer info: "T812 - Mitigation"
             -> defaultCredentials
         # applyIDS
-            developer info: "T838 - Mitigation"
-            -> modifyAlarmSettings
+            developer info: "T838,T846 - Mitigation"
+            -> modifyAlarmSettings,
+                remoteSystemDiscovery
     }
 
     asset DataHistorian extends IcsAsset {
@@ -240,16 +250,23 @@ category System {
         | remoteFileCopySend
             developer info: "T867"
             -> assets[ControlServer \/ HMI \/ DataHistorian].remoteFileCopyReceive
+        & remoteSystemDiscovery
+            developer info: "T846"
+            -> assets.access
 
         # restrictedPhysicalAccess
-            developer info: "T801 - Mitigation"
-            -> monitorProcessState
+            developer info: "T801,T846 - Mitigation"
+            -> monitorProcessState,
+            remoteSystemDiscovery
         # applyPrincipleOfLeastPrivilege
             developer info: "T801 - Mitigation"
             -> monitorProcessState
         # regularAuditOfSystem
             developer info: "T801 - Mitigation"
             -> monitorProcessState
+        # applyIDS
+            developer info: "T846 - Mitigation"
+            -> remoteSystemDiscovery
     }
 
     asset HMI {
@@ -294,6 +311,9 @@ category System {
         | remoteFileCopySend
             developer info: "T867"
             -> assets[ControlServer \/ HMI \/ DataHistorian].remoteFileCopyReceive
+        & remoteSystemDiscovery
+            developer info: "T846"
+            -> assets.access
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
@@ -313,10 +333,11 @@ category System {
             -> dataDestruction,
                 defaultCredentials
         # restrictedPhysicalAccess
-            developer info: "T809,T838,T801 - Mitigation"
+            developer info: "T809,T838,T801,T846 - Mitigation"
             -> dataDestruction,
                 modifyAlarmSettings,
-                monitorProcessState
+                monitorProcessState,
+                remoteSystemDiscovery
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
             -> dataDestruction
@@ -324,8 +345,9 @@ category System {
             developer info: "T812 - Mitigation"
             -> defaultCredentials
         # applyIDS
-            developer info: "T838 - Mitigation"
-            -> modifyAlarmSettings
+            developer info: "T838,T846 - Mitigation"
+            -> modifyAlarmSettings,
+                remoteSystemDiscovery
     }
 
     asset IOServer extends IcsAsset {
@@ -357,6 +379,9 @@ category System {
             -> modifyAlarmSettings
         & monitorProcessState
             developer info: "T801"
+        & remoteSystemDiscovery
+            developer info: "T846"
+            -> assets.access
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
@@ -374,12 +399,14 @@ category System {
             developer info: "T812 - Mitigation"
             -> defaultCredentials
         # restrictedPhysicalAccess
-            developer info: "T838,T801 - Mitigation"
+            developer info: "T838,T801,T846 - Mitigation"
             -> modifyAlarmSettings,
-                monitorProcessState
+                monitorProcessState,
+                remoteSystemDiscovery
         # applyIDS
-            developer info: "T838 - Mitigation"
-            -> modifyAlarmSettings
+            developer info: "T838,T846 - Mitigation"
+            -> modifyAlarmSettings,
+                remoteSystemDiscovery
     }
 }
 
