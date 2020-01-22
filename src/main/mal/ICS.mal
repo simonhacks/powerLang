@@ -78,6 +78,9 @@ category System {
         & remoteSystemDiscovery
             developer info: "T846"
             -> assets.access
+        | replicationThroughRemovableMedia
+            developer info: "T847"
+            -> access
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
@@ -253,6 +256,9 @@ category System {
         & remoteSystemDiscovery
             developer info: "T846"
             -> assets.access
+        | replicationThroughRemovableMedia
+            developer info: "T847"
+            -> access
 
         # restrictedPhysicalAccess
             developer info: "T801,T846 - Mitigation"
@@ -314,6 +320,9 @@ category System {
         & remoteSystemDiscovery
             developer info: "T846"
             -> assets.access
+        | replicationThroughRemovableMedia
+            developer info: "T847"
+            -> access
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
