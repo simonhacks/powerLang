@@ -43,7 +43,7 @@ category System {
             -> access
         & modifyParameter
             developer info: "T836"
-        & spoofReportingMessage
+        & spoofReportingMessage {I}
             developer info: "T856"
         & masquerade //lowProbability
             developer info: "T849"
@@ -99,9 +99,10 @@ category System {
             -> authenticatedAccess
 
         # regularAuditOfSystem
-            developer info: "T838,T801 - Mitigation"
+            developer info: "T838,T801,T856 - Mitigation"
             -> modifyAlarmSettings,
-                monitorProcessState
+                monitorProcessState,
+                spoofReportingMessage
         # applyPasswordAuthentication
             developer info: "T809 - Mitigation"
             -> dataDestruction
@@ -117,13 +118,14 @@ category System {
             -> dataDestruction,
                 defaultCredentials
         # restrictedPhysicalAccess
-            developer info: "T809,T825,T838,T801,T846,T848,T850 - Mitigation"
+            developer info: "T809,T825,T838,T801,T846,T848,T850,T856 - Mitigation"
             -> dataDestruction,
                 locationIdentification,
                 modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
-                roleIdentification
+                roleIdentification,
+                spoofReportingMessage
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
             -> dataDestruction
@@ -134,9 +136,10 @@ category System {
             developer info: "T825 - Mitigation"
             -> locationIdentification
         # applyIDS
-            developer info: "T838,T846 - Mitigation"
+            developer info: "T838,T846,T856 - Mitigation"
             -> modifyAlarmSettings,
-                remoteSystemDiscovery
+                remoteSystemDiscovery,
+                spoofReportingMessage
     }
 
     asset ControlSystemApplication {
@@ -511,10 +514,11 @@ category Networking {
             -> assets[ControlServer].spoofReportingMessage
 
         # encryptCommunication
-            developer info: "T830,T848,T850 - Mitigation"
+            developer info: "T830,T848,T850,T856 - Mitigation"
             -> MITM,
                 assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice,
-                assets[ControlServer \/ HMI \/ DataHistorian \/ Controller].roleIdentification
+                assets[ControlServer \/ HMI \/ DataHistorian \/ Controller].roleIdentification,
+                assets[ControlServer].spoofReportingMessage
         # challengeResponseAuthentication
             developer info: "T830 - Mitigation"
             -> MITM
