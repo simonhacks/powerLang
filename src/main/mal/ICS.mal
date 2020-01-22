@@ -84,6 +84,10 @@ category System {
         & rogueMasterDevice
             developer info: "T848"
             -> assets.authenticatedAccess
+        & roleIdentification
+            developer info: "T850"
+            -> rogueMasterDevice,
+                assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
@@ -93,22 +97,24 @@ category System {
             developer info: "T809 - Mitigation"
             -> dataDestruction
         # applyPrincipleOfLeastPrivilege
-            developer info: "T809,T812,T838,T801 - Mitigation"
+            developer info: "T809,T812,T838,T801,T850 - Mitigation"
             -> dataDestruction,
                 defaultCredentials,
                 modifyAlarmSettings,
-                monitorProcessState
+                monitorProcessState,
+                roleIdentification
         # applyMultiFactorAuthentication
             developer info: "T809,T812 - Mitigation"
             -> dataDestruction,
                 defaultCredentials
         # restrictedPhysicalAccess
-            developer info: "T809,T825,T838,T801,T846,T848 - Mitigation"
+            developer info: "T809,T825,T838,T801,T846,T848,T850 - Mitigation"
             -> dataDestruction,
                 locationIdentification,
                 modifyAlarmSettings,
                 monitorProcessState,
-                remoteSystemDiscovery
+                remoteSystemDiscovery,
+                roleIdentification
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
             -> dataDestruction
@@ -214,6 +220,10 @@ category System {
         & remoteSystemDiscovery
             developer info: "T846"
             -> assets.access
+        & roleIdentification
+            developer info: "T850"
+            -> rogueMasterDevice,
+                assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
@@ -223,21 +233,23 @@ category System {
             developer info: "T809 - Mitigation"
             -> dataDestruction
         # applyPrincipleOfLeastPrivilege
-            developer info: "T809,T812,T838,T801 - Mitigation"
+            developer info: "T809,T812,T838,T801,T850 - Mitigation"
             -> dataDestruction,
                 defaultCredentials,
                 modifyAlarmSettings,
-                monitorProcessState
+                monitorProcessState,
+                roleIdentification
         # applyMultiFactorAuthentication
             developer info: "T809,812 - Mitigation"
             -> dataDestruction,
                 defaultCredentials
         # restrictedPhysicalAccess
-            developer info: "T809,T838,T801,T846 - Mitigation"
+            developer info: "T809,T838,T801,T846,T850 - Mitigation"
             -> dataDestruction,
                 modifyAlarmSettings,
                 monitorProcessState,
-                remoteSystemDiscovery
+                remoteSystemDiscovery,
+                roleIdentification
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
             -> dataDestruction
@@ -269,14 +281,20 @@ category System {
         | replicationThroughRemovableMedia
             developer info: "T847"
             -> access
+        & roleIdentification
+            developer info: "T850"
+            -> rogueMasterDevice,
+                assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice
 
         # restrictedPhysicalAccess
-            developer info: "T801,T846 - Mitigation"
+            developer info: "T801,T846,T850 - Mitigation"
             -> monitorProcessState,
-            remoteSystemDiscovery
+                remoteSystemDiscovery,
+                roleIdentification
         # applyPrincipleOfLeastPrivilege
-            developer info: "T801 - Mitigation"
-            -> monitorProcessState
+            developer info: "T801,T850 - Mitigation"
+            -> monitorProcessState,
+                roleIdentification
         # regularAuditOfSystem
             developer info: "T801 - Mitigation"
             -> monitorProcessState
@@ -336,7 +354,10 @@ category System {
         & rogueMasterDevice
             developer info: "T848"
             -> assets.authenticatedAccess
-
+        & roleIdentification
+            developer info: "T850"
+            -> rogueMasterDevice,
+                assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
@@ -346,22 +367,24 @@ category System {
             developer info: "T809 - Mitigation"
             -> dataDestruction
         # applyPrincipleOfLeastPrivilege
-            developer info: "T809,T812,T838,T801 - Mitigation"
+            developer info: "T809,T812,T838,T801,T850 - Mitigation"
             -> dataDestruction,
                 defaultCredentials,
                 modifyAlarmSettings,
-                monitorProcessState
+                monitorProcessState,
+                roleIdentification
         # applyMultiFactorAuthentication
             developer info: "T809,812 - Mitigation"
             -> dataDestruction,
                 defaultCredentials
         # restrictedPhysicalAccess
-            developer info: "T809,T838,T801,T846,T848 - Mitigation"
+            developer info: "T809,T838,T801,T846,T848,T850 - Mitigation"
             -> dataDestruction,
                 modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
-                rogueMasterDevice
+                rogueMasterDevice,
+                roleIdentification
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
             -> dataDestruction
@@ -454,9 +477,10 @@ category Networking {
             -> assets[ControlServer].spoofReportingMessage
 
         # encryptCommunication
-            developer info: "T830,T848 - Mitigation"
+            developer info: "T830,T848,T850 - Mitigation"
             -> MITM,
-                assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice
+                assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice,
+                assets[ControlServer \/ HMI \/ DataHistorian \/ Controller].roleIdentification
         # challengeResponseAuthentication
             developer info: "T830 - Mitigation"
             -> MITM
