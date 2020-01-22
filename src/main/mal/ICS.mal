@@ -91,6 +91,12 @@ category System {
         | serviceStop
             developer info: "T881"
             -> dataDestruction
+        | spearfishingAttachment
+            developer info: "T865"
+            -> userExecution
+        | userExecution
+            developer info: "T863"
+            -> authenticatedAccess
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
@@ -148,6 +154,12 @@ category System {
             -> assets.authenticatedAccess
         | serviceStop
             developer info: "T881"
+        | spearfishingAttachment
+            developer info: "T865"
+            -> userExecution
+        | userExecution
+            developer info: "T863"
+            -> authenticatedAccess
 
         # applyPrincipleOfLeastPrivilege
             developer info: "T809,T812 - Mitigation"
@@ -292,6 +304,12 @@ category System {
                 assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice
         | serviceStop
             developer info: "T881"
+        | spearfishingAttachment
+            developer info: "T865"
+            -> userExecution
+        | userExecution
+            developer info: "T863"
+            -> authenticatedAccess
 
         # restrictedPhysicalAccess
             developer info: "T801,T846,T850 - Mitigation"
@@ -368,6 +386,12 @@ category System {
         | serviceStop
             developer info: "T881"
             -> dataDestruction
+        | spearfishingAttachment
+            developer info: "T865"
+            -> userExecution
+        | userExecution
+            developer info: "T863"
+            -> authenticatedAccess
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
