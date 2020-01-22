@@ -5,6 +5,25 @@ category System {
     asset abstract IcsAsset {
         | access
         | authenticatedAccess
+        | stealCredentials
+            developer info: "T859"
+            -> validAccounts
+        | useDefaultCredentials
+            developer info: "T859"
+            -> validAccounts
+        & validAccounts
+            developer info: "T859"
+            -> authenticatedAccess
+
+        # applyPrincipleOfLeastPrivilege
+            developer info: "T859 - Mitigation"
+            -> validAccounts
+        # applyMultiFactorAuthentication
+            developer info: "T859 - Mitigation"
+            -> validAccounts
+        # restrictedPhysicalAccess
+            developer info: "T859 - Mitigation"
+            -> validAccounts
         # restrictedAccessToConfigurationSettings
             developer info: "T885 - Mitigation"
             -> networks.assets[Firewall].commonlyUsedPort
@@ -180,8 +199,9 @@ category System {
 
     asset AntiVirus {
         # maliciousFileDetectionActivated
-            developer info: "T809 - Mitigation"
-            -> observed.dataDestruction
+            developer info: "T809,T859 - Mitigation"
+            -> observed.dataDestruction,
+                observed.validAccounts
     }
 
     asset Firewall extends IcsAsset {
@@ -520,14 +540,16 @@ category Networking {
                 assets[ControlServer \/ HMI \/ DataHistorian \/ Controller].roleIdentification,
                 assets[ControlServer].spoofReportingMessage
         # challengeResponseAuthentication
-            developer info: "T830 - Mitigation"
-            -> MITM
+            developer info: "T830,T859 - Mitigation"
+            -> MITM,
+                assets.validAccounts
         # restrictedPhysicalAccess
             developer info: "T830- Mitigation"
             -> MITM
         # applyIDS
-            developer info: "T830 - Mitigation"
-            -> MITM
+            developer info: "T830,T859 - Mitigation"
+            -> MITM,
+                assets.validAccounts
         # whitelistAllowedDevices
             -> assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice
     }
