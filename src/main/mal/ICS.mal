@@ -81,6 +81,9 @@ category System {
         | replicationThroughRemovableMedia
             developer info: "T847"
             -> access
+        & rogueMasterDevice
+            developer info: "T848"
+            -> assets.authenticatedAccess
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
@@ -100,7 +103,7 @@ category System {
             -> dataDestruction,
                 defaultCredentials
         # restrictedPhysicalAccess
-            developer info: "T809,T825,T838,T801,T846 - Mitigation"
+            developer info: "T809,T825,T838,T801,T846,T848 - Mitigation"
             -> dataDestruction,
                 locationIdentification,
                 modifyAlarmSettings,
@@ -131,6 +134,10 @@ category System {
         & defaultCredentials
             developer info: "T812"
             -> authenticatedAccess
+        & rogueMasterDevice
+            developer info: "T848"
+            -> assets.authenticatedAccess
+
         # applyPrincipleOfLeastPrivilege
             developer info: "T809,T812 - Mitigation"
             -> defaultCredentials
@@ -140,6 +147,9 @@ category System {
         # applyMultiFactorAuthentication
             developer info: "T812 - Mitigation"
             -> defaultCredentials
+        # restrictedPhysicalAccess
+            developer info: "T848 - Mitigation"
+            -> rogueMasterDevice
     }
 
     asset AntiVirus {
@@ -323,6 +333,10 @@ category System {
         | replicationThroughRemovableMedia
             developer info: "T847"
             -> access
+        & rogueMasterDevice
+            developer info: "T848"
+            -> assets.authenticatedAccess
+
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
@@ -342,11 +356,12 @@ category System {
             -> dataDestruction,
                 defaultCredentials
         # restrictedPhysicalAccess
-            developer info: "T809,T838,T801,T846 - Mitigation"
+            developer info: "T809,T838,T801,T846,T848 - Mitigation"
             -> dataDestruction,
                 modifyAlarmSettings,
                 monitorProcessState,
-                remoteSystemDiscovery
+                remoteSystemDiscovery,
+                rogueMasterDevice
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
             -> dataDestruction
@@ -437,18 +452,22 @@ category Networking {
             -> assets[Controller].unauthorizedCommandMessage
         | spoofReportingMessage
             -> assets[ControlServer].spoofReportingMessage
+
         # encryptCommunication
-            developer info: "T830 - Mitigation"
-            -> MITM
+            developer info: "T830,T848 - Mitigation"
+            -> MITM,
+                assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice
         # challengeResponseAuthentication
             developer info: "T830 - Mitigation"
             -> MITM
         # restrictedPhysicalAccess
+            developer info: "T830- Mitigation"
+            -> MITM
+        # applyIDS
             developer info: "T830 - Mitigation"
             -> MITM
-        # IDSinPlace
-            developer info: "T830 - Mitigation"
-            -> MITM
+        # whitelistAllowedDevices
+            -> assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice
     }
 }
 
