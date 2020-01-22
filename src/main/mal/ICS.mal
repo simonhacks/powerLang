@@ -88,6 +88,9 @@ category System {
             developer info: "T850"
             -> rogueMasterDevice,
                 assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice
+        | serviceStop
+            developer info: "T881"
+            -> dataDestruction
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
@@ -143,6 +146,8 @@ category System {
         & rogueMasterDevice
             developer info: "T848"
             -> assets.authenticatedAccess
+        | serviceStop
+            developer info: "T881"
 
         # applyPrincipleOfLeastPrivilege
             developer info: "T809,T812 - Mitigation"
@@ -285,6 +290,8 @@ category System {
             developer info: "T850"
             -> rogueMasterDevice,
                 assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice
+        | serviceStop
+            developer info: "T881"
 
         # restrictedPhysicalAccess
             developer info: "T801,T846,T850 - Mitigation"
@@ -358,6 +365,9 @@ category System {
             developer info: "T850"
             -> rogueMasterDevice,
                 assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice
+        | serviceStop
+            developer info: "T881"
+            -> dataDestruction
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
