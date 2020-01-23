@@ -37,19 +37,47 @@ category System {
 
     asset ControlServer extends IcsAsset {
         | access
-            +> bruteForceIO
+            +> bruteForceIO,
+                defaultCredentials,
+                remoteFileCopyReceive,
+                roleIdentification
         | authenticatedAccess
-            +> dataDestruction
-        | automatedCollection
+            +> dataDestruction,
+                automatedCollection,
+                dataFromInformationRepositories,
+                modifyParameter,
+                masquerade,
+                modifyAlarmSettings,
+                monitorProcessState,
+                pointAndTackIdentification,
+                remoteFileCopySend,
+                remoteSystemDiscovery,
+                rogueMasterDevice,
+                serviceStop
+        | hidableAttacks
+            +> automatedCollection,
+                restrictedOperations,
+                dataDestruction,
+                dataFromInformationRepositories,
+                modifyParameter,
+                spoofReportingMessage,
+                monitorProcessState,
+                pointAndTackIdentification,
+                remoteFileCopyReceive,
+                remoteFileCopySend,
+                remoteSystemDiscovery,
+                replicationThroughRemovableMedia
+
+        & automatedCollection
             developer info: "T802"
             +> networks.assets.access
         | bruteForceIO
             developer info: "T806"
             +> restrictedOperations
-        | restrictedOperations {I,A}
+        & restrictedOperations {I,A}
         & dataDestruction {I,A}
             developer info: "T809"
-        | dataFromInformationRepositories {C}
+        & dataFromInformationRepositories {C}
             developer info: "T811"
         & defaultCredentials
             developer info: "T812"
@@ -60,7 +88,10 @@ category System {
         & locationIdentification
             developer info: "T825"
             +> access
-        & modifyParameter
+        & modifyParameter {I}
+            developer info: "T836"
+            -> physicalImpact
+        | physicalImpact {I}
             developer info: "T836"
         & spoofReportingMessage {I}
             developer info: "T856"
@@ -73,8 +104,6 @@ category System {
         # masqueradeNotInPlace
             developer info: "T849"
             +> hidableAttacks
-        | hidableAttacks
-            //add attacks
         & modifyAlarmSettings //lowProbability
             developer info: "T838"
             +> hidableAttacks
@@ -86,27 +115,28 @@ category System {
             +> modifyAlarmSettings
         & monitorProcessState
             developer info: "T801"
-        | pointAndTackIdentification
+            +> networks.assets.access
+        & pointAndTackIdentification {C}
             developer info: "T861"
-        | remoteFileCopyReceive
+        & remoteFileCopyReceive
             developer info: "T867"
             +> authenticatedAccess
-        | remoteFileCopySend
+        & remoteFileCopySend
             developer info: "T867"
-            +> assets[ControlServer \/ HMI \/ DataHistorian].remoteFileCopyReceive
+            +> networks.assets[ControlServer \/ HMI \/ DataHistorian].remoteFileCopyReceive
         & remoteSystemDiscovery
             developer info: "T846"
-            +> assets.access
-        | replicationThroughRemovableMedia
+            +> networks.assets.access
+        & replicationThroughRemovableMedia
             developer info: "T847"
             +> access
         & rogueMasterDevice
             developer info: "T848"
-            +> assets.authenticatedAccess
+            +> networks.assets.authenticatedAccess
         & roleIdentification
             developer info: "T850"
             +> rogueMasterDevice,
-                assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice
+                networks.assets[ControlServer \/ HMI \/ EngineeringWorkstation].rogueMasterDevice
         | serviceStop
             developer info: "T881"
             +> dataDestruction
@@ -238,7 +268,10 @@ category System {
             +> authenticatedAccess
         & blockReportingMessage
             developer info: "T804"
-        & modifyParameter
+        & modifyParameter {I}
+            developer info: "T836"
+            -> physicalImpact
+        | physicalImpact
             developer info: "T836"
         & unauthorizedCommandMessage
             developer info: "T855"
@@ -357,7 +390,10 @@ category System {
         & defaultCredentials
             developer info: "T812"
             +> authenticatedAccess
-        & modifyParameter
+        & modifyParameter {I}
+            developer info: "T836"
+            -> physicalImpact
+        | physicalImpact
             developer info: "T836"
         & masquerade //lowProbability
             developer info: "T849"
@@ -465,7 +501,10 @@ category System {
         & defaultCredentials
             developer info: "T812"
             +> authenticatedAccess
-        & modifyParameter
+        & modifyParameter {I}
+            developer info: "T836"
+            -> physicalImpact
+        | physicalImpact
             developer info: "T836"
         | hidableAttacks
         & modifyAlarmSettings //lowProbability
