@@ -380,7 +380,8 @@ category System {
             +> dataHistorianCompromise,
                 dataFromInformationRepositories,
                 exploitationOfRemoteService,
-                monitorProcessState
+                monitorProcessState,
+                pointAndTackIdentification
 
         | dataHistorianCompromise {C}
             developer info: "T810"
@@ -397,8 +398,9 @@ category System {
             developer info: "T801"
             -> networks.assets.access
 
-        | pointAndTackIdentification
+        | pointAndTackIdentification {C}
             developer info: "T861"
+
         | remoteFileCopyReceive
             developer info: "T867"
             -> authenticatedAccess
