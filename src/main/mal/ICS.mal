@@ -376,12 +376,15 @@ category System {
     }
 
     asset DataHistorian extends IcsAsset {
+        | access
+            +> remoteFileCopyReceive
         | authenticatedAccess
             +> dataHistorianCompromise,
                 dataFromInformationRepositories,
                 exploitationOfRemoteService,
                 monitorProcessState,
-                pointAndTackIdentification
+                pointAndTackIdentification,
+                remoteFileCopySend
 
         | dataHistorianCompromise {C}
             developer info: "T810"
@@ -409,6 +412,7 @@ category System {
             -> networks.assets[ControlServer].remoteFileCopyReceive,
                 networks.assets[HMI].remoteFileCopyReceive,
                 networks.assets[DataHistorian].remoteFileCopyReceive
+
         & remoteSystemDiscovery
             developer info: "T846"
             -> networks.assets.access
