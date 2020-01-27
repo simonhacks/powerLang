@@ -5,16 +5,15 @@ category System {
                 defaultCredentials,
                 remoteFileCopyReceive,
                 roleIdentification,
-                hidableAttacks
+                dontModifyAlarmSettings,
+                dontMasquerade
         | authenticatedAccess
             +> dataDestruction,
                 automatedCollection,
                 dataFromInformationRepositories,
                 modifyParameter,
                 masquerade,
-                dontMasquerade,
                 modifyAlarmSettings,
-                dontModifyAlarmSettings,
                 monitorProcessState,
                 pointAndTackIdentification,
                 remoteFileCopySend,

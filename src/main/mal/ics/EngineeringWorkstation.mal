@@ -2,12 +2,12 @@ category System {
     asset EngineeringWorkstation extends IcsAsset {
         | access
             +> defaultCredentials,
-                scripting
+                scripting,
+                noLossOfView
         | authenticatedAccess
             +> dataFromInformationRepositories,
                 exploitationOfRemoteService,
                 lossOfView,
-                noLossOfView,
                 manipulationOfView,
                 projectFileInfection,
                 serviceStop,
