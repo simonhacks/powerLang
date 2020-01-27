@@ -4,8 +4,7 @@ category DataHistorian {
             +> remoteFileCopyReceive,
                 roleIdentification
         | authenticatedAccess
-            +> dataHistorianCompromise,
-                dataFromInformationRepositories,
+            +> dataFromInformationRepositories,
                 exploitationOfRemoteService,
                 monitorProcessState,
                 pointAndTackIdentification,

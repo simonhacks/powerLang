@@ -11,11 +11,11 @@ category System {
                 manipulationOfView,
                 projectFileInfection,
                 serviceStop,
-                rogueOfMasterDevice
+                rogueMasterDevice
         | hidableAttacks
             -> exploitationOfRemoteService,
                 projectFileInfection,
-                rogueOfMasterDevice,
+                rogueMasterDevice,
                 scripting,
                 serviceStop,
                 userExecution
