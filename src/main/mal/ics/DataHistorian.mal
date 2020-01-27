@@ -13,10 +13,6 @@ category DataHistorian {
                 remoteSystemDiscovery,
                 serviceStop
 
-        | dataHistorianCompromise {C}
-            developer info: "T810"
-            -> networks.assets.access
-
         | dataFromInformationRepositories {C}
             developer info: "T811"
 

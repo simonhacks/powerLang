@@ -1,10 +1,16 @@
 category System {
     asset EngineeringWorkstation extends IcsAsset {
+        | access
+        | authenticatedAccess
+            +> dataFromInformationRepositories
+
         | dataFromInformationRepositories {C}
             developer info: "T811"
+
         & defaultCredentials
             developer info: "T812"
-            -> authenticatedAccess
+            -> credentials
+
         & rogueMasterDevice
             developer info: "T848"
             -> networks.assets.authenticatedAccess
