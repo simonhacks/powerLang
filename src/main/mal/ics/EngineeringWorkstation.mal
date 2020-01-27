@@ -1,8 +1,12 @@
 category System {
     asset EngineeringWorkstation extends IcsAsset {
         | access
+            +> defaultCredentials
         | authenticatedAccess
-            +> dataFromInformationRepositories
+            +> dataFromInformationRepositories,
+                exploitationOfRemoteService
+        | hidableAttacks
+            ->
 
         | dataFromInformationRepositories {C}
             developer info: "T811"
@@ -10,6 +14,22 @@ category System {
         & defaultCredentials
             developer info: "T812"
             -> credentials
+
+        | exploitationOfRemoteService
+            developer info: "T866"
+            -> networks.assets.access
+
+        & lossOfView //lowProbability
+            developer info: "T829"
+            -> hidableAttacks
+        | noLossOfView //highProbability
+            developer info: "T829"
+            -> hidableAttacks
+        # lossOfViewNotInPlace
+            developer info: "T829"
+            -> lossOfView
+
+
 
         & rogueMasterDevice
             developer info: "T848"
@@ -22,9 +42,6 @@ category System {
         | userExecution
             developer info: "T863"
             -> authenticatedAccess
-        | exploitationOfRemoteService
-            developer info: "T866"
-            -> networks.assets.access
 
         # applyPrincipleOfLeastPrivilege
             developer info: "T809,T812 - Mitigation"

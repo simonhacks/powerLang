@@ -83,7 +83,7 @@ category System {
             -> hidableAttacks
         # masqueradeNotInPlace
             developer info: "T849"
-            -> hidableAttacks
+            -> masquerade
 
         & modifyAlarmSettings //lowProbability
             developer info: "T838"

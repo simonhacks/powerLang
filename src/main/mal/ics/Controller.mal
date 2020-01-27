@@ -4,6 +4,7 @@ category System {
             +> bruteForceIO
         | authenticatedAccess
             +> dataDestruction
+        | hidableAttacks
         | automatedCollection
             developer info: "T802"
             -> networks.assets.access
@@ -25,7 +26,7 @@ category System {
             developer info: "T836"
         & unauthorizedCommandMessage
             developer info: "T855"
-        | hidableAttacks
+
         & modifyAlarmSettings //lowProbability
             developer info: "T838"
             -> hidableAttacks

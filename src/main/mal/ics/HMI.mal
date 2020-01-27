@@ -25,7 +25,18 @@ category System {
             -> hidableAttacks
         # masqueradeInPlace
             developer info: "T849"
+            -> masquerade
+
+        & lossOfView //lowProbability
+            developer info: "T829"
             -> hidableAttacks
+        | noLossOfView //highProbability
+            developer info: "T829"
+            -> hidableAttacks
+        # lossOfViewNotInPlace
+            developer info: "T829"
+            -> lossOfView
+
         | hidableAttacks
             //add attacks
         & modifyAlarmSettings //lowProbability
