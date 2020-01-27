@@ -9,11 +9,18 @@ category System {
                 lossOfView,
                 noLossOfView,
                 manipulationOfView,
-                projectFileInfection
+                projectFileInfection,
+                serviceStop,
+                rogueOfMasterDevice
         | hidableAttacks
-            ->
+            -> exploitationOfRemoteService,
+                projectFileInfection,
+                rogueOfMasterDevice,
+                scripting,
+                serviceStop,
+                userExecution
         | physicalImpact {I}
-
+        | dataDestruction {I,A}
 
         | dataFromInformationRepositories {C}
             developer info: "T811"
@@ -22,7 +29,7 @@ category System {
             developer info: "T812"
             -> credentials
 
-        | exploitationOfRemoteService
+        & exploitationOfRemoteService
             developer info: "T866"
             -> networks.assets.access
 
@@ -40,7 +47,7 @@ category System {
             developer info: "T832"
             -> physicalImpact
 
-        | projectFileInfection
+        & projectFileInfection
             developer info: "T873"
             -> networks.assets[Controller].authenticatedAccess
 
@@ -52,12 +59,15 @@ category System {
             developer info: "T853"
             -> authenticatedAccess
 
-        | serviceStop
+        & serviceStop
             developer info: "T881"
+            -> dataDestruction
+
         | spearfishingAttachment
             developer info: "T865"
             -> userExecution
-        | userExecution
+
+        & userExecution
             developer info: "T863"
             -> authenticatedAccess
 
