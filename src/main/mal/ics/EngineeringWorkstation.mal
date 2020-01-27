@@ -1,7 +1,8 @@
 category System {
     asset EngineeringWorkstation extends IcsAsset {
         | access
-            +> defaultCredentials
+            +> defaultCredentials,
+                scripting
         | authenticatedAccess
             +> dataFromInformationRepositories,
                 exploitationOfRemoteService,
@@ -46,6 +47,11 @@ category System {
         & rogueMasterDevice
             developer info: "T848"
             -> networks.assets.authenticatedAccess
+
+        & scripting
+            developer info: "T853"
+            -> authenticatedAccess
+
         | serviceStop
             developer info: "T881"
         | spearfishingAttachment
@@ -56,8 +62,9 @@ category System {
             -> authenticatedAccess
 
         # applyPrincipleOfLeastPrivilege
-            developer info: "T809,T812 - Mitigation"
-            -> defaultCredentials
+            developer info: "T812,T853 - Mitigation"
+            -> defaultCredentials,
+                scripting
         # applyPasswordRules
             developer info: "T812 - Mitigation"
             -> defaultCredentials
@@ -65,7 +72,11 @@ category System {
             developer info: "T812 - Mitigation"
             -> defaultCredentials
         # restrictedPhysicalAccess
-            developer info: "T848 - Mitigation"
-            -> rogueMasterDevice
+            developer info: "T848,T853 - Mitigation"
+            -> rogueMasterDevice,
+                scripting
+        # applyPasswordsToAllowChanges
+            developer info: "T853 - Mitigation"
+            -> scripting
     }
 }
