@@ -1,12 +1,12 @@
 category System {
     abstract asset IcsAsset {
         | access
-        | authenticatedAccess
+            -> authenticatedAccess
+        & authenticatedAccess
         | stealCredentials
             developer info: "T859"
-            -> validAccounts
-        | useDefaultCredentials
-            developer info: "T859"
+            -> credentials
+        | credentials
             -> validAccounts
         & validAccounts
             developer info: "T859"
@@ -37,14 +37,17 @@ category System {
             +> bruteForceIO,
                 defaultCredentials,
                 remoteFileCopyReceive,
-                roleIdentification
-        | authenticatedAccess
+                roleIdentification,
+                hidableAccess
+        & authenticatedAccess
             +> dataDestruction,
                 automatedCollection,
                 dataFromInformationRepositories,
                 modifyParameter,
                 masquerade,
+                dontMasquerade,
                 modifyAlarmSettings,
+                dontModifyAlarmSettings,
                 monitorProcessState,
                 pointAndTackIdentification,
                 remoteFileCopySend,
@@ -54,7 +57,7 @@ category System {
         | hidableAttacks
             -> automatedCollection,
                 restrictedOperations,
-                dataDestruction,
+                dataDestructionDefended,
                 dataFromInformationRepositories,
                 modifyParameter,
                 spoofReportingMessage,
@@ -68,30 +71,43 @@ category System {
         & automatedCollection
             developer info: "T802"
             -> networks.assets.access
+
         | bruteForceIO
             developer info: "T806"
             -> restrictedOperations
+
         & restrictedOperations {I,A}
-        & dataDestruction {I,A}
+
+        | dataDestruction
             developer info: "T809"
+            -> dataDestructionDefended
+        & dataDestructionDefended {I,A}
+            developer info: "T809"
+
         & dataFromInformationRepositories {C}
             developer info: "T811"
+
         & defaultCredentials
             developer info: "T812"
-            -> authenticatedAccess
+            -> credentials
+
         | externalRemoteService
             developer info: "T822"
             -> access
+
         & locationIdentification
             developer info: "T825"
             -> access
+
         & modifyParameter {I}
             developer info: "T836"
             -> physicalImpact
         | physicalImpact {I}
             developer info: "T836"
+
         & spoofReportingMessage {I}
             developer info: "T856"
+
         & masquerade //lowProbability
             developer info: "T849"
             -> hidableAttacks
@@ -101,6 +117,7 @@ category System {
         # masqueradeNotInPlace
             developer info: "T849"
             -> hidableAttacks
+
         & modifyAlarmSettings //lowProbability
             developer info: "T838"
             -> hidableAttacks
@@ -110,11 +127,14 @@ category System {
         # alarmSettingsNotModified
             developer info: "T838"
             -> modifyAlarmSettings
+
         & monitorProcessState
             developer info: "T801"
             -> networks.assets.access
+
         & pointAndTackIdentification {C}
             developer info: "T861"
+
         & remoteFileCopyReceive
             developer info: "T867"
             -> authenticatedAccess
@@ -123,27 +143,37 @@ category System {
             -> networks.assets[ControlServer].remoteFileCopyReceive,
                 networks.assets[HMI].remoteFileCopyReceive,
                 networks.assets[DataHistorian].remoteFileCopyReceive
+
         & remoteSystemDiscovery
             developer info: "T846"
             -> networks.assets.access
+
         & replicationThroughRemovableMedia
             developer info: "T847"
             -> access
-        & rogueMasterDevice
+
+        | rogueMasterDevice
+            developer info: "T848"
+            -> rogueMasterDeviceHided
+        & rogueMasterDeviceHided
             developer info: "T848"
             -> networks.assets.authenticatedAccess
+
         & roleIdentification
             developer info: "T850"
             -> rogueMasterDevice,
                 networks.assets[ControlServer].rogueMasterDevice,
                 networks.assets[HMI].rogueMasterDevice,
                 networks.assets[EngineeringWorkstation].rogueMasterDevice
+
         | serviceStop
             developer info: "T881"
             -> dataDestruction
+
         | spearfishingAttachment
             developer info: "T865"
             -> userExecution
+
         | userExecution
             developer info: "T863"
             -> authenticatedAccess
@@ -155,21 +185,21 @@ category System {
                 spoofReportingMessage
         # applyPasswordAuthentication
             developer info: "T809 - Mitigation"
-            -> dataDestruction
+            -> dataDestructionDefended
         # applyPrincipleOfLeastPrivilege
             developer info: "T809,T812,T838,T801,T850 - Mitigation"
-            -> dataDestruction,
+            -> dataDestructionDefended,
                 defaultCredentials,
                 modifyAlarmSettings,
                 monitorProcessState,
                 roleIdentification
         # applyMultiFactorAuthentication
             developer info: "T809,T812 - Mitigation"
-            -> dataDestruction,
+            -> dataDestructionDefended,
                 defaultCredentials
         # restrictedPhysicalAccess
             developer info: "T809,T825,T838,T801,T846,T848,T850,T856 - Mitigation"
-            -> dataDestruction,
+            -> dataDestructionDefended,
                 locationIdentification,
                 modifyAlarmSettings,
                 monitorProcessState,
@@ -178,7 +208,7 @@ category System {
                 spoofReportingMessage
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
-            -> dataDestruction
+            -> dataDestructionDefended
         # applyPasswordRules
             developer info: "T812 - Mitigation"
             -> defaultCredentials
