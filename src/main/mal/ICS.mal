@@ -1,26 +1,32 @@
 category System {
     abstract asset IcsAsset {
         | access
+            -> authentication
+        & authentication
             -> authenticatedAccess
-        & authenticatedAccess
+        | authenticatedAccess
         | stealCredentials
             developer info: "T859"
             -> credentials
         | credentials
             -> validAccounts
-        & validAccounts
+
+        | validAccounts
             developer info: "T859"
-            -> authenticatedAccess
+            -> validAccountsDefended
+        & validAccountsDefended
+            developer info: "T859"
+            -> authentication
 
         # applyPrincipleOfLeastPrivilege
             developer info: "T859 - Mitigation"
-            -> validAccounts
+            -> validAccountsDefended
         # applyMultiFactorAuthentication
             developer info: "T859 - Mitigation"
-            -> validAccounts
+            -> validAccountsDefended
         # restrictedPhysicalAccess
             developer info: "T859 - Mitigation"
-            -> validAccounts
+            -> validAccountsDefended
         # restrictedAccessToConfigurationSettings
             developer info: "T885 - Mitigation"
             -> networks.assets[Firewall].commonlyUsedPort
@@ -39,7 +45,7 @@ category System {
                 remoteFileCopyReceive,
                 roleIdentification,
                 hidableAttacks
-        & authenticatedAccess
+        | authenticatedAccess
             +> dataDestruction,
                 automatedCollection,
                 dataFromInformationRepositories,
@@ -285,7 +291,7 @@ category System {
     asset Controller extends IcsAsset {
         | access
             +> bruteForceIO
-        & authenticatedAccess
+        | authenticatedAccess
             +> dataDestruction
         | automatedCollection
             developer info: "T802"
@@ -418,7 +424,7 @@ category System {
     }
 
     asset HMI extends IcsAsset {
-        & authenticatedAccess
+        | authenticatedAccess
             +> dataDestruction
         & dataDestruction {I,A}
             developer info: "T809"
