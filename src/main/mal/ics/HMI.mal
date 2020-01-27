@@ -89,6 +89,9 @@ category System {
         | userExecution
             developer info: "T863"
             -> authenticatedAccess
+        | projectFileInfection
+            developer info: "T873"
+            -> networks.assets[Controller].authenticatedAccess
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"

@@ -4,7 +4,11 @@ category System {
             +> defaultCredentials
         | authenticatedAccess
             +> dataFromInformationRepositories,
-                exploitationOfRemoteService
+                exploitationOfRemoteService,
+                lossOfView,
+                noLossOfView,
+                manipulationOfView,
+                projectFileInfection
         | hidableAttacks
             ->
         | physicalImpact {I}
@@ -34,6 +38,10 @@ category System {
         | manipulationOfView
             developer info: "T832"
             -> physicalImpact
+
+        | projectFileInfection
+            developer info: "T873"
+            -> networks.assets[Controller].authenticatedAccess
 
         & rogueMasterDevice
             developer info: "T848"
