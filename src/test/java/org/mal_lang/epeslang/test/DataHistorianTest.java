@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 public class DataHistorianTest extends EpesLangTest {
     @Test
-    public void testAutomatedCollectionNoDefense() {
+    public void testRemoteSystemDiscoveryNoDefense() {
         Attacker attacker = new Attacker();
         DataHistorian historian = new DataHistorian(
                 false, false,
