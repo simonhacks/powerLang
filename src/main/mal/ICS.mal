@@ -38,7 +38,7 @@ category System {
                 defaultCredentials,
                 remoteFileCopyReceive,
                 roleIdentification,
-                hidableAccess
+                hidableAttacks
         & authenticatedAccess
             +> dataDestruction,
                 automatedCollection,
@@ -285,7 +285,7 @@ category System {
     asset Controller extends IcsAsset {
         | access
             +> bruteForceIO
-        | authenticatedAccess
+        & authenticatedAccess
             +> dataDestruction
         | automatedCollection
             developer info: "T802"
@@ -418,8 +418,8 @@ category System {
     }
 
     asset HMI extends IcsAsset {
-        | authenticatedAccess
-            -> dataDestruction
+        & authenticatedAccess
+            +> dataDestruction
         & dataDestruction {I,A}
             developer info: "T809"
         | dataFromInformationRepositories {C}
