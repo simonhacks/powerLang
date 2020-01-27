@@ -328,6 +328,7 @@ category System {
             -> modifyAlarmSettings
         & monitorProcessState
             developer info: "T801"
+            -> networks.assets.access
         & remoteSystemDiscovery
             developer info: "T846"
             -> networks.assets.access
@@ -378,7 +379,8 @@ category System {
         | authenticatedAccess
             +> dataHistorianCompromise,
                 dataFromInformationRepositories,
-                exploitationOfRemoteService
+                exploitationOfRemoteService,
+                monitorProcessState
 
         | dataHistorianCompromise {C}
             developer info: "T810"
@@ -393,6 +395,8 @@ category System {
 
         & monitorProcessState
             developer info: "T801"
+            -> networks.assets.access
+
         | pointAndTackIdentification
             developer info: "T861"
         | remoteFileCopyReceive
@@ -476,10 +480,11 @@ category System {
             developer info: "T838"
             -> hidableAttacks
         # alarmSettingsNotModified
-            developer info: "T801"
+            developer info: "T838"
             -> modifyAlarmSettings
         & monitorProcessState
             developer info: "T801"
+            -> networks.assets.access
         | pointAndTackIdentification
             developer info: "T861"
         | remoteFileCopyReceive
@@ -584,6 +589,7 @@ category System {
             -> modifyAlarmSettings
         & monitorProcessState
             developer info: "T801"
+            -> networks.assets.access
         & remoteSystemDiscovery
             developer info: "T846"
             -> networks.assets.access
