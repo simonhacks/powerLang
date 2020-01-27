@@ -377,14 +377,17 @@ category System {
 
     asset DataHistorian extends IcsAsset {
         | access
-            +> remoteFileCopyReceive
+            +> remoteFileCopyReceive,
+                roleIdentification
         | authenticatedAccess
             +> dataHistorianCompromise,
                 dataFromInformationRepositories,
                 exploitationOfRemoteService,
                 monitorProcessState,
                 pointAndTackIdentification,
-                remoteFileCopySend
+                remoteFileCopySend,
+                remoteSystemDiscovery,
+                serviceStop
 
         | dataHistorianCompromise {C}
             developer info: "T810"
@@ -416,19 +419,24 @@ category System {
         & remoteSystemDiscovery
             developer info: "T846"
             -> networks.assets.access
+
         | replicationThroughRemovableMedia
             developer info: "T847"
             -> access
+
         & roleIdentification
             developer info: "T850"
             -> networks.assets[ControlServer].rogueMasterDevice,
                 networks.assets[HMI].rogueMasterDevice,
                 networks.assets[EngineeringWorkstation].rogueMasterDevice
+
         | serviceStop
             developer info: "T881"
+
         | spearfishingAttachment
             developer info: "T865"
             -> userExecution
+
         | userExecution
             developer info: "T863"
             -> authenticatedAccess
