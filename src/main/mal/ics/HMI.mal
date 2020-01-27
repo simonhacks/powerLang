@@ -51,6 +51,11 @@ category System {
         & monitorProcessState
             developer info: "T801"
             -> networks.assets.access
+
+        | manipulationOfView
+            developer info: "T832"
+            -> physicalImpact
+
         | pointAndTackIdentification
             developer info: "T861"
         | remoteFileCopyReceive

@@ -7,6 +7,8 @@ category System {
                 exploitationOfRemoteService
         | hidableAttacks
             ->
+        | physicalImpact {I}
+
 
         | dataFromInformationRepositories {C}
             developer info: "T811"
@@ -29,7 +31,9 @@ category System {
             developer info: "T829"
             -> lossOfView
 
-
+        | manipulationOfView
+            developer info: "T832"
+            -> physicalImpact
 
         & rogueMasterDevice
             developer info: "T848"

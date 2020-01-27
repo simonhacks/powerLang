@@ -12,6 +12,11 @@ category System {
             developer info: "T806"
             -> restrictedOperations
         | restrictedOperations {I,A}
+
+        | manipulationOfView
+            developer info: "T832"
+            -> physicalImpact
+
         & dataDestruction {I,A}
             developer info: "T809"
         & defaultCredentials
