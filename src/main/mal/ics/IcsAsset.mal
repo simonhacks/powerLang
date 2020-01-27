@@ -1,0 +1,40 @@
+category System {
+    abstract asset IcsAsset {
+        | access
+            -> authentication
+        & authentication
+            -> authenticatedAccess
+        | authenticatedAccess
+        | stealCredentials
+            developer info: "T859"
+            -> credentials
+        | credentials
+            -> validAccounts
+
+        | validAccounts
+            developer info: "T859"
+            -> validAccountsDefended
+        & validAccountsDefended
+            developer info: "T859"
+            -> authentication
+
+        # applyPrincipleOfLeastPrivilege
+            developer info: "T859 - Mitigation"
+            -> validAccountsDefended
+        # applyMultiFactorAuthentication
+            developer info: "T859 - Mitigation"
+            -> validAccountsDefended
+        # restrictedPhysicalAccess
+            developer info: "T859 - Mitigation"
+            -> validAccountsDefended
+        # restrictedAccessToConfigurationSettings
+            developer info: "T885 - Mitigation"
+            -> networks.assets[Firewall].commonlyUsedPort
+        # restrictiveSettings
+            developer info: "T885 - Mitigation"
+            -> networks.assets[Firewall].commonlyUsedPort
+        # assessedAndSecured
+            developer info: "T885 - Mitigation"
+            -> networks.assets[Firewall].commonlyUsedPort
+    }
+}

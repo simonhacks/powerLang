@@ -1,0 +1,56 @@
+category System {
+    asset SIS extends IcsAsset {
+        | automatedCollection
+            developer info: "T802"
+            -> networks.assets.access
+        & defaultCredentials
+            developer info: "T812"
+            -> authenticatedAccess
+        & modifyParameter {I}
+            developer info: "T836"
+            -> physicalImpact
+        | physicalImpact
+            developer info: "T836"
+        | hidableAttacks
+        & modifyAlarmSettings //lowProbability
+            developer info: "T838"
+            -> hidableAttacks
+        | dontModifyAlarmSettings //highProbabilty
+            developer info: "T838"
+            -> hidableAttacks
+        # alarmSettingsNotModified
+            developer info: "T838"
+            -> modifyAlarmSettings
+        & monitorProcessState
+            developer info: "T801"
+            -> networks.assets.access
+        & remoteSystemDiscovery
+            developer info: "T846"
+            -> networks.assets.access
+
+        # regularAuditOfSystem
+            developer info: "T838,T801 - Mitigation"
+            -> modifyAlarmSettings,
+                monitorProcessState
+        # applyPrincipleOfLeastPrivilege
+            developer info: "T812,T838,T801 - Mitigation"
+            -> defaultCredentials,
+                modifyAlarmSettings,
+                monitorProcessState
+        # applyPasswordRules
+            developer info: "T812 - Mitigation"
+            -> defaultCredentials
+        # applyMultiFactorAuthentication
+            developer info: "T812 - Mitigation"
+            -> defaultCredentials
+        # restrictedPhysicalAccess
+            developer info: "T838,T801,T846 - Mitigation"
+            -> modifyAlarmSettings,
+                monitorProcessState,
+                remoteSystemDiscovery
+        # applyIDS
+            developer info: "T838,T846 - Mitigation"
+            -> modifyAlarmSettings,
+                remoteSystemDiscovery
+    }
+}

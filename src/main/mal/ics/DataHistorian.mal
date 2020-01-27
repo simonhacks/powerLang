@@ -1,0 +1,84 @@
+category DataHistorian {
+    asset DataHistorian extends IcsAsset {
+        | access
+            +> remoteFileCopyReceive,
+                roleIdentification
+        | authenticatedAccess
+            +> dataHistorianCompromise,
+                dataFromInformationRepositories,
+                exploitationOfRemoteService,
+                monitorProcessState,
+                pointAndTackIdentification,
+                remoteFileCopySend,
+                remoteSystemDiscovery,
+                serviceStop
+
+        | dataHistorianCompromise {C}
+            developer info: "T810"
+            -> networks.assets.access
+
+        | dataFromInformationRepositories {C}
+            developer info: "T811"
+
+        | exploitationOfRemoteService
+            developer info: "T866"
+            -> networks.assets.access
+
+        & monitorProcessState
+            developer info: "T801"
+            -> networks.assets.access
+
+        | pointAndTackIdentification {C}
+            developer info: "T861"
+
+        | remoteFileCopyReceive
+            developer info: "T867"
+            -> authenticatedAccess
+        | remoteFileCopySend
+            developer info: "T867"
+            -> networks.assets[ControlServer].remoteFileCopyReceive,
+                networks.assets[HMI].remoteFileCopyReceive,
+                networks.assets[DataHistorian].remoteFileCopyReceive
+
+        & remoteSystemDiscovery
+            developer info: "T846"
+            -> networks.assets.access
+
+        | replicationThroughRemovableMedia
+            developer info: "T847"
+            -> access
+
+        & roleIdentification
+            developer info: "T850"
+            -> networks.assets[ControlServer].rogueMasterDevice,
+                networks.assets[HMI].rogueMasterDevice,
+                networks.assets[EngineeringWorkstation].rogueMasterDevice
+
+        | serviceStop
+            developer info: "T881"
+
+        | spearfishingAttachment
+            developer info: "T865"
+            -> userExecution
+
+        | userExecution
+            developer info: "T863"
+            -> authenticatedAccess
+
+        # restrictedPhysicalAccess
+            developer info: "T801,T846,T850 - Mitigation"
+            -> monitorProcessState,
+                remoteSystemDiscovery,
+                roleIdentification
+        # applyPrincipleOfLeastPrivilege
+            developer info: "T801,T850 - Mitigation"
+            -> monitorProcessState,
+                roleIdentification
+        # regularAuditOfSystem
+            developer info: "T801 - Mitigation"
+            -> monitorProcessState
+        # applyIDS
+            developer info: "T846 - Mitigation"
+            -> remoteSystemDiscovery
+    }
+}

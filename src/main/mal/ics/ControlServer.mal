@@ -1,0 +1,191 @@
+category System {
+    asset ControlServer extends IcsAsset {
+        | access
+            +> bruteForceIO,
+                defaultCredentials,
+                remoteFileCopyReceive,
+                roleIdentification,
+                hidableAttacks
+        | authenticatedAccess
+            +> dataDestruction,
+                automatedCollection,
+                dataFromInformationRepositories,
+                modifyParameter,
+                masquerade,
+                dontMasquerade,
+                modifyAlarmSettings,
+                dontModifyAlarmSettings,
+                monitorProcessState,
+                pointAndTackIdentification,
+                remoteFileCopySend,
+                remoteSystemDiscovery,
+                rogueMasterDevice,
+                serviceStop
+        | hidableAttacks
+            -> automatedCollection,
+                restrictedOperations,
+                dataDestructionDefended,
+                dataFromInformationRepositories,
+                modifyParameter,
+                spoofReportingMessage,
+                monitorProcessState,
+                pointAndTackIdentification,
+                remoteFileCopyReceive,
+                remoteFileCopySend,
+                remoteSystemDiscovery,
+                replicationThroughRemovableMedia
+
+        & automatedCollection
+            developer info: "T802"
+            -> networks.assets.access
+
+        | bruteForceIO
+            developer info: "T806"
+            -> restrictedOperations
+
+        & restrictedOperations {I,A}
+
+        | dataDestruction
+            developer info: "T809"
+            -> dataDestructionDefended
+        & dataDestructionDefended {I,A}
+            developer info: "T809"
+
+        & dataFromInformationRepositories {C}
+            developer info: "T811"
+
+        & defaultCredentials
+            developer info: "T812"
+            -> credentials
+
+        | externalRemoteService
+            developer info: "T822"
+            -> access
+
+        & locationIdentification
+            developer info: "T825"
+            -> access
+
+        & modifyParameter {I}
+            developer info: "T836"
+            -> physicalImpact
+        | physicalImpact {I}
+            developer info: "T836"
+
+        & spoofReportingMessage {I}
+            developer info: "T856"
+
+        & masquerade //lowProbability
+            developer info: "T849"
+            -> hidableAttacks
+        | dontMasquerade //highProbablity
+            developer info: "T849"
+            -> hidableAttacks
+        # masqueradeNotInPlace
+            developer info: "T849"
+            -> hidableAttacks
+
+        & modifyAlarmSettings //lowProbability
+            developer info: "T838"
+            -> hidableAttacks
+        | dontModifyAlarmSettings //highProbabilty
+            developer info: "T838"
+            -> hidableAttacks
+        # alarmSettingsNotModified
+            developer info: "T838"
+            -> modifyAlarmSettings
+
+        & monitorProcessState
+            developer info: "T801"
+            -> networks.assets.access
+
+        & pointAndTackIdentification {C}
+            developer info: "T861"
+
+        & remoteFileCopyReceive
+            developer info: "T867"
+            -> authenticatedAccess
+        & remoteFileCopySend
+            developer info: "T867"
+            -> networks.assets[ControlServer].remoteFileCopyReceive,
+                networks.assets[HMI].remoteFileCopyReceive,
+                networks.assets[DataHistorian].remoteFileCopyReceive
+
+        & remoteSystemDiscovery
+            developer info: "T846"
+            -> networks.assets.access
+
+        & replicationThroughRemovableMedia
+            developer info: "T847"
+            -> access
+
+        | rogueMasterDevice
+            developer info: "T848"
+            -> rogueMasterDeviceHided
+        & rogueMasterDeviceHided
+            developer info: "T848"
+            -> networks.assets.authenticatedAccess
+
+        & roleIdentification
+            developer info: "T850"
+            -> rogueMasterDevice,
+                networks.assets[ControlServer].rogueMasterDevice,
+                networks.assets[HMI].rogueMasterDevice,
+                networks.assets[EngineeringWorkstation].rogueMasterDevice
+
+        | serviceStop
+            developer info: "T881"
+            -> dataDestruction
+
+        | spearfishingAttachment
+            developer info: "T865"
+            -> userExecution
+
+        | userExecution
+            developer info: "T863"
+            -> authenticatedAccess
+
+        # regularAuditOfSystem
+            developer info: "T838,T801,T856 - Mitigation"
+            -> modifyAlarmSettings,
+                monitorProcessState,
+                spoofReportingMessage
+        # applyPasswordAuthentication
+            developer info: "T809 - Mitigation"
+            -> dataDestructionDefended
+        # applyPrincipleOfLeastPrivilege
+            developer info: "T809,T812,T838,T801,T850 - Mitigation"
+            -> dataDestructionDefended,
+                defaultCredentials,
+                modifyAlarmSettings,
+                monitorProcessState,
+                roleIdentification
+        # applyMultiFactorAuthentication
+            developer info: "T809,T812 - Mitigation"
+            -> dataDestructionDefended,
+                defaultCredentials
+        # restrictedPhysicalAccess
+            developer info: "T809,T825,T838,T801,T846,T848,T850,T856 - Mitigation"
+            -> dataDestructionDefended,
+                locationIdentification,
+                modifyAlarmSettings,
+                monitorProcessState,
+                remoteSystemDiscovery,
+                roleIdentification,
+                spoofReportingMessage
+        # whitelistAllowedApplications
+            developer info: "T809 - Mitigation"
+            -> dataDestructionDefended
+        # applyPasswordRules
+            developer info: "T812 - Mitigation"
+            -> defaultCredentials
+        # keepLocationInformationSecret
+            developer info: "T825 - Mitigation"
+            -> locationIdentification
+        # applyIDS
+            developer info: "T838,T846,T856 - Mitigation"
+            -> modifyAlarmSettings,
+                remoteSystemDiscovery,
+                spoofReportingMessage
+    }
+}

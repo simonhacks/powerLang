@@ -1,0 +1,114 @@
+category System {
+    asset HMI extends IcsAsset {
+        | authenticatedAccess
+            +> dataDestruction
+        & dataDestruction {I,A}
+            developer info: "T809"
+        | dataFromInformationRepositories {C}
+            developer info: "T811"
+        | exploitationOfRemoteService
+            developer info: "T866"
+            -> networks.assets.access
+        & defaultCredentials
+            developer info: "T812"
+            -> authenticatedAccess
+        & modifyParameter {I}
+            developer info: "T836"
+            -> physicalImpact
+        | physicalImpact
+            developer info: "T836"
+        & masquerade //lowProbability
+            developer info: "T849"
+            -> hidableAttacks
+        | dontMasquerade //highProbablity
+            developer info: "T849"
+            -> hidableAttacks
+        # masqueradeInPlace
+            developer info: "T849"
+            -> hidableAttacks
+        | hidableAttacks
+            //add attacks
+        & modifyAlarmSettings //lowProbability
+            developer info: "T838"
+            -> hidableAttacks
+        | dontModifyAlarmSettings //highProbabilty
+            developer info: "T838"
+            -> hidableAttacks
+        # alarmSettingsNotModified
+            developer info: "T838"
+            -> modifyAlarmSettings
+        & monitorProcessState
+            developer info: "T801"
+            -> networks.assets.access
+        | pointAndTackIdentification
+            developer info: "T861"
+        | remoteFileCopyReceive
+            developer info: "T867"
+            -> authenticatedAccess
+        | remoteFileCopySend
+            developer info: "T867"
+            -> networks.assets[ControlServer].remoteFileCopyReceive,
+                networks.assets[HMI].remoteFileCopyReceive,
+                networks.assets[DataHistorian].remoteFileCopyReceive
+        & remoteSystemDiscovery
+            developer info: "T846"
+            -> networks.assets.access
+        | replicationThroughRemovableMedia
+            developer info: "T847"
+            -> access
+        & rogueMasterDevice
+            developer info: "T848"
+            -> networks.assets.authenticatedAccess
+        & roleIdentification
+            developer info: "T850"
+            -> networks.assets[ControlServer].rogueMasterDevice,
+                networks.assets[HMI].rogueMasterDevice,
+                networks.assets[EngineeringWorkstation].rogueMasterDevice
+        | serviceStop
+            developer info: "T881"
+            -> dataDestruction
+        | spearfishingAttachment
+            developer info: "T865"
+            -> userExecution
+        | userExecution
+            developer info: "T863"
+            -> authenticatedAccess
+
+        # regularAuditOfSystem
+            developer info: "T838,T801 - Mitigation"
+            -> modifyAlarmSettings,
+                monitorProcessState
+        # applyPasswordAuthentication
+            developer info: "T809 - Mitigation"
+            -> dataDestruction
+        # applyPrincipleOfLeastPrivilege
+            developer info: "T809,T812,T838,T801,T850 - Mitigation"
+            -> dataDestruction,
+                defaultCredentials,
+                modifyAlarmSettings,
+                monitorProcessState,
+                roleIdentification
+        # applyMultiFactorAuthentication
+            developer info: "T809,812 - Mitigation"
+            -> dataDestruction,
+                defaultCredentials
+        # restrictedPhysicalAccess
+            developer info: "T809,T838,T801,T846,T848,T850 - Mitigation"
+            -> dataDestruction,
+                modifyAlarmSettings,
+                monitorProcessState,
+                remoteSystemDiscovery,
+                rogueMasterDevice,
+                roleIdentification
+        # whitelistAllowedApplications
+            developer info: "T809 - Mitigation"
+            -> dataDestruction
+        # applyPasswordRules
+            developer info: "T812 - Mitigation"
+            -> defaultCredentials
+        # applyIDS
+            developer info: "T838,T846 - Mitigation"
+            -> modifyAlarmSettings,
+                remoteSystemDiscovery
+    }
+}

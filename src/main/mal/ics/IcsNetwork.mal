@@ -1,0 +1,51 @@
+category Network {
+    asset IcsNetwork {
+        | access
+            -> MITM
+        & MITM
+            developer info: "T830"
+            -> blockReportingMessage,
+                modifyParameter,
+                unauthorizedCommandMessage,
+                spoofReportingMessage
+        | blockReportingMessage
+            -> assets[Controller].blockReportingMessage,
+                assets[IOServer].blockReportingMessage
+        | modifyParameter
+            -> assets[ControlServer].modifyParameter,
+                assets[Controller].modifyParameter,
+                assets[SIS].modifyParameter,
+                assets[HMI].modifyParameter
+        | unauthorizedCommandMessage
+            -> assets[Controller].unauthorizedCommandMessage
+        | spoofReportingMessage
+            -> assets[ControlServer].spoofReportingMessage
+
+        # encryptCommunication
+            developer info: "T830,T848,T850,T856 - Mitigation"
+            -> MITM,
+                assets[ControlServer].rogueMasterDevice,
+                assets[HMI].rogueMasterDevice,
+                assets[EngineeringWorkstation].rogueMasterDevice,
+                assets[ControlServer].roleIdentification,
+                assets[HMI].roleIdentification,
+                assets[DataHistorian].roleIdentification,
+                assets[Controller].roleIdentification,
+                assets[ControlServer].spoofReportingMessage
+        # challengeResponseAuthentication
+            developer info: "T830,T859 - Mitigation"
+            -> MITM,
+                assets.validAccounts
+        # restrictedPhysicalAccess
+            developer info: "T830- Mitigation"
+            -> MITM
+        # applyIDS
+            developer info: "T830,T859 - Mitigation"
+            -> MITM,
+                assets.validAccounts
+        # whitelistAllowedDevices
+            -> assets[ControlServer].rogueMasterDevice,
+                assets[HMI].rogueMasterDevice,
+                assets[EngineeringWorkstation].rogueMasterDevice
+    }
+}

@@ -1,0 +1,85 @@
+category System {
+    asset Controller extends IcsAsset {
+        | access
+            +> bruteForceIO
+        | authenticatedAccess
+            +> dataDestruction
+        | automatedCollection
+            developer info: "T802"
+            -> networks.assets.access
+        | bruteForceIO
+            developer info: "T806"
+            -> restrictedOperations
+        | restrictedOperations {I,A}
+        & dataDestruction {I,A}
+            developer info: "T809"
+        & defaultCredentials
+            developer info: "T812"
+            -> authenticatedAccess
+        & blockReportingMessage
+            developer info: "T804"
+        & modifyParameter {I}
+            developer info: "T836"
+            -> physicalImpact
+        | physicalImpact
+            developer info: "T836"
+        & unauthorizedCommandMessage
+            developer info: "T855"
+        | hidableAttacks
+        & modifyAlarmSettings //lowProbability
+            developer info: "T838"
+            -> hidableAttacks
+        | dontModifyAlarmSettings //highProbabilty
+            developer info: "T838"
+            -> hidableAttacks
+        # alarmSettingsNotModified
+            -> modifyAlarmSettings
+        & monitorProcessState
+            developer info: "T801"
+            -> networks.assets.access
+        & remoteSystemDiscovery
+            developer info: "T846"
+            -> networks.assets.access
+        & roleIdentification
+            developer info: "T850"
+            -> networks.assets[ControlServer].rogueMasterDevice,
+                networks.assets[HMI].rogueMasterDevice,
+                networks.assets[EngineeringWorkstation].rogueMasterDevice
+
+        # regularAuditOfSystem
+            developer info: "T838,T801 - Mitigation"
+            -> modifyAlarmSettings,
+                monitorProcessState
+        # applyPasswordAuthentication
+            developer info: "T809 - Mitigation"
+            -> dataDestruction
+        # applyPrincipleOfLeastPrivilege
+            developer info: "T809,T812,T838,T801,T850 - Mitigation"
+            -> dataDestruction,
+                defaultCredentials,
+                modifyAlarmSettings,
+                monitorProcessState,
+                roleIdentification
+        # applyMultiFactorAuthentication
+            developer info: "T809,812 - Mitigation"
+            -> dataDestruction,
+                defaultCredentials
+        # restrictedPhysicalAccess
+            developer info: "T809,T838,T801,T846,T850 - Mitigation"
+            -> dataDestruction,
+                modifyAlarmSettings,
+                monitorProcessState,
+                remoteSystemDiscovery,
+                roleIdentification
+        # whitelistAllowedApplications
+            developer info: "T809 - Mitigation"
+            -> dataDestruction
+        # applyPasswordRules
+            developer info: "T812 - Mitigation"
+            -> defaultCredentials
+        # applyIDS
+            developer info: "T838,T846 - Mitigation"
+            -> modifyAlarmSettings,
+                remoteSystemDiscovery
+    }
+}

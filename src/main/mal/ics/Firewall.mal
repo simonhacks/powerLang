@@ -1,0 +1,20 @@
+category System {
+    asset Firewall extends IcsAsset {
+        | access
+           +> commonlyUsedPort
+        & commonlyUsedPort
+            developer info: "T885"
+            -> bypass
+        | bypass
+            -> networks.assets.access
+        # applyWhitelist
+            developer info: "T885 - Mitigation"
+            -> commonlyUsedPort
+        # justAllowVPN
+            developer info: "T885 - Mitigation"
+            -> commonlyUsedPort
+        # applyIDS
+            developer info: "T885 - Mitigation"
+            -> commonlyUsedPort
+    }
+}

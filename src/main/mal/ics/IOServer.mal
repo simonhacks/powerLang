@@ -1,0 +1,9 @@
+category System {
+    asset IOServer extends IcsAsset {
+        | externalRemoteService
+            developer info: "T822"
+            -> access
+        & blockReportingMessage
+            developer info: "T804"
+    }
+}

@@ -1,0 +1,11 @@
+category System {
+    asset AntiVirus {
+        # maliciousFileDetectionActivated
+            developer info: "T809,T859 - Mitigation"
+            -> observed[ControlServer].dataDestruction,
+                observed[Controller].dataDestruction,
+                observed[HMI].dataDestruction,
+                observed.validAccounts
+    }
+
+}
