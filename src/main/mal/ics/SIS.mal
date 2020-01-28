@@ -2,10 +2,20 @@ category System {
     asset SIS extends IcsAsset {
 
         | restrictedOperations {I,A}
+        | hidableAttacks
 
         | activateFirmwareUpdateMode
             developer info: "T800"
             -> restrictedOperations
+
+        & alarmSuppression //lowProbability
+            developer info: "T838"
+            -> hidableAttacks
+        | dontAlarmSuppression //highProbabilty
+            developer info: "T838"
+            -> hidableAttacks
+        # alarmSuppressionNotModified
+            -> alarmSuppression
 
         | automatedCollection
             developer info: "T802"
@@ -18,7 +28,7 @@ category System {
             -> physicalImpact
         | physicalImpact
             developer info: "T836"
-        | hidableAttacks
+
         & modifyAlarmSettings //lowProbability
             developer info: "T838"
             -> hidableAttacks

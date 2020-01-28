@@ -1,15 +1,26 @@
 category System {
     asset Controller extends IcsAsset {
         | access
-            +> bruteForceIO
+            +> bruteForceIO,
+                dontAlarmSuppression
         | authenticatedAccess
             +> dataDestruction,
-                activateFirmwareUpdateMode
+                activateFirmwareUpdateMode,
+                alarmSuppression
         | hidableAttacks
 
         | activateFirmwareUpdateMode
             developer info: "T800"
             -> restrictedOperations
+
+        & alarmSuppression //lowProbability
+            developer info: "T838"
+            -> hidableAttacks
+        | dontAlarmSuppression //highProbabilty
+            developer info: "T838"
+            -> hidableAttacks
+        # alarmSuppressionNotModified
+            -> alarmSuppression
 
         | automatedCollection
             developer info: "T802"
