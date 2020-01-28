@@ -3,8 +3,14 @@ category System {
         | access
             +> bruteForceIO
         | authenticatedAccess
-            +> dataDestruction
+            +> dataDestruction,
+                activateFirmwareUpdateMode
         | hidableAttacks
+
+        | activateFirmwareUpdateMode
+            developer info: "T800"
+            -> restrictedOperations
+
         | automatedCollection
             developer info: "T802"
             -> networks.assets.access

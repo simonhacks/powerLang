@@ -1,5 +1,12 @@
 category System {
     asset SIS extends IcsAsset {
+
+        | restrictedOperations {I,A}
+
+        | activateFirmwareUpdateMode
+            developer info: "T800"
+            -> restrictedOperations
+
         | automatedCollection
             developer info: "T802"
             -> networks.assets.access
