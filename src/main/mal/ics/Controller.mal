@@ -5,7 +5,8 @@ category System {
                 dontAlarmSuppression,
                 blockSerialCom,
                 changeProgramState,
-                denialOfService
+                denialOfService,
+                detectOperatingMode
         | authenticatedAccess
             +> dataDestruction,
                 activateFirmwareUpdateMode,
@@ -57,6 +58,10 @@ category System {
         | denialOfService
             developer info: "T814"
             -> restrictedOperations
+
+        | detectOperatingMode
+            developer info: "T868"
+            -> authenticatedAccess
 
         & modifyParameter {I}
             developer info: "T836"
