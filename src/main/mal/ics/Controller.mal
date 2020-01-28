@@ -32,6 +32,10 @@ category System {
             developer info: "T804"
             -> restrictedOperations
 
+        & blockSerialCom
+            developer info: "T805"
+            -> restrictedOperations
+
         | bruteForceIO
             developer info: "T806"
             -> restrictedOperations
@@ -89,16 +93,18 @@ category System {
                 monitorProcessState,
                 roleIdentification
         # applyMultiFactorAuthentication
-            developer info: "T809,812 - Mitigation"
+            developer info: "T809,T812,T805 - Mitigation"
             -> dataDestruction,
-                defaultCredentials
+                defaultCredentials,
+                blockSerialCom
         # restrictedPhysicalAccess
-            developer info: "T809,T838,T801,T846,T850 - Mitigation"
+            developer info: "T809,T838,T801,T846,T850,T805 - Mitigation"
             -> dataDestruction,
                 modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
-                roleIdentification
+                roleIdentification,
+                blockSerialCom
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
             -> dataDestruction
@@ -106,8 +112,9 @@ category System {
             developer info: "T812 - Mitigation"
             -> defaultCredentials
         # applyIDS
-            developer info: "T838,T846 - Mitigation"
+            developer info: "T838,T846,T805 - Mitigation"
             -> modifyAlarmSettings,
-                remoteSystemDiscovery
+                remoteSystemDiscovery,
+                blockServialCom
     }
 }

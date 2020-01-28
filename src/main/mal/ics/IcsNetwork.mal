@@ -41,14 +41,18 @@ category Network {
             -> MITM,
                 assets.validAccounts
         # restrictedPhysicalAccess
-            developer info: "T830, T803- Mitigation"
+            developer info: "T830, T803,T804- Mitigation"
             -> MITM,
-                blockCommandMessage
+                blockCommandMessage,
+                assets[Controller].blockReportingMessage,
+                assets[IOServer].blockReportingMessage
         # applyIDS
-            developer info: "T830,T859,T803 - Mitigation"
+            developer info: "T830,T859,T803,T804 - Mitigation"
             -> MITM,
                 assets.validAccounts,
-                blockCommandMessage
+                blockCommandMessage,
+                assets[Controller].blockReportingMessage,
+                assets[IOServer].blockReportingMessage
         # whitelistAllowedDevices
             -> assets[ControlServer].rogueMasterDevice,
                 assets[HMI].rogueMasterDevice,

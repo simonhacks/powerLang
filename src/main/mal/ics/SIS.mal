@@ -20,6 +20,11 @@ category System {
         | automatedCollection
             developer info: "T802"
             -> networks.assets.access
+
+        & blockSerialCom
+            developer info: "T805"
+            -> restrictedOperations
+
         & defaultCredentials
             developer info: "T812"
             -> authenticatedAccess
@@ -58,16 +63,19 @@ category System {
             developer info: "T812 - Mitigation"
             -> defaultCredentials
         # applyMultiFactorAuthentication
-            developer info: "T812 - Mitigation"
-            -> defaultCredentials
+            developer info: "T812,T805 - Mitigation"
+            -> defaultCredentials,
+                blockSerialCom
         # restrictedPhysicalAccess
-            developer info: "T838,T801,T846 - Mitigation"
+            developer info: "T838,T801,T846,T805 - Mitigation"
             -> modifyAlarmSettings,
                 monitorProcessState,
-                remoteSystemDiscovery
+                remoteSystemDiscovery,
+                blockSerialCom
         # applyIDS
-            developer info: "T838,T846 - Mitigation"
+            developer info: "T838,T846,T805 - Mitigation"
             -> modifyAlarmSettings,
-                remoteSystemDiscovery
+                remoteSystemDiscovery,
+                blockSerialCom
     }
 }
