@@ -1,7 +1,9 @@
 category Network {
     asset IcsNetwork {
         | access
-            -> MITM
+            -> MITM,
+                blockCommandMessage,
+                controlDeviceIdentification
         & MITM
             developer info: "T830"
             -> blockReportingMessage,
@@ -25,8 +27,12 @@ category Network {
             developer info: "T803"
             -> assets[Controller].restrictedOperations
 
+        & controlDeviceIdentification
+            developer info: "T808"
+            -> assets[Controller].access
+
         # encryptCommunication
-            developer info: "T830,T848,T850,T856 - Mitigation"
+            developer info: "T830,T848,T850,T856,T808 - Mitigation"
             -> MITM,
                 assets[ControlServer].rogueMasterDevice,
                 assets[HMI].rogueMasterDevice,
@@ -35,17 +41,19 @@ category Network {
                 assets[HMI].roleIdentification,
                 assets[DataHistorian].roleIdentification,
                 assets[Controller].roleIdentification,
-                assets[ControlServer].spoofReportingMessage
+                assets[ControlServer].spoofReportingMessage,
+                controlDeviceIdentification
         # challengeResponseAuthentication
             developer info: "T830,T859 - Mitigation"
             -> MITM,
                 assets.validAccounts
         # restrictedPhysicalAccess
-            developer info: "T830, T803,T804- Mitigation"
+            developer info: "T830,T803,T804,T808 - Mitigation"
             -> MITM,
                 blockCommandMessage,
                 assets[Controller].blockReportingMessage,
-                assets[IOServer].blockReportingMessage
+                assets[IOServer].blockReportingMessage,
+                controlDeviceIdentification
         # applyIDS
             developer info: "T830,T859,T803,T804 - Mitigation"
             -> MITM,
