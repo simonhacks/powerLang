@@ -6,7 +6,8 @@ category System {
                 blockSerialCom,
                 changeProgramState,
                 denialOfService,
-                detectOperatingMode
+                detectOperatingMode,
+                detectProgramState
         | authenticatedAccess
             +> dataDestruction,
                 activateFirmwareUpdateMode,
@@ -61,6 +62,10 @@ category System {
 
         | detectOperatingMode
             developer info: "T868"
+            -> authenticatedAccess
+
+        | detectProgramState
+            developer info: "T870"
             -> authenticatedAccess
 
         & modifyParameter {I}
