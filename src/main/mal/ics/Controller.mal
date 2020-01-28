@@ -28,6 +28,10 @@ category System {
             developer info: "T802"
             -> networks.assets.access
 
+        & blockReportingMessage
+            developer info: "T804"
+            -> restrictedOperations
+
         | bruteForceIO
             developer info: "T806"
             -> restrictedOperations
@@ -41,8 +45,7 @@ category System {
         & defaultCredentials
             developer info: "T812"
             -> authenticatedAccess
-        & blockReportingMessage
-            developer info: "T804"
+
         & modifyParameter {I}
             developer info: "T836"
             -> physicalImpact

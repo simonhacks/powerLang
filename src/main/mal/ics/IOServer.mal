@@ -1,9 +1,12 @@
 category System {
     asset IOServer extends IcsAsset {
+        | restrictedOperations {I,A}
+
         | externalRemoteService
             developer info: "T822"
             -> access
         & blockReportingMessage
             developer info: "T804"
+            -> restrictedOperations
     }
 }
