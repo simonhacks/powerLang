@@ -2,7 +2,9 @@ category System {
     asset Controller extends IcsAsset {
         | access
             +> bruteForceIO,
-                dontAlarmSuppression
+                dontAlarmSuppression,
+                blockSerialCom,
+                changeProgramState
         | authenticatedAccess
             +> dataDestruction,
                 activateFirmwareUpdateMode,
@@ -39,6 +41,10 @@ category System {
         | bruteForceIO
             developer info: "T806"
             -> restrictedOperations
+
+        | changeProgramState
+            developer info: "T875"
+            -> authenticatedAccess
 
         | manipulationOfView
             developer info: "T832"
