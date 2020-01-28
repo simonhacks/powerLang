@@ -28,6 +28,11 @@ category System {
         & defaultCredentials
             developer info: "T812"
             -> authenticatedAccess
+
+        | denialOfService
+            developer info: "T814"
+            -> restrictedOperations
+
         & modifyParameter {I}
             developer info: "T836"
             -> physicalImpact

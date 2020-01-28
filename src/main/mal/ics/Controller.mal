@@ -4,7 +4,8 @@ category System {
             +> bruteForceIO,
                 dontAlarmSuppression,
                 blockSerialCom,
-                changeProgramState
+                changeProgramState,
+                denialOfService
         | authenticatedAccess
             +> dataDestruction,
                 activateFirmwareUpdateMode,
@@ -12,6 +13,9 @@ category System {
                 automatedCollection
         | hidableAttacks
         | restrictedOperations {I,A}
+
+        & dataDestruction {I,A}
+            developer info: "T809"
 
         | activateFirmwareUpdateMode
             developer info: "T800"
@@ -46,15 +50,13 @@ category System {
             developer info: "T875"
             -> authenticatedAccess
 
-        | manipulationOfView
-            developer info: "T832"
-            -> physicalImpact
-
-        & dataDestruction {I,A}
-            developer info: "T809"
         & defaultCredentials
             developer info: "T812"
             -> authenticatedAccess
+
+        | denialOfService
+            developer info: "T814"
+            -> restrictedOperations
 
         & modifyParameter {I}
             developer info: "T836"
@@ -83,6 +85,10 @@ category System {
             -> networks.assets[ControlServer].rogueMasterDevice,
                 networks.assets[HMI].rogueMasterDevice,
                 networks.assets[EngineeringWorkstation].rogueMasterDevice
+
+        | manipulationOfView
+            developer info: "T832"
+            -> physicalImpact
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
