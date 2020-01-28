@@ -21,6 +21,10 @@ category Network {
         | spoofReportingMessage
             -> assets[ControlServer].spoofReportingMessage
 
+        & blockCommandMessage
+            developer info: "T803"
+            -> assets[Controller].restrictedOperations
+
         # encryptCommunication
             developer info: "T830,T848,T850,T856 - Mitigation"
             -> MITM,
@@ -37,12 +41,14 @@ category Network {
             -> MITM,
                 assets.validAccounts
         # restrictedPhysicalAccess
-            developer info: "T830- Mitigation"
-            -> MITM
-        # applyIDS
-            developer info: "T830,T859 - Mitigation"
+            developer info: "T830, T803- Mitigation"
             -> MITM,
-                assets.validAccounts
+                blockCommandMessage
+        # applyIDS
+            developer info: "T830,T859,T803 - Mitigation"
+            -> MITM,
+                assets.validAccounts,
+                blockCommandMessage
         # whitelistAllowedDevices
             -> assets[ControlServer].rogueMasterDevice,
                 assets[HMI].rogueMasterDevice,

@@ -6,8 +6,10 @@ category System {
         | authenticatedAccess
             +> dataDestruction,
                 activateFirmwareUpdateMode,
-                alarmSuppression
+                alarmSuppression,
+                automatedCollection
         | hidableAttacks
+        | restrictedOperations {I,A}
 
         | activateFirmwareUpdateMode
             developer info: "T800"
@@ -25,10 +27,10 @@ category System {
         | automatedCollection
             developer info: "T802"
             -> networks.assets.access
+
         | bruteForceIO
             developer info: "T806"
             -> restrictedOperations
-        | restrictedOperations {I,A}
 
         | manipulationOfView
             developer info: "T832"
