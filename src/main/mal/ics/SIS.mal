@@ -1,7 +1,8 @@
 category System {
     asset SIS extends IcsAsset {
         | access
-            +> modifyControlLogic
+            +> modifyControlLogic,
+                moduleFirmware
         | restrictedOperations {I,A}
         | hidableAttacks
 
@@ -58,6 +59,12 @@ category System {
             developer info: "T833"
             -> physicalImpact
 
+        & moduleFirmware
+            developer info: "T839"
+            -> restrictedOperations,
+                networks.assets.access,
+                authenticatedAccess
+
         & monitorProcessState
             developer info: "T801"
             -> networks.assets.access
@@ -72,11 +79,12 @@ category System {
             -> modifyAlarmSettings,
                 monitorProcessState
         # applyPrincipleOfLeastPrivilege
-            developer info: "T812,T838,T801,T833 - Mitigation"
+            developer info: "T812,T838,T801,T833,T839 - Mitigation"
             -> defaultCredentials,
                 modifyAlarmSettings,
                 monitorProcessState,
-                modifyControlLogic
+                modifyControlLogic,
+                moduleFirmware
         # applyPasswordRules
             developer info: "T812 - Mitigation"
             -> defaultCredentials
@@ -85,17 +93,25 @@ category System {
             -> defaultCredentials,
                 blockSerialCom
         # restrictedPhysicalAccess
-            developer info: "T838,T801,T846,T805,T833 - Mitigation"
+            developer info: "T838,T801,T846,T805,T833,T839 - Mitigation"
             -> modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
                 blockSerialCom,
-                modifyControlLogic
+                modifyControlLogic,
+                moduleFirmware
         # applyIDS
-            developer info: "T838,T846,T805,T833 - Mitigation"
+            developer info: "T838,T846,T805,T833,T839 - Mitigation"
             -> modifyAlarmSettings,
                 remoteSystemDiscovery,
                 blockSerialCom,
-                modifyControlLogic
+                modifyControlLogic,
+                moduleFirmware
+        # useCryptographyKeyForFirmware
+            developer info: "T839 - Mitigation"
+            -> moduleFirmware
+        # whitelistAllowedApplications
+            developer info: "T839 - Mitigation"
+            -> moduleFirmware
     }
 }

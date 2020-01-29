@@ -10,7 +10,8 @@ category System {
                 detectProgramState,
                 executionThroughApi,
                 IOmoduleDiscovery,
-                modifyControlLogic
+                modifyControlLogic,
+                moduleFirmware
         | authenticatedAccess
             +> dataDestruction,
                 activateFirmwareUpdateMode,
@@ -132,6 +133,12 @@ category System {
             developer info: "T836"
             -> physicalImpact
 
+        & moduleFirmware
+            developer info: "T839"
+            -> restrictedOperations,
+                networks.assets.access,
+                authenticatedAccess
+
         & unauthorizedCommandMessage
             developer info: "T855"
 
@@ -165,14 +172,18 @@ category System {
             developer info: "T809 - Mitigation"
             -> dataDestruction
         # applyPrincipleOfLeastPrivilege
-            developer info: "T809,T812,T838,T801,T850,T816,T833 - Mitigation"
+            developer info: "T809,T812,T838,T801,T850,T816,T833,T839 - Mitigation"
             -> dataDestruction,
                 defaultCredentials,
                 modifyAlarmSettings,
                 monitorProcessState,
                 roleIdentification,
                 deviceRestartShutdownDefended,
-                modifyControlLogic
+                modifyControlLogic,
+                moduleFirmware
+        # useCryptographyKeyForFirmware
+            developer info: "T839 - Mitigation"
+            -> moduleFirmware
         # applyMultiFactorAuthentication
             developer info: "T809,T812,T805,T816,T824 - Mitigation"
             -> dataDestruction,
@@ -181,7 +192,7 @@ category System {
                 deviceRestartShutdownDefended,
                 IOmoduleDiscovery
         # restrictedPhysicalAccess
-            developer info: "T809,T838,T801,T846,T850,T805,T816,T824,T833 - Mitigation"
+            developer info: "T809,T838,T801,T846,T850,T805,T816,T824,T833,T839 - Mitigation"
             -> dataDestruction,
                 modifyAlarmSettings,
                 monitorProcessState,
@@ -190,19 +201,22 @@ category System {
                 blockSerialCom,
                 deviceRestartShutdownDefended,
                 IOmoduleDiscovery,
-                modifyControlLogic
+                modifyControlLogic,
+                moduleFirmware
         # whitelistAllowedApplications
-            developer info: "T809 - Mitigation"
-            -> dataDestruction
+            developer info: "T809,T839 - Mitigation"
+            -> dataDestruction,
+                moduleFirmware
         # applyPasswordRules
             developer info: "T812 - Mitigation"
             -> defaultCredentials
         # applyIDS
-            developer info: "T838,T846,T805,T816,T833 - Mitigation"
+            developer info: "T838,T846,T805,T816,T833,T839 - Mitigation"
             -> modifyAlarmSettings,
                 remoteSystemDiscovery,
                 blockSerialCom,
                 deviceRestartShutdownDefended,
-                modifyControlLogic
+                modifyControlLogic,
+                moduleFirmware
     }
 }
