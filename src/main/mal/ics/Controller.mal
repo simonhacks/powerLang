@@ -87,6 +87,10 @@ category System {
             developer info: "T820"
             -> systemFirmware
 
+        | IOimage
+            developer info: "T877"
+            //no clue
+
         & modifyParameter {I}
             developer info: "T836"
             -> physicalImpact
