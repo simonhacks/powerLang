@@ -9,7 +9,8 @@ category System {
                 detectOperatingMode,
                 detectProgramState,
                 executionThroughApi,
-                IOmoduleDiscovery
+                IOmoduleDiscovery,
+                modifyControlLogic
         | authenticatedAccess
             +> dataDestruction,
                 activateFirmwareUpdateMode,
@@ -123,6 +124,10 @@ category System {
         # alarmSettingsNotModified
             -> modifyAlarmSettings
 
+        & modifyControlLogic
+            developer info: "T833"
+            -> physicalImpact
+
         & modifyParameter {I}
             developer info: "T836"
             -> physicalImpact
@@ -160,13 +165,14 @@ category System {
             developer info: "T809 - Mitigation"
             -> dataDestruction
         # applyPrincipleOfLeastPrivilege
-            developer info: "T809,T812,T838,T801,T850,T816 - Mitigation"
+            developer info: "T809,T812,T838,T801,T850,T816,T833 - Mitigation"
             -> dataDestruction,
                 defaultCredentials,
                 modifyAlarmSettings,
                 monitorProcessState,
                 roleIdentification,
-                deviceRestartShutdownDefended
+                deviceRestartShutdownDefended,
+                modifyControlLogic
         # applyMultiFactorAuthentication
             developer info: "T809,T812,T805,T816,T824 - Mitigation"
             -> dataDestruction,
@@ -175,7 +181,7 @@ category System {
                 deviceRestartShutdownDefended,
                 IOmoduleDiscovery
         # restrictedPhysicalAccess
-            developer info: "T809,T838,T801,T846,T850,T805,T816,T824 - Mitigation"
+            developer info: "T809,T838,T801,T846,T850,T805,T816,T824,T833 - Mitigation"
             -> dataDestruction,
                 modifyAlarmSettings,
                 monitorProcessState,
@@ -183,7 +189,8 @@ category System {
                 roleIdentification,
                 blockSerialCom,
                 deviceRestartShutdownDefended,
-                IOmoduleDiscovery
+                IOmoduleDiscovery,
+                modifyControlLogic
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
             -> dataDestruction
@@ -191,10 +198,11 @@ category System {
             developer info: "T812 - Mitigation"
             -> defaultCredentials
         # applyIDS
-            developer info: "T838,T846,T805,T816 - Mitigation"
+            developer info: "T838,T846,T805,T816,T833 - Mitigation"
             -> modifyAlarmSettings,
                 remoteSystemDiscovery,
                 blockSerialCom,
-                deviceRestartShutdownDefended
+                deviceRestartShutdownDefended,
+                modifyControlLogic
     }
 }

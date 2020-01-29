@@ -5,7 +5,9 @@ category System {
             -> observed[ControlServer].dataDestruction,
                 observed[Controller].dataDestruction,
                 observed[HMI].dataDestruction,
-                observed.validAccounts
+                observed.validAccounts,
+                observed[Controller].modifyControlLogic,
+                observed[SIS].modifyControlLogic
     }
 
 }

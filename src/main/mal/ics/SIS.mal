@@ -1,6 +1,7 @@
 category System {
     asset SIS extends IcsAsset {
-
+        | access
+            +> modifyControlLogic
         | restrictedOperations {I,A}
         | hidableAttacks
 
@@ -52,6 +53,11 @@ category System {
         # alarmSettingsNotModified
             developer info: "T838"
             -> modifyAlarmSettings
+
+        & modifyControlLogic
+            developer info: "T833"
+            -> physicalImpact
+
         & monitorProcessState
             developer info: "T801"
             -> networks.assets.access
@@ -66,10 +72,11 @@ category System {
             -> modifyAlarmSettings,
                 monitorProcessState
         # applyPrincipleOfLeastPrivilege
-            developer info: "T812,T838,T801 - Mitigation"
+            developer info: "T812,T838,T801,T833 - Mitigation"
             -> defaultCredentials,
                 modifyAlarmSettings,
-                monitorProcessState
+                monitorProcessState,
+                modifyControlLogic
         # applyPasswordRules
             developer info: "T812 - Mitigation"
             -> defaultCredentials
@@ -78,15 +85,17 @@ category System {
             -> defaultCredentials,
                 blockSerialCom
         # restrictedPhysicalAccess
-            developer info: "T838,T801,T846,T805 - Mitigation"
+            developer info: "T838,T801,T846,T805,T833 - Mitigation"
             -> modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
-                blockSerialCom
+                blockSerialCom,
+                modifyControlLogic
         # applyIDS
-            developer info: "T838,T846,T805 - Mitigation"
+            developer info: "T838,T846,T805,T833 - Mitigation"
             -> modifyAlarmSettings,
                 remoteSystemDiscovery,
-                blockSerialCom
+                blockSerialCom,
+                modifyControlLogic
     }
 }

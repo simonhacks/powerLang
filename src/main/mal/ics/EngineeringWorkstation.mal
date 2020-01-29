@@ -11,14 +11,16 @@ category System {
                 manipulationOfView,
                 projectFileInfection,
                 serviceStop,
-                rogueMasterDevice
+                rogueMasterDevice,
+                modifyControlLogic
         | hidableAttacks
             -> exploitationOfRemoteService,
                 projectFileInfection,
                 rogueMasterDevice,
                 scripting,
                 serviceStop,
-                userExecution
+                userExecution,
+                modifyControlLogic
         | physicalImpact {I}
         | dataDestruction {I,A}
 
@@ -70,6 +72,11 @@ category System {
         & userExecution
             developer info: "T863"
             -> authenticatedAccess
+
+        | modifyControlLogic
+            developer info: "T833"
+            -> networks.assets[Controller].modifyControlLogic,
+                networks.assets[SIS].modifyControlLogic
 
         # applyPrincipleOfLeastPrivilege
             developer info: "T812,T853 - Mitigation"
