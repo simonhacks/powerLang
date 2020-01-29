@@ -7,7 +7,8 @@ category System {
                 changeProgramState,
                 denialOfService,
                 detectOperatingMode,
-                detectProgramState
+                detectProgramState,
+                executionThroughApi
         | authenticatedAccess
             +> dataDestruction,
                 activateFirmwareUpdateMode,
@@ -77,6 +78,10 @@ category System {
             -> deviceRestartShutdownDefended
         & deviceRestartShutdownDefended
             -> physicalImpact
+
+        | executionThroughApi
+            developer info: "T871"
+            -> changeProgramState
 
         & modifyParameter {I}
             developer info: "T836"
