@@ -15,7 +15,11 @@ category System {
                 activateFirmwareUpdateMode,
                 alarmSuppression,
                 automatedCollection,
-                deviceRestartShutdown
+                deviceRestartShutdown,
+                memoryManipulation,
+                overrideTestingFunction,
+                manipulationOfView,
+                modifyAlarmSettings
         | hidableAttacks
         | restrictedOperations {I,A}
         | physicalImpact
@@ -90,12 +94,34 @@ category System {
 
         | IOimage
             developer info: "T877"
-            //no clue
+            -> manipulateIOimage
 
         & IOmoduleDiscovery
             developer info: "T824"
             -> IOimage,
                 networks.assets.access
+
+        & manipulateIOimage
+            developer info: "T835"
+            -> hidableAttacks,
+                physicalImpact
+        | memoryManipulation
+            -> manipulateIOimage
+        | overrideTestingFunction
+            -> manipulateIOimage
+
+        | manipulationOfView
+            developer info: "T832"
+            -> physicalImpact
+
+        & modifyAlarmSettings //lowProbability
+            developer info: "T838"
+            -> hidableAttacks
+        | dontModifyAlarmSettings //highProbabilty
+            developer info: "T838"
+            -> hidableAttacks
+        # alarmSettingsNotModified
+            -> modifyAlarmSettings
 
         & modifyParameter {I}
             developer info: "T836"
@@ -125,10 +151,6 @@ category System {
                 networks.assets[EngineeringWorkstation].rogueMasterDevice
 
         | systemFirmware
-
-        | manipulationOfView
-            developer info: "T832"
-            -> physicalImpact
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
