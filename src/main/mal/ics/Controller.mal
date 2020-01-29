@@ -12,9 +12,12 @@ category System {
             +> dataDestruction,
                 activateFirmwareUpdateMode,
                 alarmSuppression,
-                automatedCollection
+                automatedCollection,
+                deviceRestartShutdown
         | hidableAttacks
         | restrictedOperations {I,A}
+        | physicalImpact
+            developer info: "T836"
 
         & dataDestruction {I,A}
             developer info: "T809"
@@ -50,7 +53,8 @@ category System {
 
         | changeProgramState
             developer info: "T875"
-            -> authenticatedAccess
+            -> authenticatedAccess,
+                deviceRestartShutdown
 
         & defaultCredentials
             developer info: "T812"
@@ -68,11 +72,16 @@ category System {
             developer info: "T870"
             -> authenticatedAccess
 
+        | deviceRestartShutdown
+            developer info: "T816"
+            -> deviceRestartShutdownDefended
+        & deviceRestartShutdownDefended
+            -> physicalImpact
+
         & modifyParameter {I}
             developer info: "T836"
             -> physicalImpact
-        | physicalImpact
-            developer info: "T836"
+
         & unauthorizedCommandMessage
             developer info: "T855"
 
@@ -108,25 +117,28 @@ category System {
             developer info: "T809 - Mitigation"
             -> dataDestruction
         # applyPrincipleOfLeastPrivilege
-            developer info: "T809,T812,T838,T801,T850 - Mitigation"
+            developer info: "T809,T812,T838,T801,T850,T816 - Mitigation"
             -> dataDestruction,
                 defaultCredentials,
                 modifyAlarmSettings,
                 monitorProcessState,
-                roleIdentification
+                roleIdentification,
+                deviceRestartShutdownDefended
         # applyMultiFactorAuthentication
-            developer info: "T809,T812,T805 - Mitigation"
+            developer info: "T809,T812,T805,T816 - Mitigation"
             -> dataDestruction,
                 defaultCredentials,
-                blockSerialCom
+                blockSerialCom,
+                deviceRestartShutdownDefended
         # restrictedPhysicalAccess
-            developer info: "T809,T838,T801,T846,T850,T805 - Mitigation"
+            developer info: "T809,T838,T801,T846,T850,T805,T816 - Mitigation"
             -> dataDestruction,
                 modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
                 roleIdentification,
-                blockSerialCom
+                blockSerialCom,
+                deviceRestartShutdownDefended
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
             -> dataDestruction
@@ -134,9 +146,10 @@ category System {
             developer info: "T812 - Mitigation"
             -> defaultCredentials
         # applyIDS
-            developer info: "T838,T846,T805 - Mitigation"
+            developer info: "T838,T846,T805,T816 - Mitigation"
             -> modifyAlarmSettings,
                 remoteSystemDiscovery,
-                blockServialCom
+                blockSerialCom,
+                deviceRestartShutdownDefended
     }
 }
