@@ -8,7 +8,8 @@ category System {
                 denialOfService,
                 detectOperatingMode,
                 detectProgramState,
-                executionThroughApi
+                executionThroughApi,
+                IOmoduleDiscovery
         | authenticatedAccess
             +> dataDestruction,
                 activateFirmwareUpdateMode,
@@ -91,6 +92,11 @@ category System {
             developer info: "T877"
             //no clue
 
+        & IOmoduleDiscovery
+            developer info: "T824"
+            -> IOimage,
+                networks.assets.access
+
         & modifyParameter {I}
             developer info: "T836"
             -> physicalImpact
@@ -140,20 +146,22 @@ category System {
                 roleIdentification,
                 deviceRestartShutdownDefended
         # applyMultiFactorAuthentication
-            developer info: "T809,T812,T805,T816 - Mitigation"
+            developer info: "T809,T812,T805,T816,T824 - Mitigation"
             -> dataDestruction,
                 defaultCredentials,
                 blockSerialCom,
-                deviceRestartShutdownDefended
+                deviceRestartShutdownDefended,
+                IOmoduleDiscovery
         # restrictedPhysicalAccess
-            developer info: "T809,T838,T801,T846,T850,T805,T816 - Mitigation"
+            developer info: "T809,T838,T801,T846,T850,T805,T816,T824 - Mitigation"
             -> dataDestruction,
                 modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
                 roleIdentification,
                 blockSerialCom,
-                deviceRestartShutdownDefended
+                deviceRestartShutdownDefended,
+                IOmoduleDiscovery
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
             -> dataDestruction
