@@ -29,7 +29,9 @@ category Network {
 
         & controlDeviceIdentification
             developer info: "T808"
-            -> assets[Controller].access
+            -> assets[Controller].access,
+                assets[Controller].exploitationForEvasion,
+                assets[SIS].exploitationForEvasion
 
         # encryptCommunication
             developer info: "T830,T848,T850,T856,T808 - Mitigation"

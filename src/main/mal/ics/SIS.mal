@@ -33,6 +33,10 @@ category System {
             developer info: "T814"
             -> restrictedOperations
 
+        | exploitationForEvasion
+            developer info: "T820"
+            -> systemFirmware
+
         & modifyParameter {I}
             developer info: "T836"
             -> physicalImpact
@@ -54,6 +58,8 @@ category System {
         & remoteSystemDiscovery
             developer info: "T846"
             -> networks.assets.access
+
+        | systemFirmware
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"

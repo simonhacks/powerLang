@@ -83,6 +83,10 @@ category System {
             developer info: "T871"
             -> changeProgramState
 
+        | exploitationForEvasion
+            developer info: "T820"
+            -> systemFirmware
+
         & modifyParameter {I}
             developer info: "T836"
             -> physicalImpact
@@ -109,6 +113,8 @@ category System {
             -> networks.assets[ControlServer].rogueMasterDevice,
                 networks.assets[HMI].rogueMasterDevice,
                 networks.assets[EngineeringWorkstation].rogueMasterDevice
+
+        | systemFirmware
 
         | manipulationOfView
             developer info: "T832"
