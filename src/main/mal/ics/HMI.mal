@@ -1,9 +1,14 @@
 category System {
     asset HMI extends IcsAsset {
+        | access
         | authenticatedAccess
             +> dataDestruction
-        & dataDestruction {I,A}
+
+        | dataDestruction
             developer info: "T809"
+        & dataDestructionDefended {I,A}
+            developer info: "T809"
+
         | dataFromInformationRepositories {C}
             developer info: "T811"
         | exploitationOfRemoteService
@@ -99,21 +104,21 @@ category System {
                 monitorProcessState
         # applyPasswordAuthentication
             developer info: "T809 - Mitigation"
-            -> dataDestruction
+            -> dataDestructionDefended
         # applyPrincipleOfLeastPrivilege
             developer info: "T809,T812,T838,T801,T850 - Mitigation"
-            -> dataDestruction,
+            -> dataDestructionDefended,
                 defaultCredentials,
                 modifyAlarmSettings,
                 monitorProcessState,
                 roleIdentification
         # applyMultiFactorAuthentication
             developer info: "T809,812 - Mitigation"
-            -> dataDestruction,
+            -> dataDestructionDefended,
                 defaultCredentials
         # restrictedPhysicalAccess
             developer info: "T809,T838,T801,T846,T848,T850 - Mitigation"
-            -> dataDestruction,
+            -> dataDestructionDefended,
                 modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
@@ -121,7 +126,7 @@ category System {
                 roleIdentification
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
-            -> dataDestruction
+            -> dataDestructionDefended
         # applyPasswordRules
             developer info: "T812 - Mitigation"
             -> defaultCredentials
