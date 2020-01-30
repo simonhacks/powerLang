@@ -36,7 +36,7 @@ category System {
         # restrictedPhysicalAccess
             developer info: "T857,T805 - Mitigation"
             -> systemFirmware,
-                blockSerialComDefended
+                blockSerialCom
         # applyIDS
             developer info: "T857,T805 - Mitigation"
             -> systemFirmwareDefended,

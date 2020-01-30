@@ -4,15 +4,37 @@ category System {
             +> modifyControlLogic,
                 moduleFirmware,
                 systemFirmware,
+                utilizeChangeOperatingMode,
+                dontAlarmSuppression,
+                denialOfService,
+                dontModifyAlarmSettings,
+                modifyControlLogic,
+                moduleFirmware,
+                monitorProcessState,
                 utilizeChangeOperatingMode
         | authenticatedAccess
-            +> programDownload
+            +> programDownload,
+                activateFirmwareUpdateMode,
+                alarmSuppression,
+                automatedCollection,
+                modifyAlarmSettings,
+                programDownload,
+                remoteSystemDiscovery
         | restrictedOperations {I,A}
         | physicalImpact {I,A}
             developer info: "T836"
         | hidableAttacks
+            -> activateFirmwareUpdateMode,
+                automatedCollection,
+                modifyControlLogic,
+                modifyParameter,
+                moduleFirmware,
+                programDownload,
+                remoteSystemDiscovery,
+                systemFirmwareDefended,
+                utilizeChangeOperatingMode
 
-        | activateFirmwareUpdateMode
+        & activateFirmwareUpdateMode
             developer info: "T800"
             -> restrictedOperations
 
@@ -25,13 +47,9 @@ category System {
         # alarmSuppressionNotModified
             -> alarmSuppression
 
-        | automatedCollection
+        & automatedCollection
             developer info: "T802"
             -> networks.assets.access
-
-        & blockSerialCom
-            developer info: "T805"
-            -> restrictedOperations
 
         & defaultCredentials
             developer info: "T812"
@@ -45,10 +63,6 @@ category System {
             developer info: "T820"
             -> systemFirmware
 
-        & modifyParameter {I}
-            developer info: "T836"
-            -> physicalImpact
-
         & modifyAlarmSettings //lowProbability
             developer info: "T838"
             -> hidableAttacks
@@ -61,6 +75,10 @@ category System {
 
         & modifyControlLogic
             developer info: "T833"
+            -> physicalImpact
+
+        & modifyParameter {I}
+            developer info: "T836"
             -> physicalImpact
 
         & moduleFirmware
@@ -82,7 +100,10 @@ category System {
             developer info: "T846"
             -> networks.assets.access
 
-        & systemFirmware
+        | systemFirmware
+            developer info: "T857"
+            -> systemFirmwareDefended
+        & systemFirmwareDefended
             developer info: "T857"
             -> authenticatedAccess
 
@@ -102,7 +123,7 @@ category System {
                 monitorProcessState,
                 modifyControlLogic,
                 moduleFirmware,
-                systemFirmware,
+                systemFirmwareDefended,
                 utilizeChangeOperatingMode
         # applyPasswordRules
             developer info: "T812 - Mitigation"
@@ -110,26 +131,23 @@ category System {
         # applyMultiFactorAuthentication
             developer info: "T812,T805,T858 - Mitigation"
             -> defaultCredentials,
-                blockSerialCom,
                 utilizeChangeOperatingMode
         # restrictedPhysicalAccess
             developer info: "T838,T801,T846,T805,T833,T839,T857,T858 - Mitigation"
             -> modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
-                blockSerialCom,
                 modifyControlLogic,
                 moduleFirmware,
-                systemFirmware,
+                systemFirmwareDefended,
                 utilizeChangeOperatingMode
         # applyIDS
             developer info: "T838,T846,T805,T833,T839,T857 - Mitigation"
             -> modifyAlarmSettings,
                 remoteSystemDiscovery,
-                blockSerialCom,
                 modifyControlLogic,
                 moduleFirmware,
-                systemFirmware
+                systemFirmwareDefended
         # useCryptographyKeyForFirmware
             developer info: "T839 - Mitigation"
             -> moduleFirmware
