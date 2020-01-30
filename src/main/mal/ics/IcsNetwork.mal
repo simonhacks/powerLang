@@ -3,7 +3,8 @@ category Network {
         | access
             -> MITM,
                 blockCommandMessage,
-                controlDeviceIdentification
+                networkSniffing
+
         & MITM
             developer info: "T830"
             -> blockReportingMessage,
@@ -33,8 +34,12 @@ category Network {
                 assets[Controller].exploitationForEvasion,
                 assets[SIS].exploitationForEvasion
 
+        & networkSniffing
+            developer info: "T824"
+            -> controlDeviceIdentification
+
         # encryptCommunication
-            developer info: "T830,T848,T850,T856,T808 - Mitigation"
+            developer info: "T830,T848,T850,T856,T808,T824 - Mitigation"
             -> MITM,
                 assets[ControlServer].rogueMasterDevice,
                 assets[HMI].rogueMasterDevice,
@@ -44,28 +49,33 @@ category Network {
                 assets[DataHistorian].roleIdentification,
                 assets[Controller].roleIdentification,
                 assets[ControlServer].spoofReportingMessage,
-                controlDeviceIdentification
+                controlDeviceIdentification,
+                networkSniffing
         # challengeResponseAuthentication
-            developer info: "T830,T859 - Mitigation"
+            developer info: "T830,T859,T824 - Mitigation"
             -> MITM,
-                assets.validAccounts
+                assets.validAccounts,
+                networkSniffing
         # restrictedPhysicalAccess
-            developer info: "T830,T803,T804,T808 - Mitigation"
+            developer info: "T830,T803,T804,T808,T824 - Mitigation"
             -> MITM,
                 blockCommandMessage,
                 assets[Controller].blockReportingMessage,
                 assets[IOServer].blockReportingMessage,
-                controlDeviceIdentification
+                controlDeviceIdentification,
+                networkSniffing
         # applyIDS
-            developer info: "T830,T859,T803,T804 - Mitigation"
+            developer info: "T830,T859,T803,T804,T824 - Mitigation"
             -> MITM,
                 assets.validAccounts,
                 blockCommandMessage,
                 assets[Controller].blockReportingMessage,
-                assets[IOServer].blockReportingMessage
+                assets[IOServer].blockReportingMessage,
+                networkSniffing
         # whitelistAllowedDevices
             -> assets[ControlServer].rogueMasterDevice,
                 assets[HMI].rogueMasterDevice,
-                assets[EngineeringWorkstation].rogueMasterDevice
+                assets[EngineeringWorkstation].rogueMasterDevice,
+                networkSniffing
     }
 }

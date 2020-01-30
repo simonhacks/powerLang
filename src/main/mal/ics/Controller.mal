@@ -11,7 +11,9 @@ category System {
                 executionThroughApi,
                 IOmoduleDiscovery,
                 modifyControlLogic,
-                moduleFirmware
+                moduleFirmware,
+                dontModifyAlarmSettings,
+                monitorProcessState
         | authenticatedAccess
             +> dataDestruction,
                 activateFirmwareUpdateMode,
@@ -139,20 +141,13 @@ category System {
                 networks.assets.access,
                 authenticatedAccess
 
-        & unauthorizedCommandMessage
-            developer info: "T855"
-
-        & modifyAlarmSettings //lowProbability
-            developer info: "T838"
-            -> hidableAttacks
-        | dontModifyAlarmSettings //highProbabilty
-            developer info: "T838"
-            -> hidableAttacks
-        # alarmSettingsNotModified
-            -> modifyAlarmSettings
         & monitorProcessState
             developer info: "T801"
             -> networks.assets.access
+
+        & unauthorizedCommandMessage
+            developer info: "T855"
+
         & remoteSystemDiscovery
             developer info: "T846"
             -> networks.assets.access
