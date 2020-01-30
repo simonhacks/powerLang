@@ -22,9 +22,24 @@ category System {
                 projectFileInfection,
                 remoteFileCopySend,
                 remoteSystemDiscovery,
-                rogueMasterDevice
+                rogueMasterDevice,
+                serviceStop
         | hidableAttacks
-            //add attacks
+            -> dataDestructionDefended,
+                dataFromInformationRepositories,
+                exploitationOfRemoteService,
+                manipulationOfView,
+                modifyParameter,
+                monitorProcessState,
+                networkConnectionEnumeration,
+                pointAndTackIdentification,
+                projectFileInfection,
+                remoteFileCopyReceive,
+                remoteFileCopySend,
+                remoteSystemDiscovery,
+                rogueMasterDeviceDefended,
+                roleIdentification,
+                serviceStop
 
         | dataDestruction
             developer info: "T809"
@@ -34,14 +49,14 @@ category System {
         | physicalImpact
             developer info: "T836"
 
-        | dataFromInformationRepositories {C}
+        & dataFromInformationRepositories {C}
             developer info: "T811"
 
         & defaultCredentials
             developer info: "T812"
             -> authenticatedAccess
 
-        | exploitationOfRemoteService
+        & exploitationOfRemoteService
             developer info: "T866"
             -> networks.assets.access
 
@@ -93,19 +108,19 @@ category System {
 
         & networkConnectionEnumeration
             developer info: "T840"
-            -> network.assets.access
+            -> networks.assets.access
 
-        | pointAndTackIdentification {C}
+        & pointAndTackIdentification {C}
             developer info: "T861"
 
-        | projectFileInfection
+        & projectFileInfection
             developer info: "T873"
             -> networks.assets[Controller].authenticatedAccess
 
-        | remoteFileCopyReceive
+        & remoteFileCopyReceive
             developer info: "T867"
             -> authenticatedAccess
-        | remoteFileCopySend
+        & remoteFileCopySend
             developer info: "T867"
             -> networks.assets[ControlServer].remoteFileCopyReceive,
                 networks.assets[HMI].remoteFileCopyReceive,
@@ -135,12 +150,14 @@ category System {
         | screenCapture {C}
             developer info: "T852"
 
-        | serviceStop
+        & serviceStop
             developer info: "T881"
             -> dataDestruction
+
         | spearfishingAttachment
             developer info: "T865"
             -> userExecution
+
         | userExecution
             developer info: "T863"
             -> authenticatedAccess
