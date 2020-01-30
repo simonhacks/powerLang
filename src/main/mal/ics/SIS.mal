@@ -3,7 +3,11 @@ category System {
         | access
             +> modifyControlLogic,
                 moduleFirmware
+        | authenticatedAccess
+            +> programDownload
         | restrictedOperations {I,A}
+        | physicalImpact {I,A}
+            developer info: "T836"
         | hidableAttacks
 
         | activateFirmwareUpdateMode
@@ -42,8 +46,6 @@ category System {
         & modifyParameter {I}
             developer info: "T836"
             -> physicalImpact
-        | physicalImpact
-            developer info: "T836"
 
         & modifyAlarmSettings //lowProbability
             developer info: "T838"
@@ -68,6 +70,12 @@ category System {
         & monitorProcessState
             developer info: "T801"
             -> networks.assets.access
+
+        | programDownload
+            developer info: "T843"
+            -> physicalImpact,
+                restrictedOperations
+
         & remoteSystemDiscovery
             developer info: "T846"
             -> networks.assets.access

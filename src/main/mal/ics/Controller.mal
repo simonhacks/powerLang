@@ -23,10 +23,11 @@ category System {
                 memoryManipulation,
                 overrideTestingFunction,
                 manipulationOfView,
-                modifyAlarmSettings
+                modifyAlarmSettings,
+                programDownload
         | hidableAttacks
         | restrictedOperations {I,A}
-        | physicalImpact
+        | physicalImpact {I,A}
             developer info: "T836"
 
         & dataDestruction {I,A}
@@ -144,6 +145,11 @@ category System {
         & monitorProcessState
             developer info: "T801"
             -> networks.assets.access
+
+        | programDownload
+            developer info: "T843"
+            -> physicalImpact,
+                restrictedOperations
 
         & unauthorizedCommandMessage
             developer info: "T855"
