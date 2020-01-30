@@ -2,7 +2,8 @@ category System {
     asset IOServer extends IcsAsset {
         | access
             +> systemFirmware,
-                blockSerialCom
+                blockSerialCom,
+                systemFirmware
         | authenticatedAccess
 
         | restrictedOperations {I,A}
@@ -19,7 +20,10 @@ category System {
             developer info: "T822"
             -> access
 
-        & systemFirmware
+        | systemFirmware
+            developer info: "T857"
+            -> systemFirmware
+        & systemFirmwareDefended
             developer info: "T857"
             -> authenticatedAccess
 
@@ -28,14 +32,14 @@ category System {
             -> blockSerialCom
         # applyPrincipleOfLeastPrivilege
             developer info: "T857 - Mitigation"
-            -> systemFirmware
+            -> systemFirmwareDefended
         # restrictedPhysicalAccess
             developer info: "T857,T805 - Mitigation"
             -> systemFirmware,
-                blockSerialCom
+                blockSerialComDefended
         # applyIDS
             developer info: "T857,T805 - Mitigation"
-            -> systemFirmware,
+            -> systemFirmwareDefended,
                 blockSerialCom
     }
 }

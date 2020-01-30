@@ -43,7 +43,7 @@ category System {
                 moduleFirmware,
                 programDownload,
                 remoteSystemDiscovery,
-                systemFirmware,
+                systemFirmwareDefended,
                 unauthorizedCommandMessage,
                 utilizeChangeOperatingMode
         | restrictedOperations {I,A}
@@ -192,7 +192,10 @@ category System {
         # rootkitNotInPlace
             -> rootkit
 
-        & systemFirmware
+        | systemFirmwareDefended
+            developer info: "T857"
+            ->systemFirmwareDefended
+        & systemFirmwareDefended
             developer info: "T857"
             -> authenticatedAccess
 
@@ -222,7 +225,7 @@ category System {
                 deviceRestartShutdownDefended,
                 modifyControlLogic,
                 moduleFirmware,
-                systemFirmware,
+                systemFirmwareDefended,
                 utilizeChangeOperatingMode
         # useCryptographyKeyForFirmware
             developer info: "T839 - Mitigation"
@@ -249,7 +252,7 @@ category System {
                 modifyControlLogic,
                 moduleFirmware,
                 rootkit,
-                systemFirmware,
+                systemFirmwareDefended,
                 utilizeChangeOperatingMode
         # whitelistAllowedApplications
             developer info: "T809,T839,T851 - Mitigation"
@@ -267,7 +270,7 @@ category System {
                 deviceRestartShutdownDefended,
                 modifyControlLogic,
                 moduleFirmware,
-                systemFirmware,
+                systemFirmwareDefended,
                 unauthorizedCommandMessage
         # implementChallengeResponseAuthentication
             developer info: "T858 - Mitigation"
