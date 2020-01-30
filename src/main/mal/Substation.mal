@@ -1,16 +1,16 @@
 category System {
-    asset RTU
+    asset RTU extends Controller
     user info: "Remote Terminal Unit"
     {
 
     }
 
-    asset SCADA
+    asset SCADA extends ControlServer
     user info: "Supervisory Control And Data Acquisition"
      {
      }
 
-     asset DPR
+     asset DPR extends SIS
      user info: "Digital Protective Relay"
      {
 
@@ -18,17 +18,15 @@ category System {
 }
 
 category Communication {
-    asset IEC60870 {
+    asset IEC60870 extends IcsNetwork{
 
     }
 
-    asset IEC61850 {
+    asset IEC61850 extends IcsNetwork{
 
     }
 }
 
 associations {
-    SCADA [scada] * <-- NetworkAccess --> * [networks] IEC60870
-    RTU [rtu] * <-- NetworkAccess --> * [networks] IEC60870
-    DPR [dpr] * <-- NetworkAccess --> * [networks] IEC61850
+
 }

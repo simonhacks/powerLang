@@ -17,6 +17,8 @@
 #version: "1.0.0"
 
 include "ICS.mal"
+include "Prosumer.mal"
+include "Substation.mal"
 
 
 
