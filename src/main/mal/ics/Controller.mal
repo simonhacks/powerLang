@@ -32,6 +32,20 @@ category System {
                 remoteSystemDiscovery,
                 rootkit
         | hidableAttacks
+            -> activateFirmwareUpdateMode,
+                automatedCollection,
+                blockReportingMessage,
+                blockSerialCom,
+                bruteForceIO,
+                changeProgramState,
+                modifyControlLogic,
+                modifyParameter,
+                moduleFirmware,
+                programDownload,
+                remoteSystemDiscovery,
+                systemFirmware,
+                unauthorizedCommandMessage,
+                utilizeChangeOperatingMode
         | restrictedOperations {I,A}
         | physicalImpact {I,A}
             developer info: "T836"
@@ -39,7 +53,7 @@ category System {
         & dataDestruction {I,A}
             developer info: "T809"
 
-        | activateFirmwareUpdateMode
+        & activateFirmwareUpdateMode
             developer info: "T800"
             -> restrictedOperations
 
@@ -52,7 +66,7 @@ category System {
         # alarmSuppressionNotModified
             -> alarmSuppression
 
-        | automatedCollection
+        & automatedCollection
             developer info: "T802"
             -> networks.assets.access
 
@@ -64,11 +78,11 @@ category System {
             developer info: "T805"
             -> restrictedOperations
 
-        | bruteForceIO
+        & bruteForceIO
             developer info: "T806"
             -> restrictedOperations
 
-        | changeProgramState
+        & changeProgramState
             developer info: "T875"
             -> authenticatedAccess,
                 deviceRestartShutdown
@@ -152,7 +166,7 @@ category System {
             developer info: "T801"
             -> networks.assets.access
 
-        | programDownload
+        & programDownload
             developer info: "T843"
             -> physicalImpact,
                 restrictedOperations
@@ -189,7 +203,7 @@ category System {
         & utilizeChangeOperatingMode
             developer info: "T858"
             -> physicalImpact,
-                authorizedAccess
+                authenticatedAccess
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"

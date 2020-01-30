@@ -89,7 +89,7 @@ category System {
         & utilizeChangeOperatingMode
             developer info: "T858"
             -> physicalImpact,
-                authorizedAccess
+                authenticatedAccess
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
