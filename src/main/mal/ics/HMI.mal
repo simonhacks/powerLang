@@ -1,8 +1,13 @@
 category System {
     asset HMI extends IcsAsset {
         | access
+            +> defaultCredentials
         | authenticatedAccess
-            +> dataDestruction
+            +> dataDestruction,
+                dataFromInformationRepositories,
+                exploitationOfRemoteService
+        | hidableAttacks
+            //add attacks
 
         | dataDestruction
             developer info: "T809"
@@ -11,12 +16,19 @@ category System {
 
         | dataFromInformationRepositories {C}
             developer info: "T811"
-        | exploitationOfRemoteService
-            developer info: "T866"
-            -> networks.assets.access
+
         & defaultCredentials
             developer info: "T812"
             -> authenticatedAccess
+
+        | exploitationOfRemoteService
+            developer info: "T866"
+            -> networks.assets.access
+
+        | graphicalUserInterface
+            developer info: "T823"
+            -> access
+
         & modifyParameter {I}
             developer info: "T836"
             -> physicalImpact
@@ -42,8 +54,7 @@ category System {
             developer info: "T829"
             -> lossOfView
 
-        | hidableAttacks
-            //add attacks
+
         & modifyAlarmSettings //lowProbability
             developer info: "T838"
             -> hidableAttacks
@@ -103,8 +114,9 @@ category System {
             -> modifyAlarmSettings,
                 monitorProcessState
         # applyPasswordAuthentication
-            developer info: "T809 - Mitigation"
-            -> dataDestructionDefended
+            developer info: "T809,T823 - Mitigation"
+            -> dataDestructionDefended,
+                graphicalUserInterface
         # applyPrincipleOfLeastPrivilege
             developer info: "T809,T812,T838,T801,T850 - Mitigation"
             -> dataDestructionDefended,
@@ -117,16 +129,18 @@ category System {
             -> dataDestructionDefended,
                 defaultCredentials
         # restrictedPhysicalAccess
-            developer info: "T809,T838,T801,T846,T848,T850 - Mitigation"
+            developer info: "T809,T838,T801,T846,T848,T850,T823 - Mitigation"
             -> dataDestructionDefended,
                 modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
                 rogueMasterDevice,
-                roleIdentification
+                roleIdentification,
+                graphicalUserInterface
         # whitelistAllowedApplications
-            developer info: "T809 - Mitigation"
-            -> dataDestructionDefended
+            developer info: "T809,823 - Mitigation"
+            -> dataDestructionDefended,
+                graphicalUserInterface
         # applyPasswordRules
             developer info: "T812 - Mitigation"
             -> defaultCredentials
