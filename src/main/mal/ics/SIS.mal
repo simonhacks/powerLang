@@ -2,7 +2,8 @@ category System {
     asset SIS extends IcsAsset {
         | access
             +> modifyControlLogic,
-                moduleFirmware
+                moduleFirmware,
+                systemFirmware
         | authenticatedAccess
             +> programDownload
         | restrictedOperations {I,A}
@@ -80,19 +81,22 @@ category System {
             developer info: "T846"
             -> networks.assets.access
 
-        | systemFirmware
+        & systemFirmware
+            developer info: "T857"
+            -> authenticatedAccess
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
             -> modifyAlarmSettings,
                 monitorProcessState
         # applyPrincipleOfLeastPrivilege
-            developer info: "T812,T838,T801,T833,T839 - Mitigation"
+            developer info: "T812,T838,T801,T833,T839,T857 - Mitigation"
             -> defaultCredentials,
                 modifyAlarmSettings,
                 monitorProcessState,
                 modifyControlLogic,
-                moduleFirmware
+                moduleFirmware,
+                systemFirmware
         # applyPasswordRules
             developer info: "T812 - Mitigation"
             -> defaultCredentials
@@ -101,20 +105,22 @@ category System {
             -> defaultCredentials,
                 blockSerialCom
         # restrictedPhysicalAccess
-            developer info: "T838,T801,T846,T805,T833,T839 - Mitigation"
+            developer info: "T838,T801,T846,T805,T833,T839,T857 - Mitigation"
             -> modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
                 blockSerialCom,
                 modifyControlLogic,
-                moduleFirmware
+                moduleFirmware,
+                systemFirmware
         # applyIDS
-            developer info: "T838,T846,T805,T833,T839 - Mitigation"
+            developer info: "T838,T846,T805,T833,T839,T857 - Mitigation"
             -> modifyAlarmSettings,
                 remoteSystemDiscovery,
                 blockSerialCom,
                 modifyControlLogic,
-                moduleFirmware
+                moduleFirmware,
+                systemFirmware
         # useCryptographyKeyForFirmware
             developer info: "T839 - Mitigation"
             -> moduleFirmware

@@ -63,13 +63,14 @@ category Network {
                 assets.validAccounts,
                 networkSniffing
         # restrictedPhysicalAccess
-            developer info: "T830,T803,T804,T808,T824 - Mitigation"
+            developer info: "T830,T803,T804,T808,T824,T854 - Mitigation"
             -> MITM,
                 blockCommandMessage,
                 assets[Controller].blockReportingMessage,
                 assets[IOServer].blockReportingMessage,
                 controlDeviceIdentification,
-                networkSniffing
+                networkSniffing,
+                serialConnectionEnumeration
         # applyIDS
             developer info: "T830,T859,T803,T804,T824 - Mitigation"
             -> MITM,

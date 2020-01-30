@@ -15,7 +15,8 @@ category System {
                 dontModifyAlarmSettings,
                 monitorProcessState,
                 roleIdentification,
-                noRootkit
+                noRootkit,
+                systemFirmware
         | authenticatedAccess
             +> dataDestruction,
                 activateFirmwareUpdateMode,
@@ -176,10 +177,13 @@ category System {
         # rootkitNotInPlace
             -> rootkit
 
+        & systemFirmware
+            developer info: "T857"
+            -> authenticatedAccess
+
         & unauthorizedCommandMessage
             developer info: "T855"
 
-        | systemFirmware
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
@@ -189,7 +193,7 @@ category System {
             developer info: "T809 - Mitigation"
             -> dataDestruction
         # applyPrincipleOfLeastPrivilege
-            developer info: "T809,T812,T838,T801,T850,T816,T833,T839 - Mitigation"
+            developer info: "T809,T812,T838,T801,T850,T816,T833,T839,T857 - Mitigation"
             -> dataDestruction,
                 defaultCredentials,
                 modifyAlarmSettings,
@@ -197,7 +201,8 @@ category System {
                 roleIdentification,
                 deviceRestartShutdownDefended,
                 modifyControlLogic,
-                moduleFirmware
+                moduleFirmware,
+                systemFirmware
         # useCryptographyKeyForFirmware
             developer info: "T839 - Mitigation"
             -> moduleFirmware
@@ -210,7 +215,7 @@ category System {
                 IOmoduleDiscovery,
                 rootkit
         # restrictedPhysicalAccess
-            developer info: "T809,T838,T801,T846,T850,T805,T816,T824,T833,T839,T851 - Mitigation"
+            developer info: "T809,T838,T801,T846,T850,T805,T816,T824,T833,T839,T851,T857 - Mitigation"
             -> dataDestruction,
                 modifyAlarmSettings,
                 monitorProcessState,
@@ -221,7 +226,8 @@ category System {
                 IOmoduleDiscovery,
                 modifyControlLogic,
                 moduleFirmware,
-                rootkit
+                rootkit,
+                systemFirmware
         # whitelistAllowedApplications
             developer info: "T809,T839,T851 - Mitigation"
             -> dataDestruction,
@@ -231,12 +237,13 @@ category System {
             developer info: "T812 - Mitigation"
             -> defaultCredentials
         # applyIDS
-            developer info: "T838,T846,T805,T816,T833,T839 - Mitigation"
+            developer info: "T838,T846,T805,T816,T833,T839,T857 - Mitigation"
             -> modifyAlarmSettings,
                 remoteSystemDiscovery,
                 blockSerialCom,
                 deviceRestartShutdownDefended,
                 modifyControlLogic,
-                moduleFirmware
+                moduleFirmware,
+                systemFirmware
     }
 }

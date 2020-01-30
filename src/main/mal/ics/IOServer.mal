@@ -1,5 +1,9 @@
 category System {
     asset IOServer extends IcsAsset {
+        | access
+            +> systemFirmware
+        | authenticatedAccess
+
         | restrictedOperations {I,A}
 
         | externalRemoteService
@@ -8,5 +12,19 @@ category System {
         & blockReportingMessage
             developer info: "T804"
             -> restrictedOperations
+
+        & systemFirmware
+            developer info: "T857"
+            -> authenticatedAccess
+
+        # applyPrincipleOfLeastPrivilege
+            developer info: "T857 - Mitigation"
+            -> systemFirmware
+        # restrictedPhysicalAccess
+            developer info: "T857 - Mitigation"
+            -> systemFirmware
+        # applyIDS
+            developer info: "T857 - Mitigation"
+            -> systemFirmware
     }
 }
