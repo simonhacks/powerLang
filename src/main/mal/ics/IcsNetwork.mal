@@ -3,7 +3,8 @@ category Network {
         | access
             -> MITM,
                 blockCommandMessage,
-                networkSniffing
+                networkSniffing,
+                serialConnectionEnumeration
 
         & MITM
             developer info: "T830"
@@ -37,6 +38,11 @@ category Network {
         & networkSniffing
             developer info: "T824"
             -> controlDeviceIdentification
+
+        | serialConnectionEnumeration
+            developer info: "T854"
+            -> assets[Controller].access,
+                assets[SIS].access
 
         # encryptCommunication
             developer info: "T830,T848,T850,T856,T808,T824 - Mitigation"
