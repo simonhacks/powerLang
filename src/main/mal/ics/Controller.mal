@@ -183,7 +183,7 @@ category System {
 
         & unauthorizedCommandMessage
             developer info: "T855"
-
+            -> physicalImpact
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
@@ -237,13 +237,14 @@ category System {
             developer info: "T812 - Mitigation"
             -> defaultCredentials
         # applyIDS
-            developer info: "T838,T846,T805,T816,T833,T839,T857 - Mitigation"
+            developer info: "T838,T846,T805,T816,T833,T839,T857,T855 - Mitigation"
             -> modifyAlarmSettings,
                 remoteSystemDiscovery,
                 blockSerialCom,
                 deviceRestartShutdownDefended,
                 modifyControlLogic,
                 moduleFirmware,
-                systemFirmware
+                systemFirmware,
+                unauthorizedCommandMessage
     }
 }
