@@ -7,7 +7,8 @@ category System {
                 observed[HMI].dataDestruction,
                 observed.validAccounts,
                 observed[Controller].modifyControlLogic,
-                observed[SIS].modifyControlLogic
+                observed[SIS].modifyControlLogic,
+                observed[Controller].rootkit
     }
 
 }
