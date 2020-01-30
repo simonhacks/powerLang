@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 public class ControllerTest extends EpesLangTest {
     @Test
-    public void testGUINoDefense() {
+    public void testAutomatedConnectionNoDefense() {
         Attacker attacker = new Attacker();
         Controller controller = new Controller(
                 false, false,
