@@ -1,30 +1,41 @@
 category System {
     asset IOServer extends IcsAsset {
         | access
-            +> systemFirmware
+            +> systemFirmware,
+                blockSerialCom
         | authenticatedAccess
 
         | restrictedOperations {I,A}
 
-        | externalRemoteService
-            developer info: "T822"
-            -> access
         & blockReportingMessage
             developer info: "T804"
             -> restrictedOperations
+
+        & blockSerialCom
+            developer info: "T805"
+            -> restrictedOperations
+
+        | externalRemoteService
+            developer info: "T822"
+            -> access
 
         & systemFirmware
             developer info: "T857"
             -> authenticatedAccess
 
+        # applyMultiFactorAuthentication
+            developer info: "T805 - Mitigation"
+            -> blockSerialCom
         # applyPrincipleOfLeastPrivilege
             developer info: "T857 - Mitigation"
             -> systemFirmware
         # restrictedPhysicalAccess
-            developer info: "T857 - Mitigation"
-            -> systemFirmware
+            developer info: "T857,T805 - Mitigation"
+            -> systemFirmware,
+                blockSerialCom
         # applyIDS
-            developer info: "T857 - Mitigation"
-            -> systemFirmware
+            developer info: "T857,T805 - Mitigation"
+            -> systemFirmware,
+                blockSerialCom
     }
 }
