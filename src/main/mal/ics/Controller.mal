@@ -16,7 +16,8 @@ category System {
                 monitorProcessState,
                 roleIdentification,
                 noRootkit,
-                systemFirmware
+                systemFirmware,
+                utilizeChangeOperatingMode
         | authenticatedAccess
             +> dataDestruction,
                 activateFirmwareUpdateMode,
@@ -185,6 +186,11 @@ category System {
             developer info: "T855"
             -> physicalImpact
 
+        & utilizeChangeOperatingMode
+            developer info: "T858"
+            -> physicalImpact,
+                authorizedAccess
+
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
             -> modifyAlarmSettings,
@@ -193,7 +199,7 @@ category System {
             developer info: "T809 - Mitigation"
             -> dataDestruction
         # applyPrincipleOfLeastPrivilege
-            developer info: "T809,T812,T838,T801,T850,T816,T833,T839,T857 - Mitigation"
+            developer info: "T809,T812,T838,T801,T850,T816,T833,T839,T857,T858 - Mitigation"
             -> dataDestruction,
                 defaultCredentials,
                 modifyAlarmSettings,
@@ -202,20 +208,22 @@ category System {
                 deviceRestartShutdownDefended,
                 modifyControlLogic,
                 moduleFirmware,
-                systemFirmware
+                systemFirmware,
+                utilizeChangeOperatingMode
         # useCryptographyKeyForFirmware
             developer info: "T839 - Mitigation"
             -> moduleFirmware
         # applyMultiFactorAuthentication
-            developer info: "T809,T812,T805,T816,T824,T851 - Mitigation"
+            developer info: "T809,T812,T805,T816,T824,T851,T858 - Mitigation"
             -> dataDestruction,
                 defaultCredentials,
                 blockSerialCom,
                 deviceRestartShutdownDefended,
                 IOmoduleDiscovery,
-                rootkit
+                rootkit,
+                utilizeChangeOperatingMode
         # restrictedPhysicalAccess
-            developer info: "T809,T838,T801,T846,T850,T805,T816,T824,T833,T839,T851,T857 - Mitigation"
+            developer info: "T809,T838,T801,T846,T850,T805,T816,T824,T833,T839,T851,T857,T858 - Mitigation"
             -> dataDestruction,
                 modifyAlarmSettings,
                 monitorProcessState,
@@ -227,7 +235,8 @@ category System {
                 modifyControlLogic,
                 moduleFirmware,
                 rootkit,
-                systemFirmware
+                systemFirmware,
+                utilizeChangeOperatingMode
         # whitelistAllowedApplications
             developer info: "T809,T839,T851 - Mitigation"
             -> dataDestruction,
@@ -246,5 +255,8 @@ category System {
                 moduleFirmware,
                 systemFirmware,
                 unauthorizedCommandMessage
+        # implementChallengeResponseAuthentication
+            developer info: "T858 - Mitigation"
+            -> utilizeChangeOperatingMode
     }
 }

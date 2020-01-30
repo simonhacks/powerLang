@@ -3,7 +3,8 @@ category System {
         | access
             +> modifyControlLogic,
                 moduleFirmware,
-                systemFirmware
+                systemFirmware,
+                utilizeChangeOperatingMode
         | authenticatedAccess
             +> programDownload
         | restrictedOperations {I,A}
@@ -85,34 +86,42 @@ category System {
             developer info: "T857"
             -> authenticatedAccess
 
+        & utilizeChangeOperatingMode
+            developer info: "T858"
+            -> physicalImpact,
+                authorizedAccess
+
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
             -> modifyAlarmSettings,
                 monitorProcessState
         # applyPrincipleOfLeastPrivilege
-            developer info: "T812,T838,T801,T833,T839,T857 - Mitigation"
+            developer info: "T812,T838,T801,T833,T839,T857,T858 - Mitigation"
             -> defaultCredentials,
                 modifyAlarmSettings,
                 monitorProcessState,
                 modifyControlLogic,
                 moduleFirmware,
-                systemFirmware
+                systemFirmware,
+                utilizeChangeOperatingMode
         # applyPasswordRules
             developer info: "T812 - Mitigation"
             -> defaultCredentials
         # applyMultiFactorAuthentication
-            developer info: "T812,T805 - Mitigation"
+            developer info: "T812,T805,T858 - Mitigation"
             -> defaultCredentials,
-                blockSerialCom
+                blockSerialCom,
+                utilizeChangeOperatingMode
         # restrictedPhysicalAccess
-            developer info: "T838,T801,T846,T805,T833,T839,T857 - Mitigation"
+            developer info: "T838,T801,T846,T805,T833,T839,T857,T858 - Mitigation"
             -> modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
                 blockSerialCom,
                 modifyControlLogic,
                 moduleFirmware,
-                systemFirmware
+                systemFirmware,
+                utilizeChangeOperatingMode
         # applyIDS
             developer info: "T838,T846,T805,T833,T839,T857 - Mitigation"
             -> modifyAlarmSettings,
@@ -127,5 +136,8 @@ category System {
         # whitelistAllowedApplications
             developer info: "T839 - Mitigation"
             -> moduleFirmware
+        # implementChallengeResponseAuthentication
+            developer info: "T858 - Mitigation"
+            -> utilizeChangeOperatingMode
     }
 }
