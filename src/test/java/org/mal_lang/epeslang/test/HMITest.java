@@ -3,12 +3,11 @@ package org.mal_lang.epeslang.test;
 import core.Attacker;
 import org.junit.jupiter.api.Test;
 
-public class ControllerTest extends EpesLangTest {
+public class HMITest extends EpesLangTest {
     @Test
-    public void testGUINoDefense() {
+    public void testAutomatedCollectionNoDefense() {
         Attacker attacker = new Attacker();
-        Controller controller = new Controller(
-                false, false,
+        HMI hmi = new HMI(
                 false, false,
                 false, false,
                 false, false,
@@ -18,10 +17,9 @@ public class ControllerTest extends EpesLangTest {
                 false, false
         );
 
-        attacker.addAttackPoint(controller.access);
-        attacker.addAttackPoint(controller.credentials);
+        attacker.addAttackPoint(hmi.graphicalUserInterface);
         attacker.attack();
 
-        controller.automatedCollection.assertCompromisedInstantaneously();
+        hmi.pointAndTackIdentification.assertCompromisedInstantaneously();
     }
 }
