@@ -5,7 +5,10 @@ category System {
                 noLossOfView,
                 dontMasquerade,
                 dontModifyAlarmSettings,
-                monitorProcessState
+                monitorProcessState,
+                remoteFileCopyReceive,
+                roleIdentification,
+                screenCapture
         | authenticatedAccess
             +> dataDestruction,
                 dataFromInformationRepositories,
@@ -15,7 +18,11 @@ category System {
                 masquerade,
                 modifyAlarmSettings,
                 modifyParameter,
-                networkConnectionEnumeration
+                networkConnectionEnumeration,
+                projectFileInfection,
+                remoteFileCopySend,
+                remoteSystemDiscovery,
+                rogueMasterDevice
         | hidableAttacks
             //add attacks
 
@@ -88,8 +95,13 @@ category System {
             developer info: "T840"
             -> network.assets.access
 
-        | pointAndTackIdentification
+        | pointAndTackIdentification {C}
             developer info: "T861"
+
+        | projectFileInfection
+            developer info: "T873"
+            -> networks.assets[Controller].authenticatedAccess
+
         | remoteFileCopyReceive
             developer info: "T867"
             -> authenticatedAccess
@@ -98,20 +110,31 @@ category System {
             -> networks.assets[ControlServer].remoteFileCopyReceive,
                 networks.assets[HMI].remoteFileCopyReceive,
                 networks.assets[DataHistorian].remoteFileCopyReceive
+
         & remoteSystemDiscovery
             developer info: "T846"
             -> networks.assets.access
+
         | replicationThroughRemovableMedia
             developer info: "T847"
             -> access
-        & rogueMasterDevice
+
+        | rogueMasterDevice
+            developer info: "T848"
+            -> rogueMasterDeviceDefended
+        & rogueMasterDeviceDefended
             developer info: "T848"
             -> networks.assets.authenticatedAccess
+
         & roleIdentification
             developer info: "T850"
             -> networks.assets[ControlServer].rogueMasterDevice,
                 networks.assets[HMI].rogueMasterDevice,
                 networks.assets[EngineeringWorkstation].rogueMasterDevice
+
+        | screenCapture {C}
+            developer info: "T852"
+
         | serviceStop
             developer info: "T881"
             -> dataDestruction
@@ -121,9 +144,6 @@ category System {
         | userExecution
             developer info: "T863"
             -> authenticatedAccess
-        | projectFileInfection
-            developer info: "T873"
-            -> networks.assets[Controller].authenticatedAccess
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
@@ -150,7 +170,7 @@ category System {
                 modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
-                rogueMasterDevice,
+                rogueMasterDeviceDefended,
                 roleIdentification,
                 graphicalUserInterface,
                 networkConnectionEnumeration
