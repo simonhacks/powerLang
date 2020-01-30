@@ -1,11 +1,21 @@
 category System {
     asset HMI extends IcsAsset {
         | access
-            +> defaultCredentials
+            +> defaultCredentials,
+                noLossOfView,
+                dontMasquerade,
+                dontModifyAlarmSettings,
+                monitorProcessState
         | authenticatedAccess
             +> dataDestruction,
                 dataFromInformationRepositories,
-                exploitationOfRemoteService
+                exploitationOfRemoteService,
+                lossOfView,
+                manipulationOfView,
+                masquerade,
+                modifyAlarmSettings,
+                modifyParameter,
+                networkConnectionEnumeration
         | hidableAttacks
             //add attacks
 
@@ -13,6 +23,9 @@ category System {
             developer info: "T809"
         & dataDestructionDefended {I,A}
             developer info: "T809"
+
+        | physicalImpact
+            developer info: "T836"
 
         | dataFromInformationRepositories {C}
             developer info: "T811"
@@ -29,21 +42,6 @@ category System {
             developer info: "T823"
             -> access
 
-        & modifyParameter {I}
-            developer info: "T836"
-            -> physicalImpact
-        | physicalImpact
-            developer info: "T836"
-        & masquerade //lowProbability
-            developer info: "T849"
-            -> hidableAttacks
-        | dontMasquerade //highProbablity
-            developer info: "T849"
-            -> hidableAttacks
-        # masqueradeInPlace
-            developer info: "T849"
-            -> masquerade
-
         & lossOfView //lowProbability
             developer info: "T829"
             -> hidableAttacks
@@ -54,6 +52,19 @@ category System {
             developer info: "T829"
             -> lossOfView
 
+        | manipulationOfView
+            developer info: "T832"
+            -> physicalImpact
+
+        & masquerade //lowProbability
+            developer info: "T849"
+            -> hidableAttacks
+        | dontMasquerade //highProbablity
+            developer info: "T849"
+            -> hidableAttacks
+        # masqueradeInPlace
+            developer info: "T849"
+            -> masquerade
 
         & modifyAlarmSettings //lowProbability
             developer info: "T838"
@@ -64,13 +75,18 @@ category System {
         # alarmSettingsNotModified
             developer info: "T838"
             -> modifyAlarmSettings
+
+        & modifyParameter {I}
+            developer info: "T836"
+            -> physicalImpact
+
         & monitorProcessState
             developer info: "T801"
             -> networks.assets.access
 
-        | manipulationOfView
-            developer info: "T832"
-            -> physicalImpact
+        & networkConnectionEnumeration
+            developer info: "T840"
+            -> network.assets.access
 
         | pointAndTackIdentification
             developer info: "T861"
@@ -129,24 +145,26 @@ category System {
             -> dataDestructionDefended,
                 defaultCredentials
         # restrictedPhysicalAccess
-            developer info: "T809,T838,T801,T846,T848,T850,T823 - Mitigation"
+            developer info: "T809,T838,T801,T846,T848,T850,T823,T840 - Mitigation"
             -> dataDestructionDefended,
                 modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
                 rogueMasterDevice,
                 roleIdentification,
-                graphicalUserInterface
+                graphicalUserInterface,
+                networkConnectionEnumeration
         # whitelistAllowedApplications
-            developer info: "T809,823 - Mitigation"
+            developer info: "T809,T823 - Mitigation"
             -> dataDestructionDefended,
                 graphicalUserInterface
         # applyPasswordRules
             developer info: "T812 - Mitigation"
             -> defaultCredentials
         # applyIDS
-            developer info: "T838,T846 - Mitigation"
+            developer info: "T838,T846,T840 - Mitigation"
             -> modifyAlarmSettings,
-                remoteSystemDiscovery
+                remoteSystemDiscovery,
+                networkConnectionEnumeration
     }
 }
