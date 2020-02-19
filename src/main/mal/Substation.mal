@@ -20,6 +20,8 @@ category System {
 
 //Author Engla Ling englal@kth.se
 //Last changes 200130
+//Extends and entrypoints added
+//Data renamed to SubstationData to differentiate from coreLang Data
 
 category Functional {
         asset Substation {
