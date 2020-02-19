@@ -8,6 +8,7 @@ category System {
     asset SCADA extends ControlServer
     user info: "Supervisory Control And Data Acquisition"
      {
+
      }
 
      asset DPR extends SIS
@@ -17,16 +18,143 @@ category System {
      }
 }
 
+//Author Engla Ling englal@kth.se
+//Last changes 200130
+
+category Functional {
+        asset Substation {
+        }
+        asset Transformer {
+				| execution
+        }
+        asset VoltageLevel {
+        }
+        asset Bay {
+        }
+        asset Equipment extends RTU {
+                | authenticatedAccess
+                    +> execution
+                | execution
+        }
+        asset SubEquipment {
+				| execution
+        }
+        asset ConnectivityNode {
+				| communicate
+						-> logicalNode.impact
+        }
+        asset Terminal {
+				| communicate
+						-> equipment.execution,
+							conNode.communicate
+        }
+        asset Function {
+				| access
+                        -> execution
+                | execution
+                        -> logicalNode.impact
+        }
+        asset Subfunction {
+                | access
+                        -> execution
+                | execution
+                        -> logicalNode.impact
+        }
+}
+
+category Product {
+        asset LogicalDevice {
+				| impact
+					-> logicalNode.impact
+
+        }
+        asset LogicalNode {
+                | impact
+                        -> equipment.execution,
+							subEquipment.execution,
+							transformer.execution,
+							data.impact
+        }
+        asset IED extends DPR {
+                | access
+						+> communicate
+				& communicate
+						-> accessPoint.communicate
+				E router
+				user info: "If a router exist on any accessPoint a valid route is implied and communication can occur via the IED."
+						<- accessPoint.router
+						-> communicate
+        }
+        asset Server extends SCADA {
+                | authenticatedAccess
+                    +> communicate
+				| communicate
+						-> accessPoint.communicate,
+							logicalDev.impact
+        }
+        asset Data {
+                | impact
+                        -> logicalNode.impact
+        }
+        asset Router {
+                | communicate
+						-> accessPoint.communicate
+		}
+        asset Clock {
+                | impact
+				| communicate
+						-> accessPoint.communicate
+        }
+}
+
 category Communication {
-    asset IEC60870 extends IcsNetwork{
-
-    }
-
-    asset IEC61850 extends IcsNetwork{
-
-    }
+        asset SubNetwork {
+				| access
+						-> accessPoint.communicate
+        }
+        asset AccessPoint {
+				| communicate
+						-> logicalNode.impact,
+							server.communicate,
+							ied.access,
+							subNet.access,
+							router.communicate,
+							clock.communicate,
+							clock.impact
+        }
 }
 
 associations {
-
+        Bay [bay] 1 <-- Has --> * [logicalNode] LogicalNode
+        Bay [bay] 1 <-- Has --> * [equipment] Equipment
+        Bay [bay] 1 <-- Has --> * [conNode] ConnectivityNode
+        Clock [clock] 0..1 <-- Communication --> 1 [accessPoint] AccessPoint
+        Equipment [equipment] 1 <-- Has --> * [subEquipment] SubEquipment
+        Function [function] * <-- IsIn --> 1 [substation] Substation
+        Function [function] 1 <-- Has --> * [subfunction] Subfunction
+        Function [function] * <-- Has --> 1 [voltage] VoltageLevel
+        Function [function] * <-- IsIn --> * [bay] Bay
+        Function [function] * <-- Communication --> * [logicalNode] LogicalNode
+        Function [function] * <-- Communication --> * [equipment] Equipment
+        IED [ied] 1 <-- Communication --> 1..* [accessPoint] AccessPoint
+        LogicalDevice [logicalDev] 1 <-- Contains --> * [logicalNode] LogicalNode
+        LogicalDevice [logicalDev] 1..* <-- HostedOn --> 1 [server] Server
+        LogicalNode [logicalNode] * <-- Communication --> * [accessPoint] AccessPoint
+        LogicalNode [logicalNode] 1 <-- Handles --> 1..* [data] Data
+        LogicalNode [logicalNode] * <-- Communication --> 1 [conNode] ConnectivityNode
+        LogicalNode [logicalNode] * <-- IsIn --> 1 [transformer] Transformer
+        LogicalNode [logicalNode] * <-- Has --> 1 [voltage] VoltageLevel
+        LogicalNode [logicalNode] * <-- Communication --> * [equipment] Equipment
+        LogicalNode [logicalNode] * <-- Communication --> * [subEquipment] SubEquipment
+		LogicalNode [logicalNode] * <-- IsIn --> 1 [substation] Substation
+        Router [router] 0..1 <-- Communication --> 1 [accessPoint] AccessPoint
+        Server [server] 0..1 <-- Communication --> 1..* [accessPoint] AccessPoint
+        Subfunction [subfunction] * <-- PartOf --> * [equipment] Equipment
+        Subfunction [subfunction] * <-- Communication --> * [logicalNode] LogicalNode
+        SubNetwork [subNet] 1 <-- Has --> 1..* [accessPoint] AccessPoint
+        Substation [substation] * <-- Has --> * [transformer] Transformer
+        Substation [substation] 1 <-- Has --> * [voltage] VoltageLevel
+        Terminal [terminal] * <-- Communication --> 1 [equipment] Equipment
+        Terminal [terminal] * <-- Communication --> 1 [conNode] ConnectivityNode
+        VoltageLevel [voltageLevel] * <-- Has --> * [bay] Bay
 }
