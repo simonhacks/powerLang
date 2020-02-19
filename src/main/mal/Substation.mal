@@ -92,7 +92,7 @@ category Product {
 						-> accessPoint.communicate,
 							logicalDev.impact
         }
-        asset Data {
+        asset SubstationData {
                 | impact
                         -> logicalNode.impact
         }
@@ -140,7 +140,7 @@ associations {
         LogicalDevice [logicalDev] 1 <-- Contains --> * [logicalNode] LogicalNode
         LogicalDevice [logicalDev] 1..* <-- HostedOn --> 1 [server] Server
         LogicalNode [logicalNode] * <-- Communication --> * [accessPoint] AccessPoint
-        LogicalNode [logicalNode] 1 <-- Handles --> 1..* [data] Data
+        LogicalNode [logicalNode] 1 <-- Handles --> 1..* [data] SubstationData
         LogicalNode [logicalNode] * <-- Communication --> 1 [conNode] ConnectivityNode
         LogicalNode [logicalNode] * <-- IsIn --> 1 [transformer] Transformer
         LogicalNode [logicalNode] * <-- Has --> 1 [voltage] VoltageLevel

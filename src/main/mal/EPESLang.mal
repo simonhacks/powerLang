@@ -19,6 +19,7 @@
 include "ICS.mal"
 include "Prosumer.mal"
 include "Substation.mal"
+include "core/coreLang.mal"
 
 
 
