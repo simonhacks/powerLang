@@ -1,5 +1,5 @@
 category System {
-    abstract asset IcsAsset {
+    abstract asset IcsAsset extends Application {
         | access
             -> authentication
         & authentication
@@ -29,12 +29,12 @@ category System {
             -> validAccountsDefended
         # restrictedAccessToConfigurationSettings
             developer info: "T885 - Mitigation"
-            -> networks.assets[Firewall].commonlyUsedPort
+            -> networks.applications[Firewall].commonlyUsedPort
         # restrictiveSettings
             developer info: "T885 - Mitigation"
-            -> networks.assets[Firewall].commonlyUsedPort
+            -> networks.applications[Firewall].commonlyUsedPort
         # assessedAndSecured
             developer info: "T885 - Mitigation"
-            -> networks.assets[Firewall].commonlyUsedPort
+            -> networks.applications[Firewall].commonlyUsedPort
     }
 }

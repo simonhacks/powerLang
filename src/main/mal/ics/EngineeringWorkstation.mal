@@ -33,7 +33,7 @@ category System {
 
         & exploitationOfRemoteService
             developer info: "T866"
-            -> networks.assets.access
+            -> networks.applications.access
 
         & lossOfView //lowProbability
             developer info: "T829"
@@ -51,11 +51,11 @@ category System {
 
         & projectFileInfection
             developer info: "T873"
-            -> networks.assets[Controller].authenticatedAccess
+            -> networks.applications[Controller].authenticatedAccess
 
         & rogueMasterDevice
             developer info: "T848"
-            -> networks.assets.authenticatedAccess
+            -> networks.applications[IcsAsset].authenticatedAccess
 
         & scripting
             developer info: "T853"
@@ -75,8 +75,8 @@ category System {
 
         | modifyControlLogic
             developer info: "T833"
-            -> networks.assets[Controller].modifyControlLogic,
-                networks.assets[SIS].modifyControlLogic
+            -> networks.applications[Controller].modifyControlLogic,
+                networks.applications[SIS].modifyControlLogic
 
         # applyPrincipleOfLeastPrivilege
             developer info: "T812,T853 - Mitigation"

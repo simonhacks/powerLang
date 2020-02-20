@@ -58,7 +58,7 @@ category System {
 
         & exploitationOfRemoteService
             developer info: "T866"
-            -> networks.assets.access
+            -> networks.applications.access
 
         | graphicalUserInterface
             developer info: "T823"
@@ -104,31 +104,31 @@ category System {
 
         & monitorProcessState
             developer info: "T801"
-            -> networks.assets.access
+            -> networks.applications.access
 
         & networkConnectionEnumeration
             developer info: "T840"
-            -> networks.assets.access
+            -> networks.applications.access
 
         & pointAndTackIdentification {C}
             developer info: "T861"
 
         & projectFileInfection
             developer info: "T873"
-            -> networks.assets[Controller].authenticatedAccess
+            -> networks.applications[Controller].authenticatedAccess
 
         & remoteFileCopyReceive
             developer info: "T867"
             -> authenticatedAccess
         & remoteFileCopySend
             developer info: "T867"
-            -> networks.assets[ControlServer].remoteFileCopyReceive,
-                networks.assets[HMI].remoteFileCopyReceive,
-                networks.assets[DataHistorian].remoteFileCopyReceive
+            -> networks.applications[ControlServer].remoteFileCopyReceive,
+                networks.applications[HMI].remoteFileCopyReceive,
+                networks.applications[DataHistorian].remoteFileCopyReceive
 
         & remoteSystemDiscovery
             developer info: "T846"
-            -> networks.assets.access
+            -> networks.applications.access
 
         | replicationThroughRemovableMedia
             developer info: "T847"
@@ -139,13 +139,13 @@ category System {
             -> rogueMasterDeviceDefended
         & rogueMasterDeviceDefended
             developer info: "T848"
-            -> networks.assets.authenticatedAccess
+            -> networks.applications[IcsAsset].authenticatedAccess
 
         & roleIdentification
             developer info: "T850"
-            -> networks.assets[ControlServer].rogueMasterDevice,
-                networks.assets[HMI].rogueMasterDevice,
-                networks.assets[EngineeringWorkstation].rogueMasterDevice
+            -> networks.applications[ControlServer].rogueMasterDevice,
+                networks.applications[HMI].rogueMasterDevice,
+                networks.applications[EngineeringWorkstation].rogueMasterDevice
 
         | screenCapture {C}
             developer info: "T852"

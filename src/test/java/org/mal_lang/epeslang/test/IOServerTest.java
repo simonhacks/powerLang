@@ -19,7 +19,7 @@ public class IOServerTest extends EpesLangTest {
                 false
         );
 
-        network.addAssets(server);
+        network.addApplications(server);
 
         attacker.addAttackPoint(server.externalRemoteService);
         attacker.addAttackPoint(network.access);

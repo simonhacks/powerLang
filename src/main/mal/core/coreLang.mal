@@ -191,7 +191,7 @@ category Networking {
     // If you have access to a network zone, you shall be able to connect (not log in) to any other service on the same network. (nmap scan) (Joar)
     // If you have managed to log in to and use a proxy, transparent or not, you shall be able to access any service protected by that proxy. (Joar)
 
-    asset Network extends Object
+    asset Network
       developer info: "A network zone is a set of network accessible applications."
     {
 

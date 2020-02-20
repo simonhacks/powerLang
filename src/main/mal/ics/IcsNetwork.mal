@@ -1,5 +1,5 @@
 category Network {
-    asset IcsNetwork {
+    asset IcsNetwork extends Network {
         | access
             -> MITM,
                 blockCommandMessage,
@@ -13,27 +13,27 @@ category Network {
                 unauthorizedCommandMessage,
                 spoofReportingMessage
         | blockReportingMessage
-            -> assets[Controller].blockReportingMessage,
-                assets[IOServer].blockReportingMessage
+            -> applications[Controller].blockReportingMessage,
+                applications[IOServer].blockReportingMessage
         | modifyParameter
-            -> assets[ControlServer].modifyParameter,
-                assets[Controller].modifyParameter,
-                assets[SIS].modifyParameter,
-                assets[HMI].modifyParameter
+            -> applications[ControlServer].modifyParameter,
+                applications[Controller].modifyParameter,
+                applications[SIS].modifyParameter,
+                applications[HMI].modifyParameter
         | unauthorizedCommandMessage
-            -> assets[Controller].unauthorizedCommandMessage
+            -> applications[Controller].unauthorizedCommandMessage
         | spoofReportingMessage
-            -> assets[ControlServer].spoofReportingMessage
+            -> applications[ControlServer].spoofReportingMessage
 
         & blockCommandMessage
             developer info: "T803"
-            -> assets[Controller].restrictedOperations
+            -> applications[Controller].restrictedOperations
 
         & controlDeviceIdentification
             developer info: "T808"
-            -> assets[Controller].access,
-                assets[Controller].exploitationForEvasion,
-                assets[SIS].exploitationForEvasion
+            -> applications[Controller].access,
+                applications[Controller].exploitationForEvasion,
+                applications[SIS].exploitationForEvasion
 
         & networkSniffing
             developer info: "T824"
@@ -41,48 +41,48 @@ category Network {
 
         | serialConnectionEnumeration
             developer info: "T854"
-            -> assets[Controller].access,
-                assets[SIS].access
+            -> applications[Controller].access,
+                applications[SIS].access
 
         # encryptCommunication
             developer info: "T830,T848,T850,T856,T808,T824 - Mitigation"
             -> MITM,
-                assets[ControlServer].rogueMasterDevice,
-                assets[HMI].rogueMasterDevice,
-                assets[EngineeringWorkstation].rogueMasterDevice,
-                assets[ControlServer].roleIdentification,
-                assets[HMI].roleIdentification,
-                assets[DataHistorian].roleIdentification,
-                assets[Controller].roleIdentification,
-                assets[ControlServer].spoofReportingMessage,
+                applications[ControlServer].rogueMasterDevice,
+                applications[HMI].rogueMasterDevice,
+                applications[EngineeringWorkstation].rogueMasterDevice,
+                applications[ControlServer].roleIdentification,
+                applications[HMI].roleIdentification,
+                applications[DataHistorian].roleIdentification,
+                applications[Controller].roleIdentification,
+                applications[ControlServer].spoofReportingMessage,
                 controlDeviceIdentification,
                 networkSniffing
         # challengeResponseAuthentication
             developer info: "T830,T859,T824 - Mitigation"
             -> MITM,
-                assets.validAccounts,
+                applications[IcsAsset].validAccounts,
                 networkSniffing
         # restrictedPhysicalAccess
             developer info: "T830,T803,T804,T808,T824,T854 - Mitigation"
             -> MITM,
                 blockCommandMessage,
-                assets[Controller].blockReportingMessage,
-                assets[IOServer].blockReportingMessage,
+                applications[Controller].blockReportingMessage,
+                applications[IOServer].blockReportingMessage,
                 controlDeviceIdentification,
                 networkSniffing,
                 serialConnectionEnumeration
         # applyIDS
             developer info: "T830,T859,T803,T804,T824 - Mitigation"
             -> MITM,
-                assets.validAccounts,
+                applications[IcsAsset].validAccounts,
                 blockCommandMessage,
-                assets[Controller].blockReportingMessage,
-                assets[IOServer].blockReportingMessage,
+                applications[Controller].blockReportingMessage,
+                applications[IOServer].blockReportingMessage,
                 networkSniffing
         # whitelistAllowedDevices
-            -> assets[ControlServer].rogueMasterDevice,
-                assets[HMI].rogueMasterDevice,
-                assets[EngineeringWorkstation].rogueMasterDevice,
+            -> applications[ControlServer].rogueMasterDevice,
+                applications[HMI].rogueMasterDevice,
+                applications[EngineeringWorkstation].rogueMasterDevice,
                 networkSniffing
     }
 }

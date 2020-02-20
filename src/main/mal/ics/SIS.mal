@@ -49,7 +49,7 @@ category System {
 
         & automatedCollection
             developer info: "T802"
-            -> networks.assets.access
+            -> networks.applications.access
 
         & defaultCredentials
             developer info: "T812"
@@ -84,12 +84,12 @@ category System {
         & moduleFirmware
             developer info: "T839"
             -> restrictedOperations,
-                networks.assets.access,
+                networks.applications.access,
                 authenticatedAccess
 
         & monitorProcessState
             developer info: "T801"
-            -> networks.assets.access
+            -> networks.applications.access
 
         | programDownload
             developer info: "T843"
@@ -98,7 +98,7 @@ category System {
 
         & remoteSystemDiscovery
             developer info: "T846"
-            -> networks.assets.access
+            -> networks.applications.access
 
         | systemFirmware
             developer info: "T857"

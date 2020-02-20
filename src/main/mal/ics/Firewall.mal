@@ -6,7 +6,7 @@ category System {
             developer info: "T885"
             -> bypass
         | bypass
-            -> networks.assets.access
+            -> networks.applications.access
         # applyWhitelist
             developer info: "T885 - Mitigation"
             -> commonlyUsedPort

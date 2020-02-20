@@ -36,7 +36,7 @@ category System {
 
         & automatedCollection
             developer info: "T802"
-            -> networks.assets.access
+            -> networks.applications.access
 
         | bruteForceIO
             developer info: "T806"
@@ -96,7 +96,7 @@ category System {
 
         & monitorProcessState
             developer info: "T801"
-            -> networks.assets.access
+            -> networks.applications.access
 
         & pointAndTackIdentification {C}
             developer info: "T861"
@@ -106,13 +106,13 @@ category System {
             -> authenticatedAccess
         & remoteFileCopySend
             developer info: "T867"
-            -> networks.assets[ControlServer].remoteFileCopyReceive,
-                networks.assets[HMI].remoteFileCopyReceive,
-                networks.assets[DataHistorian].remoteFileCopyReceive
+            -> networks.applications[ControlServer].remoteFileCopyReceive,
+                networks.applications[HMI].remoteFileCopyReceive,
+                networks.applications[DataHistorian].remoteFileCopyReceive
 
         & remoteSystemDiscovery
             developer info: "T846"
-            -> networks.assets.access
+            -> networks.applications.access
 
         & replicationThroughRemovableMedia
             developer info: "T847"
@@ -123,14 +123,14 @@ category System {
             -> rogueMasterDeviceHided
         & rogueMasterDeviceHided
             developer info: "T848"
-            -> networks.assets.authenticatedAccess
+            -> networks.applications[IcsAsset].authenticatedAccess
 
         & roleIdentification
             developer info: "T850"
             -> rogueMasterDevice,
-                networks.assets[ControlServer].rogueMasterDevice,
-                networks.assets[HMI].rogueMasterDevice,
-                networks.assets[EngineeringWorkstation].rogueMasterDevice
+                networks.applications[ControlServer].rogueMasterDevice,
+                networks.applications[HMI].rogueMasterDevice,
+                networks.applications[EngineeringWorkstation].rogueMasterDevice
 
         | serviceStop
             developer info: "T881"

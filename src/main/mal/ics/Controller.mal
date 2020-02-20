@@ -68,7 +68,7 @@ category System {
 
         & automatedCollection
             developer info: "T802"
-            -> networks.assets.access
+            -> networks.applications.access
 
         & blockReportingMessage
             developer info: "T804"
@@ -124,7 +124,7 @@ category System {
         & IOmoduleDiscovery
             developer info: "T824"
             -> IOimage,
-                networks.assets.access
+                networks.applications.access
 
         & manipulateIOimage
             developer info: "T835"
@@ -159,12 +159,12 @@ category System {
         & moduleFirmware
             developer info: "T839"
             -> restrictedOperations,
-                networks.assets.access,
+                networks.applications.access,
                 authenticatedAccess
 
         & monitorProcessState
             developer info: "T801"
-            -> networks.assets.access
+            -> networks.applications.access
 
         & programDownload
             developer info: "T843"
@@ -173,13 +173,13 @@ category System {
 
         & remoteSystemDiscovery
             developer info: "T846"
-            -> networks.assets.access
+            -> networks.applications.access
 
         & roleIdentification
             developer info: "T850"
-            -> networks.assets[ControlServer].rogueMasterDevice,
-                networks.assets[HMI].rogueMasterDevice,
-                networks.assets[EngineeringWorkstation].rogueMasterDevice
+            -> networks.applications[ControlServer].rogueMasterDevice,
+                networks.applications[HMI].rogueMasterDevice,
+                networks.applications[EngineeringWorkstation].rogueMasterDevice
 
         & rootkit //lowProbability
             developer info: "T851"

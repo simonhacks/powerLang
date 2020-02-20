@@ -21,7 +21,6 @@ category Zone {
 }
 
 associations {
-    IcsAsset [assets] * <-- NetworkAccess --> * [networks] IcsNetwork
     DataHistorian [historian] 1 <-- NetworkAccess --> * [dmz] DMZ
     Internet [internet] 1 <-- NetworkAccess --> * [dmz] DMZ
     IOServer [server] 1 <-- Controls --> * [controller] Controller

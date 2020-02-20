@@ -9,7 +9,7 @@ This project has the following structure:
 * The directory `src/main/mal` contains the MAL specification
   `exampleLang.mal`, which is the MAL specification of exampleLang.
 * The directory `src/main/resources/icons` contains SVG icons for the
-  assets in exampleLang.
+  applications in exampleLang.
 * The directory `src/test/java/org/mal_lang/examplelang/test`
   contains the unit tests of exampleLang.
 
