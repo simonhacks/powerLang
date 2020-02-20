@@ -40,6 +40,9 @@ category IcsLang {
             -> controlDeviceIdentification
 
         | serialConnectionEnumeration
+            -> _serialConnectionEnumerationDefended
+
+        | _serialConnectionEnumerationDefended
             developer info: "T854"
             -> applications[Controller].access,
                 applications[SIS].access
@@ -70,7 +73,7 @@ category IcsLang {
                 applications[IOServer].blockReportingMessage,
                 controlDeviceIdentification,
                 networkSniffing,
-                serialConnectionEnumeration
+                _serialConnectionEnumerationDefended
         # applyIDS
             developer info: "T830,T859,T803,T804,T824 - Mitigation"
             -> MITM,
