@@ -61,6 +61,9 @@ category IcsLang {
             -> networks.applications.access
 
         | graphicalUserInterface
+            -> _graphicalUserInterfaceDefended
+
+        & _graphicalUserInterfaceDefended
             developer info: "T823"
             -> access
 
@@ -169,7 +172,7 @@ category IcsLang {
         # applyPasswordAuthentication
             developer info: "T809,T823 - Mitigation"
             -> dataDestructionDefended,
-                graphicalUserInterface
+                _graphicalUserInterfaceDefended
         # applyPrincipleOfLeastPrivilege
             developer info: "T809,T812,T838,T801,T850 - Mitigation"
             -> dataDestructionDefended,
@@ -189,12 +192,12 @@ category IcsLang {
                 remoteSystemDiscovery,
                 rogueMasterDeviceDefended,
                 roleIdentification,
-                graphicalUserInterface,
+                _graphicalUserInterfaceDefended,
                 networkConnectionEnumeration
         # whitelistAllowedApplications
             developer info: "T809,T823 - Mitigation"
             -> dataDestructionDefended,
-                graphicalUserInterface
+                _graphicalUserInterfaceDefended
         # applyPasswordRules
             developer info: "T812 - Mitigation"
             -> defaultCredentials

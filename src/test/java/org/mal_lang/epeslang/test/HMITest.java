@@ -22,4 +22,22 @@ public class HMITest extends EpesLangTest {
 
         hmi.pointAndTackIdentification.assertCompromisedInstantaneously();
     }
+
+    @Test
+    public void testAccessNotReached() {
+        Attacker attacker = new Attacker();
+        HMI hmi = new HMI(
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false
+        );
+
+        attacker.attack();
+
+        hmi.access.assertUncompromised();
+    }
 }
