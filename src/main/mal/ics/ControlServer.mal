@@ -61,7 +61,10 @@ category IcsLang {
             developer info: "T822"
             -> access
 
-        & locationIdentification
+        | locationIdentification
+            -> _locationIdentificationDefended
+
+        & _locationIdentificationDefended
             developer info: "T825"
             -> access
 
@@ -166,7 +169,7 @@ category IcsLang {
         # restrictedPhysicalAccess
             developer info: "T809,T825,T838,T801,T846,T848,T850,T856 - Mitigation"
             -> dataDestructionDefended,
-                locationIdentification,
+                _locationIdentificationDefended,
                 modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
@@ -180,7 +183,7 @@ category IcsLang {
             -> defaultCredentials
         # keepLocationInformationSecret
             developer info: "T825 - Mitigation"
-            -> locationIdentification
+            -> _locationIdentificationDefended
         # applyIDS
             developer info: "T838,T846,T856 - Mitigation"
             -> modifyAlarmSettings,
