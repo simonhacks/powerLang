@@ -1,8 +1,8 @@
 include "coreVulnerability.mal"
 include "VulnerabilityManual.mal"
-include "VulnerabilityAutomatic.mal"
+//include "VulnerabilityAutomatic.mal"
 
-category System {
+category coreLang {
 
     abstract asset Object
       developer info: "An object is the simplest form of an asset that can be compromised by a vulnerability."
@@ -112,9 +112,6 @@ category System {
         user info: "The attacker can deny some or all functionality and data pertaining to this service."
 
     }
-}
-
-category Communication {
 
     asset Data {
         & access
@@ -135,9 +132,6 @@ category Communication {
           user info: "The attacker can delete the data."
           ->  containedData.delete
     }
-}
-
-category IAM {
 
     asset Identity
     {
@@ -176,18 +170,13 @@ category IAM {
         ->  systems.connect,
             systems.physicalAccess
     }
-}
-
-category User {
 
     asset User
     {
         | compromise {C}
           ->  userIds.assume
     }
-}
 
-category Networking {
     // If you have access to a network zone, you shall be able to connect (not log in) to any other service on the same network. (nmap scan) (Joar)
     // If you have managed to log in to and use a proxy, transparent or not, you shall be able to access any service protected by that proxy. (Joar)
 

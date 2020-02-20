@@ -1,4 +1,4 @@
-category System {
+category Prosumer {
     asset SmartMeter extends Controller {
 
     }
@@ -8,10 +8,6 @@ category System {
     {
 
     }
-}
-
-category Communication {
-
 }
 
 associations {

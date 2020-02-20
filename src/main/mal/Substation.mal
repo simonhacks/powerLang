@@ -1,4 +1,4 @@
-category System {
+category Substation {
     asset RTU extends Controller
     user info: "Remote Terminal Unit"
     {
@@ -23,7 +23,7 @@ category System {
 //Extends and entrypoints added
 //Data renamed to SubstationData to differentiate from coreLang Data
 
-category Functional {
+category Substation {
         asset Substation {
         }
         asset Transformer {
@@ -62,9 +62,7 @@ category Functional {
                 | execution
                         -> logicalNode.impact
         }
-}
 
-category Product {
         asset LogicalDevice {
 				| impact
 					-> logicalNode.impact
@@ -107,9 +105,7 @@ category Product {
 				| communicate
 						-> accessPoint.communicate
         }
-}
 
-category Communication {
         asset SubNetwork {
 				| access
 						-> accessPoint.communicate

@@ -1,4 +1,4 @@
-category System {
+category IcsLang {
     asset Firewall extends IcsAsset {
         | access
            +> commonlyUsedPort

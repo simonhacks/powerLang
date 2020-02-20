@@ -1,4 +1,4 @@
-category Network {
+category IcsLang {
     asset IcsNetwork extends Network {
         | access
             -> MITM,

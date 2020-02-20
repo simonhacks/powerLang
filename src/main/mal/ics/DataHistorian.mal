@@ -1,4 +1,4 @@
-category DataHistorian {
+category IcsLang {
     asset DataHistorian extends IcsAsset {
         | access
             +> remoteFileCopyReceive,
