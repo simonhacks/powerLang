@@ -47,11 +47,6 @@ category System {
         ->  sysExecutedApps.deny
     }
 
-    //asset OperatingSystem extends Application{
-      // If the OS is compromised (at kernel level for example, or admin rights) then all the executed applications should be compromised
-      // If AD is used then having full access on the OS should lead to possible compromise of any associated Identity (Per)
-    //}
-
     asset Application extends Object
       developer info: "An application specifies pretty much everything that is executed or can execute other applications."
     {
@@ -120,14 +115,6 @@ category System {
 }
 
 category Communication {
-
-    //asset DataStore extends Object
-    //  developer info: "Datastore is mainly used for pointing out where a piece of precious data is hosted."
-    //  modeler info: "It is associated with an Identity asset which is needed to 'unlock' before accessing that data."
-    //{
-    //  | authenticatedAccess
-    //    ->  datas.access
-    //}
 
     asset Data {
         & access
@@ -255,15 +242,6 @@ category Networking {
 
       | denialOfService {A}
     }
-
-    abstract asset Proxy extends Object {
-    }
-
-    asset IPS extends Proxy {
-    }
-
-    asset IDS extends Proxy {
-    }
 }
 
 associations {
@@ -291,19 +269,6 @@ associations {
   Connection       [connection]        0..1 <-- DataInTransit         --> *   [data]                   Data
       developer info: "And a connection can have data in transit."
 
-  // A network zone is a set of network accessible applications
-  //Network          [networks]             * <-- NetworkExposure       --> *   [systems]                System  // Systems should be connected to Physical Zones and not to networks. This assumption should also be tested!
-
-  //Application      [netclients]          * <-- ApplicationConnection --> *   [netapplication]         Application //This is a dataflow... If any side of the connection is compromised -> other side can be compromised after effort, connection should be always possible (e.g client side attack)
-  //    developer info: "An application can communicate directly to another application. This could be useful for auto modeling."
-  //Network          [network]             * <-- NetworkConnection     --> *   [connections]            Connection // Is this needed? No, but this is just an assumption!
-
-  // We need to talk decide about this:
-  //Proxy            [proxy]                * <-- ProxyConnection       --> *   [networks]               Network
-
-  // ### Data related associations
-  //DataStore        [datastore]            1 <-- DataStoring           --> *   [datas]                  Data
-  //    user info: "A datastore is responsible for storing data."
   Data             [containingData]       * <-- Containment           --> *   [containedData]          Data
       user info: "Data can be contained inside other data."
   Data             [containedData]        * <-- AppContainment        --> *   [containingApp]          Application
