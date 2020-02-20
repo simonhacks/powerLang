@@ -120,8 +120,8 @@ category IcsLang {
 
         | rogueMasterDevice
             developer info: "T848"
-            -> rogueMasterDeviceHided
-        & rogueMasterDeviceHided
+            -> _rogueMasterDeviceDefended
+        & _rogueMasterDeviceDefended
             developer info: "T848"
             -> networks.applications[IcsAsset].authenticatedAccess
 

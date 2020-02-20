@@ -37,7 +37,7 @@ category IcsLang {
                 remoteFileCopyReceive,
                 remoteFileCopySend,
                 remoteSystemDiscovery,
-                rogueMasterDeviceDefended,
+                _rogueMasterDeviceDefended,
                 roleIdentification,
                 serviceStop
 
@@ -139,8 +139,8 @@ category IcsLang {
 
         | rogueMasterDevice
             developer info: "T848"
-            -> rogueMasterDeviceDefended
-        & rogueMasterDeviceDefended
+            -> _rogueMasterDeviceDefended
+        & _rogueMasterDeviceDefended
             developer info: "T848"
             -> networks.applications[IcsAsset].authenticatedAccess
 
@@ -190,7 +190,7 @@ category IcsLang {
                 modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
-                rogueMasterDeviceDefended,
+                _rogueMasterDeviceDefended,
                 roleIdentification,
                 _graphicalUserInterfaceDefended,
                 networkConnectionEnumeration

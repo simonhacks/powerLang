@@ -40,4 +40,22 @@ public class HMITest extends EpesLangTest {
 
         hmi.access.assertUncompromised();
     }
+
+    @Test
+    public void testRogueMasterDeciveNotReached() {
+        Attacker attacker = new Attacker();
+        HMI hmi = new HMI(
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false
+        );
+
+        attacker.attack();
+
+        hmi.rogueMasterDevice.assertUncompromised();
+    }
 }

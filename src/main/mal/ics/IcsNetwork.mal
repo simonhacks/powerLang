@@ -47,9 +47,9 @@ category IcsLang {
         # encryptCommunication
             developer info: "T830,T848,T850,T856,T808,T824 - Mitigation"
             -> MITM,
-                applications[ControlServer].rogueMasterDevice,
-                applications[HMI].rogueMasterDevice,
-                applications[EngineeringWorkstation].rogueMasterDevice,
+                applications[ControlServer]._rogueMasterDeviceDefended,
+                applications[HMI]._rogueMasterDeviceDefended,
+                applications[EngineeringWorkstation]._rogueMasterDeviceDefended,
                 applications[ControlServer].roleIdentification,
                 applications[HMI].roleIdentification,
                 applications[DataHistorian].roleIdentification,
@@ -80,9 +80,9 @@ category IcsLang {
                 applications[IOServer].blockReportingMessage,
                 networkSniffing
         # whitelistAllowedDevices
-            -> applications[ControlServer].rogueMasterDevice,
-                applications[HMI].rogueMasterDevice,
-                applications[EngineeringWorkstation].rogueMasterDevice,
+            -> applications[ControlServer]._rogueMasterDeviceDefended,
+                applications[HMI]._rogueMasterDeviceDefended,
+                applications[EngineeringWorkstation]._rogueMasterDeviceDefended,
                 networkSniffing
     }
 }

@@ -53,7 +53,10 @@ category IcsLang {
             developer info: "T873"
             -> networks.applications[Controller].authenticatedAccess
 
-        & rogueMasterDevice
+        | rogueMasterDevice
+            developer info: "T848"
+            -> _rogueMasterDeviceDefended
+        & _rogueMasterDeviceDefended
             developer info: "T848"
             -> networks.applications[IcsAsset].authenticatedAccess
 
