@@ -106,4 +106,37 @@ public class HMITest extends EpesLangTest {
 
         hmi.access.assertUncompromised();
     }
+
+    @Test
+    public void testAccessWithNetworAndWorkstationkNotReached() {
+        Attacker attacker = new Attacker();
+        HMI hmi = new HMI(
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false
+        );
+
+        attacker.attack();
+
+        IcsNetwork network = new IcsNetwork(false, false,
+                false, false,
+                false);
+
+        EngineeringWorkstation workstation = new EngineeringWorkstation(
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false
+        );
+
+        network.addApplications(hmi);
+        network.addApplications(workstation);
+
+        hmi.access.assertUncompromised();
+    }
 }

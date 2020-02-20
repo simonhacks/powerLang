@@ -93,7 +93,7 @@ category IcsLang {
             -> defaultCredentials
         # restrictedPhysicalAccess
             developer info: "T848,T853 - Mitigation"
-            -> rogueMasterDevice,
+            -> _rogueMasterDeviceDefended,
                 scripting
         # applyPasswordsToAllowChanges
             developer info: "T853 - Mitigation"
