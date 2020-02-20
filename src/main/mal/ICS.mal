@@ -21,8 +21,8 @@ category IcsLang {
 }
 
 associations {
-    DataHistorian [historian] 1 <-- NetworkAccess --> * [dmz] DMZ
-    Internet [internet] 1 <-- NetworkAccess --> * [dmz] DMZ
-    IOServer [server] 1 <-- Controls --> * [controller] Controller
-    AntiVirus [av] 1 <-- Monitors --> * [observed] IcsAsset
+    DataHistorian [historian] 0..1 <-- NetworkAccess --> * [dmz] DMZ
+    Internet [internet] 0..1 <-- NetworkAccess --> * [dmz] DMZ
+    IOServer [server] 0..1 <-- Controls --> * [controller] Controller
+    AntiVirus [av] 0..1 <-- Monitors --> * [observed] IcsAsset
 }
