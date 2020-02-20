@@ -42,7 +42,7 @@ category IcsLang {
         | serialConnectionEnumeration
             -> _serialConnectionEnumerationDefended
 
-        | _serialConnectionEnumerationDefended
+        & _serialConnectionEnumerationDefended
             developer info: "T854"
             -> applications[Controller].access,
                 applications[SIS].access
