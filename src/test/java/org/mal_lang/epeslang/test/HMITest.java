@@ -58,4 +58,28 @@ public class HMITest extends EpesLangTest {
 
         hmi.rogueMasterDevice.assertUncompromised();
     }
+
+    @Test
+    public void testValidAccountsNotReached() {
+        Attacker attacker = new Attacker();
+        HMI hmi = new HMI(
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false
+        );
+
+        attacker.attack();
+
+        IcsNetwork network = new IcsNetwork(false, false,
+                false, false,
+                false);
+
+        network.addApplications(hmi);
+
+        hmi.validAccounts.assertUncompromised();
+    }
 }

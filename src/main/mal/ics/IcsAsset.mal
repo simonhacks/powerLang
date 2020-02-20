@@ -13,20 +13,20 @@ category IcsLang {
 
         | validAccounts
             developer info: "T859"
-            -> validAccountsDefended
-        & validAccountsDefended
+            -> _validAccountsDefended
+        & _validAccountsDefended
             developer info: "T859"
             -> authentication
 
         # applyPrincipleOfLeastPrivilege
             developer info: "T859 - Mitigation"
-            -> validAccountsDefended
+            -> _validAccountsDefended
         # applyMultiFactorAuthentication
             developer info: "T859 - Mitigation"
-            -> validAccountsDefended
+            -> _validAccountsDefended
         # restrictedPhysicalAccess
             developer info: "T859 - Mitigation"
-            -> validAccountsDefended
+            -> _validAccountsDefended
         # restrictedAccessToConfigurationSettings
             developer info: "T885 - Mitigation"
             -> networks.applications[Firewall].commonlyUsedPort

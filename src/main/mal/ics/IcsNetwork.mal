@@ -60,7 +60,7 @@ category IcsLang {
         # challengeResponseAuthentication
             developer info: "T830,T859,T824 - Mitigation"
             -> MITM,
-                applications[IcsAsset].validAccounts,
+                applications[IcsAsset]._validAccountsDefended,
                 networkSniffing
         # restrictedPhysicalAccess
             developer info: "T830,T803,T804,T808,T824,T854 - Mitigation"
@@ -74,7 +74,7 @@ category IcsLang {
         # applyIDS
             developer info: "T830,T859,T803,T804,T824 - Mitigation"
             -> MITM,
-                applications[IcsAsset].validAccounts,
+                applications[IcsAsset]._validAccountsDefended,
                 blockCommandMessage,
                 applications[Controller].blockReportingMessage,
                 applications[IOServer].blockReportingMessage,
