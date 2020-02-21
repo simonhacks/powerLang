@@ -27,4 +27,19 @@ public class IOServerTest extends EpesLangTest {
 
         server.restrictedOperations.assertCompromisedInstantaneously();
     }
+
+    @Test
+    public void testAuthenticatedAccessNotReached() {
+        Attacker attacker = new Attacker();
+        IOServer server = new IOServer(
+                false, false,
+                false, false,
+                false, false,
+                false
+        );
+
+        attacker.attack();
+
+        server.authenticatedAccess.assertUncompromised();
+    }
 }

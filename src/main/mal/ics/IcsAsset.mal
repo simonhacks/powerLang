@@ -5,6 +5,7 @@ category IcsLang {
         & authentication
             -> authenticatedAccess
         | authenticatedAccess
+            -> networks.access
         | stealCredentials
             developer info: "T859"
             -> credentials

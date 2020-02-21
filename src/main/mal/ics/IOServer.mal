@@ -22,8 +22,8 @@ category IcsLang {
 
         | systemFirmware
             developer info: "T857"
-            -> systemFirmware
-        & systemFirmwareDefended
+            -> _systemFirmwareDefended
+        & _systemFirmwareDefended
             developer info: "T857"
             -> authenticatedAccess
 
@@ -32,14 +32,14 @@ category IcsLang {
             -> blockSerialCom
         # applyPrincipleOfLeastPrivilege
             developer info: "T857 - Mitigation"
-            -> systemFirmwareDefended
+            -> _systemFirmwareDefended
         # restrictedPhysicalAccess
             developer info: "T857,T805 - Mitigation"
-            -> systemFirmware,
+            -> _systemFirmwareDefended,
                 blockSerialCom
         # applyIDS
             developer info: "T857,T805 - Mitigation"
-            -> systemFirmwareDefended,
+            -> _systemFirmwareDefended,
                 blockSerialCom
     }
 }

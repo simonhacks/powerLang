@@ -24,4 +24,23 @@ public class ControllerTest extends EpesLangTest {
 
         controller.automatedCollection.assertCompromisedInstantaneously();
     }
+
+    @Test
+    public void testAuthenticatedAccessNotReached() {
+        Attacker attacker = new Attacker();
+        Controller controller = new Controller(
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false
+        );
+
+        attacker.attack();
+
+        controller.authenticatedAccess.assertUncompromised();
+    }
 }
