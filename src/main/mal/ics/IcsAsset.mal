@@ -15,7 +15,7 @@ category IcsLang {
         | validAccounts
             developer info: "T859"
             -> _validAccountsDefended
-        & _validAccountsDefended
+        & _validAccountsDefended @hidden
             developer info: "T859"
             -> authentication
 

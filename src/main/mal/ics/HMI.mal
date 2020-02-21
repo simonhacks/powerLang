@@ -63,7 +63,7 @@ category IcsLang {
         | graphicalUserInterface
             -> _graphicalUserInterfaceDefended
 
-        & _graphicalUserInterfaceDefended
+        & _graphicalUserInterfaceDefended @hidden
             developer info: "T823"
             -> access
 
@@ -140,7 +140,7 @@ category IcsLang {
         | rogueMasterDevice
             developer info: "T848"
             -> _rogueMasterDeviceDefended
-        & _rogueMasterDeviceDefended
+        & _rogueMasterDeviceDefended @hidden
             developer info: "T848"
             -> networks.applications[IcsAsset].authenticatedAccess
 

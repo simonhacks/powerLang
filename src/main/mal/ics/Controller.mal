@@ -89,7 +89,7 @@ category IcsLang {
 
         | defaultCredentials
             -> _defaultCredentialsDefended
-        & _defaultCredentialsDefended
+        & _defaultCredentialsDefended @hidden
             developer info: "T812"
             -> authenticatedAccess
 

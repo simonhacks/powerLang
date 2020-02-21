@@ -23,7 +23,7 @@ category IcsLang {
         | systemFirmware
             developer info: "T857"
             -> _systemFirmwareDefended
-        & _systemFirmwareDefended
+        & _systemFirmwareDefended @hidden
             developer info: "T857"
             -> authenticatedAccess
 

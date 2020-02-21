@@ -64,7 +64,7 @@ category IcsLang {
         | locationIdentification
             -> _locationIdentificationDefended
 
-        & _locationIdentificationDefended
+        & _locationIdentificationDefended @hidden
             developer info: "T825"
             -> access
 
@@ -124,7 +124,7 @@ category IcsLang {
         | rogueMasterDevice
             developer info: "T848"
             -> _rogueMasterDeviceDefended
-        & _rogueMasterDeviceDefended
+        & _rogueMasterDeviceDefended @hidden
             developer info: "T848"
             -> networks.applications[IcsAsset].authenticatedAccess
 
