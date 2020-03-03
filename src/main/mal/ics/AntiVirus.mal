@@ -2,9 +2,9 @@ category IcsLang {
     asset AntiVirus {
         # maliciousFileDetectionActivated
             developer info: "T809,T859 - Mitigation"
-            -> observed[ControlServer].dataDestruction,
-                observed[Controller].dataDestruction,
-                observed[HMI].dataDestruction,
+            -> observed[ControlServer].dataDestructionNoAntiMalware,
+                observed[Controller].dataDestructionNoAntiMalware,
+                observed[HMI].dataDestructionNoAntiMalware,
                 observed.validAccounts,
                 observed[Controller].modifyControlLogic,
                 observed[SIS].modifyControlLogic,

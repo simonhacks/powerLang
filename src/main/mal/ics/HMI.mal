@@ -10,7 +10,7 @@ category IcsLang {
                 roleIdentification,
                 screenCapture
         | authenticatedAccess
-            +> dataDestruction,
+            +> dataDestructionIncoming,
                 dataFromInformationRepositories,
                 exploitationOfRemoteService,
                 lossOfView,
@@ -25,7 +25,7 @@ category IcsLang {
                 rogueMasterDevice,
                 serviceStop
         | hidableAttacks
-            -> dataDestructionDefended,
+            -> dataDestructionIncoming,
                 dataFromInformationRepositories,
                 exploitationOfRemoteService,
                 manipulationOfView,
@@ -41,9 +41,21 @@ category IcsLang {
                 roleIdentification,
                 serviceStop
 
-        | dataDestruction
+        | dataDestructionIncoming
             developer info: "T809"
-        & dataDestructionDefended {I,A}
+            -> dataDestructionNoAntiMalware,
+                dataDestructionBypassAntiMalware
+        & dataDestructionNoAntiMalware
+            -> dataDestructionDefendedIncoming
+        | dataDestructionBypassAntiMalware [Bernoulli(0.9)]
+            modeler info: "Bagget (2008) Effectiveness of antivirus in detecting metasploit payloads"
+            -> dataDestructionDefendedIncoming
+        | dataDestructionDefendedIncoming
+            -> dataDestructionDefended
+        & dataDestructionDefended
+            developer info: "T809"
+            -> dataDestruction
+        | dataDestruction {I,A}
             developer info: "T809"
 
         | physicalImpact
@@ -155,7 +167,7 @@ category IcsLang {
 
         & serviceStop
             developer info: "T881"
-            -> dataDestruction
+            -> dataDestructionIncoming
 
         | spearfishingAttachment
             developer info: "T865"

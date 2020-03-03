@@ -41,4 +41,53 @@ public class ControlServerTest extends EpesLangTest {
 
         server.access.assertUncompromised();
     }
+
+    @Test
+    public void testDataDestructionNotDefended() {
+        Attacker attacker = new Attacker();
+        ControlServer server = new ControlServer(
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false
+        );
+
+        AntiVirus av = new AntiVirus(false);
+
+        av.addObserved(server);
+
+        attacker.addAttackPoint(server.access);
+        attacker.addAttackPoint(server.credentials);
+        attacker.attack();
+
+        server.dataDestruction.assertCompromisedInstantaneously();
+    }
+
+    @Test
+    public void testDataDestructionDefended() {
+        Attacker attacker = new Attacker();
+        ControlServer server = new ControlServer(
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false
+        );
+
+        AntiVirus av = new AntiVirus(true);
+
+        av.addObserved(server);
+
+        attacker.addAttackPoint(server.access);
+        attacker.addAttackPoint(server.credentials);
+        attacker.attack();
+
+        //Assert Bernoulli distribution?
+        //server.dataDestruction.assertCompromisedWithEffort();
+    }
 }

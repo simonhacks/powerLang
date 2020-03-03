@@ -8,7 +8,7 @@ category IcsLang {
                 dontModifyAlarmSettings,
                 dontMasquerade
         | authenticatedAccess
-            +> dataDestruction,
+            +> dataDestructionIncoming,
                 automatedCollection,
                 dataFromInformationRepositories,
                 modifyParameter,
@@ -23,7 +23,7 @@ category IcsLang {
         | hidableAttacks
             -> automatedCollection,
                 restrictedOperations,
-                dataDestructionDefended,
+                dataDestructionIncoming,
                 dataFromInformationRepositories,
                 modifyParameter,
                 spoofReportingMessage,
@@ -44,10 +44,21 @@ category IcsLang {
 
         & restrictedOperations {I,A}
 
-        | dataDestruction
+        | dataDestructionIncoming
             developer info: "T809"
+            -> dataDestructionNoAntiMalware,
+                dataDestructionBypassAntiMalware
+        & dataDestructionNoAntiMalware
+            -> dataDestructionDefendedIncoming
+        | dataDestructionBypassAntiMalware [Bernoulli(0.9)]
+            modeler info: "Bagget (2008) Effectiveness of antivirus in detecting metasploit payloads"
+            -> dataDestructionDefendedIncoming
+        | dataDestructionDefendedIncoming
             -> dataDestructionDefended
-        & dataDestructionDefended {I,A}
+        & dataDestructionDefended
+            developer info: "T809"
+            -> dataDestruction
+        | dataDestruction {I,A}
             developer info: "T809"
 
         & dataFromInformationRepositories {C}
@@ -137,7 +148,7 @@ category IcsLang {
 
         | serviceStop
             developer info: "T881"
-            -> dataDestruction
+            -> dataDestructionIncoming
 
         | spearfishingAttachment
             developer info: "T865"

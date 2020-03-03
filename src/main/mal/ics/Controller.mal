@@ -19,7 +19,7 @@ category IcsLang {
                 systemFirmware,
                 utilizeChangeOperatingMode
         | authenticatedAccess
-            +> dataDestruction,
+            +> dataDestructionIncoming,
                 activateFirmwareUpdateMode,
                 alarmSuppression,
                 automatedCollection,
@@ -50,7 +50,21 @@ category IcsLang {
         | physicalImpact {I,A}
             developer info: "T836"
 
-        & dataDestruction {I,A}
+        | dataDestructionIncoming
+            developer info: "T809"
+            -> dataDestructionNoAntiMalware,
+                dataDestructionBypassAntiMalware
+        & dataDestructionNoAntiMalware
+            -> dataDestructionDefendedIncoming
+        | dataDestructionBypassAntiMalware [Bernoulli(0.9)]
+            modeler info: "Bagget (2008) Effectiveness of antivirus in detecting metasploit payloads"
+            -> dataDestructionDefendedIncoming
+        | dataDestructionDefendedIncoming
+            -> dataDestructionDefended
+        & dataDestructionDefended
+            developer info: "T809"
+            -> dataDestruction
+        | dataDestruction {I,A}
             developer info: "T809"
 
         & activateFirmwareUpdateMode
@@ -216,10 +230,10 @@ category IcsLang {
                 monitorProcessState
         # applyPasswordAuthentication
             developer info: "T809 - Mitigation"
-            -> dataDestruction
+            -> dataDestructionDefended
         # applyPrincipleOfLeastPrivilege
             developer info: "T809,T812,T838,T801,T850,T816,T833,T839,T857,T858 - Mitigation"
-            -> dataDestruction,
+            -> dataDestructionDefended,
                 _defaultCredentialsDefended,
                 modifyAlarmSettings,
                 monitorProcessState,
@@ -234,7 +248,7 @@ category IcsLang {
             -> moduleFirmware
         # applyMultiFactorAuthentication
             developer info: "T809,T812,T805,T816,T824,T851,T858 - Mitigation"
-            -> dataDestruction,
+            -> dataDestructionDefended,
                 _defaultCredentialsDefended,
                 blockSerialCom,
                 deviceRestartShutdownDefended,
@@ -243,7 +257,7 @@ category IcsLang {
                 utilizeChangeOperatingMode
         # restrictedPhysicalAccess
             developer info: "T809,T838,T801,T846,T850,T805,T816,T824,T833,T839,T851,T857,T858 - Mitigation"
-            -> dataDestruction,
+            -> dataDestructionDefended,
                 modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
@@ -258,7 +272,7 @@ category IcsLang {
                 utilizeChangeOperatingMode
         # whitelistAllowedApplications
             developer info: "T809,T839,T851 - Mitigation"
-            -> dataDestruction,
+            -> dataDestructionDefended,
                 moduleFirmware,
                 rootkit
         # applyPasswordRules
