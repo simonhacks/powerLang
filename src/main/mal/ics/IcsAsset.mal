@@ -15,8 +15,16 @@ category IcsLang {
 
         | validAccounts
             developer info: "T859"
+            -> validAccountsNoAntiMalware,
+                validAccountsBypassAntiMalware
+        & validAccountsNoAntiMalware
+            -> validAccountsDefendedIncoming
+        | validAccountsBypassAntiMalware [Bernoulli(0.9)]
+            modeler info: "Bagget (2008) Effectiveness of antivirus in detecting metasploit payloads"
+            -> validAccountsDefendedIncoming
+        | validAccountsDefendedIncoming
             -> _validAccountsDefended
-        & _validAccountsDefended @hidden
+        & _validAccountsDefended
             developer info: "T859"
             -> authentication
 

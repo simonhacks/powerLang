@@ -90,4 +90,34 @@ public class ControlServerTest extends EpesLangTest {
         //Assert Bernoulli distribution?
         //server.dataDestruction.assertCompromisedWithEffort();
     }
+
+    @Test
+    public void testValidAccountsNotDefended() {
+        Attacker attacker = new Attacker();
+        ControlServer server = new ControlServer(
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false
+        );
+
+        AntiVirus av = new AntiVirus(false);
+        av.addObserved(server);
+
+        IcsNetwork network = new IcsNetwork(
+                false, false,
+                false, false,
+                false);
+
+        network.addApplications(server);
+
+        attacker.addAttackPoint(server.access);
+        attacker.addAttackPoint(server.credentials);
+        attacker.attack();
+
+        server.authentication.assertCompromisedInstantaneously();
+    }
 }

@@ -5,7 +5,7 @@ category IcsLang {
             -> observed[ControlServer].dataDestructionNoAntiMalware,
                 observed[Controller].dataDestructionNoAntiMalware,
                 observed[HMI].dataDestructionNoAntiMalware,
-                observed.validAccounts,
+                observed.validAccountsNoAntiMalware,
                 observed[Controller].modifyControlLogic,
                 observed[SIS].modifyControlLogic,
                 observed[Controller].rootkit
