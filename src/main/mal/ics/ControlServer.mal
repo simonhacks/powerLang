@@ -168,18 +168,18 @@ category IcsLang {
             -> dataDestructionDefended
         # applyPrincipleOfLeastPrivilege
             developer info: "T809,T812,T838,T801,T850 - Mitigation"
-            -> dataDestructionDefended,
+            +> dataDestructionDefended,
                 defaultCredentials,
                 modifyAlarmSettings,
                 monitorProcessState,
                 roleIdentification
         # applyMultiFactorAuthentication
             developer info: "T809,T812 - Mitigation"
-            -> dataDestructionDefended,
+            +> dataDestructionDefended,
                 defaultCredentials
         # restrictedPhysicalAccess
             developer info: "T809,T825,T838,T801,T846,T848,T850,T856 - Mitigation"
-            -> dataDestructionDefended,
+            +> dataDestructionDefended,
                 _locationIdentificationDefended,
                 modifyAlarmSettings,
                 monitorProcessState,

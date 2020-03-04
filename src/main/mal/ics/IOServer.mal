@@ -29,13 +29,13 @@ category IcsLang {
 
         # applyMultiFactorAuthentication
             developer info: "T805 - Mitigation"
-            -> blockSerialCom
+            +> blockSerialCom
         # applyPrincipleOfLeastPrivilege
             developer info: "T857 - Mitigation"
-            -> _systemFirmwareDefended
+            +> _systemFirmwareDefended
         # restrictedPhysicalAccess
             developer info: "T857,T805 - Mitigation"
-            -> _systemFirmwareDefended,
+            +> _systemFirmwareDefended,
                 blockSerialCom
         # applyIDS
             developer info: "T857,T805 - Mitigation"

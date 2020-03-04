@@ -83,17 +83,17 @@ category IcsLang {
 
         # applyPrincipleOfLeastPrivilege
             developer info: "T812,T853 - Mitigation"
-            -> defaultCredentials,
+            +> defaultCredentials,
                 scripting
         # applyPasswordRules
             developer info: "T812 - Mitigation"
             -> defaultCredentials
         # applyMultiFactorAuthentication
             developer info: "T812 - Mitigation"
-            -> defaultCredentials
+            +> defaultCredentials
         # restrictedPhysicalAccess
             developer info: "T848,T853 - Mitigation"
-            -> _rogueMasterDeviceDefended,
+            +> _rogueMasterDeviceDefended,
                 scripting
         # applyPasswordsToAllowChanges
             developer info: "T853 - Mitigation"

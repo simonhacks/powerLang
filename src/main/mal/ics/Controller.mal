@@ -233,7 +233,7 @@ category IcsLang {
             -> dataDestructionDefended
         # applyPrincipleOfLeastPrivilege
             developer info: "T809,T812,T838,T801,T850,T816,T833,T839,T857,T858 - Mitigation"
-            -> dataDestructionDefended,
+            +> dataDestructionDefended,
                 _defaultCredentialsDefended,
                 modifyAlarmSettings,
                 monitorProcessState,
@@ -248,7 +248,7 @@ category IcsLang {
             -> moduleFirmware
         # applyMultiFactorAuthentication
             developer info: "T809,T812,T805,T816,T824,T851,T858 - Mitigation"
-            -> dataDestructionDefended,
+            +> dataDestructionDefended,
                 _defaultCredentialsDefended,
                 blockSerialCom,
                 deviceRestartShutdownDefended,
@@ -257,7 +257,7 @@ category IcsLang {
                 utilizeChangeOperatingMode
         # restrictedPhysicalAccess
             developer info: "T809,T838,T801,T846,T850,T805,T816,T824,T833,T839,T851,T857,T858 - Mitigation"
-            -> dataDestructionDefended,
+            +> dataDestructionDefended,
                 modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,

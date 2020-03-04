@@ -62,12 +62,12 @@ category IcsLang {
 
         # restrictedPhysicalAccess
             developer info: "T801,T846,T850 - Mitigation"
-            -> monitorProcessState,
+            +> monitorProcessState,
                 remoteSystemDiscovery,
                 roleIdentification
         # applyPrincipleOfLeastPrivilege
             developer info: "T801,T850 - Mitigation"
-            -> monitorProcessState,
+            +> monitorProcessState,
                 roleIdentification
         # regularAuditOfSystem
             developer info: "T801 - Mitigation"

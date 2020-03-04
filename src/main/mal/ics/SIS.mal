@@ -118,7 +118,7 @@ category IcsLang {
                 monitorProcessState
         # applyPrincipleOfLeastPrivilege
             developer info: "T812,T838,T801,T833,T839,T857,T858 - Mitigation"
-            -> defaultCredentials,
+            +> defaultCredentials,
                 modifyAlarmSettings,
                 monitorProcessState,
                 modifyControlLogic,
@@ -130,11 +130,11 @@ category IcsLang {
             -> defaultCredentials
         # applyMultiFactorAuthentication
             developer info: "T812,T805,T858 - Mitigation"
-            -> defaultCredentials,
+            +> defaultCredentials,
                 utilizeChangeOperatingMode
         # restrictedPhysicalAccess
             developer info: "T838,T801,T846,T805,T833,T839,T857,T858 - Mitigation"
-            -> modifyAlarmSettings,
+            +> modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
                 modifyControlLogic,
