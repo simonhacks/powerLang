@@ -164,7 +164,18 @@ category IcsLang {
         # alarmSettingsNotModified
             -> modifyAlarmSettings
 
-        & modifyControlLogic
+        | modifyControlLogic
+            developer info: "T833"
+            -> modifyControlLogicNoAntiMalware,
+                modifyControlLogicBypassAntiMalware
+        & modifyControlLogicNoAntiMalware
+            -> modifyControlLogicDefendedIncoming
+        | modifyControlLogicBypassAntiMalware [Bernoulli(0.9)]
+            modeler info: "Bagget (2008) Effectiveness of antivirus in detecting metasploit payloads"
+            -> modifyControlLogicDefendedIncoming
+        | modifyControlLogicDefendedIncoming
+            -> modifyControlLogicDefended
+        & modifyControlLogicDefended
             developer info: "T833"
             -> physicalImpact
 
@@ -239,7 +250,7 @@ category IcsLang {
                 monitorProcessState,
                 roleIdentification,
                 deviceRestartShutdownDefended,
-                modifyControlLogic,
+                modifyControlLogicDefended,
                 moduleFirmware,
                 systemFirmwareDefended,
                 utilizeChangeOperatingMode
@@ -265,7 +276,7 @@ category IcsLang {
                 blockSerialCom,
                 deviceRestartShutdownDefended,
                 IOmoduleDiscovery,
-                modifyControlLogic,
+                modifyControlLogicDefended,
                 moduleFirmware,
                 rootkit,
                 systemFirmwareDefended,
@@ -284,7 +295,7 @@ category IcsLang {
                 remoteSystemDiscovery,
                 blockSerialCom,
                 deviceRestartShutdownDefended,
-                modifyControlLogic,
+                modifyControlLogicDefended,
                 moduleFirmware,
                 systemFirmwareDefended,
                 unauthorizedCommandMessage

@@ -73,7 +73,18 @@ category IcsLang {
             developer info: "T838"
             -> modifyAlarmSettings
 
-        & modifyControlLogic
+        | modifyControlLogic
+            developer info: "T833"
+            -> modifyControlLogicNoAntiMalware,
+                modifyControlLogicBypassAntiMalware
+        & modifyControlLogicNoAntiMalware
+            -> modifyControlLogicDefendedIncoming
+        | modifyControlLogicBypassAntiMalware [Bernoulli(0.9)]
+            modeler info: "Bagget (2008) Effectiveness of antivirus in detecting metasploit payloads"
+            -> modifyControlLogicDefendedIncoming
+        | modifyControlLogicDefendedIncoming
+            -> modifyControlLogicDefended
+        & modifyControlLogicDefended
             developer info: "T833"
             -> physicalImpact
 
@@ -121,7 +132,7 @@ category IcsLang {
             +> defaultCredentials,
                 modifyAlarmSettings,
                 monitorProcessState,
-                modifyControlLogic,
+                modifyControlLogicDefended,
                 moduleFirmware,
                 systemFirmwareDefended,
                 utilizeChangeOperatingMode
@@ -137,7 +148,7 @@ category IcsLang {
             +> modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
-                modifyControlLogic,
+                modifyControlLogicDefended,
                 moduleFirmware,
                 systemFirmwareDefended,
                 utilizeChangeOperatingMode
@@ -145,7 +156,7 @@ category IcsLang {
             developer info: "T838,T846,T805,T833,T839,T857 - Mitigation"
             -> modifyAlarmSettings,
                 remoteSystemDiscovery,
-                modifyControlLogic,
+                modifyControlLogicDefended,
                 moduleFirmware,
                 systemFirmwareDefended
         # useCryptographyKeyForFirmware
