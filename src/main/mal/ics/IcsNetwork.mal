@@ -31,9 +31,9 @@ category IcsLang {
 
         & controlDeviceIdentification
             developer info: "T808"
-            -> applications[Controller].access,
-                applications[Controller].exploitationForEvasion,
-                applications[SIS].exploitationForEvasion
+            -> applications[Controller].access
+//               applications[Controller].exploitationForEvasion,
+//                applications[SIS].exploitationForEvasion
 
         & networkSniffing
             developer info: "T824"

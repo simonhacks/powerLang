@@ -4,35 +4,35 @@ category IcsLang {
             +> bruteForceIO,
                 defaultCredentials,
                 remoteFileCopyReceive,
-                roleIdentification,
-                dontModifyAlarmSettings,
-                dontMasquerade
+                roleIdentification
+//                dontModifyAlarmSettings
+//                dontMasquerade
         | authenticatedAccess
             +> dataDestructionIncoming,
                 automatedCollection,
                 dataFromInformationRepositories,
                 modifyParameter,
-                masquerade,
-                modifyAlarmSettings,
+//                masquerade,
+//                modifyAlarmSettings,
                 monitorProcessState,
                 pointAndTackIdentification,
                 remoteFileCopySend,
                 remoteSystemDiscovery,
                 rogueMasterDevice,
                 serviceStop
-        | hidableAttacks
-            -> automatedCollection,
-                restrictedOperations,
-                dataDestructionIncoming,
-                dataFromInformationRepositories,
-                modifyParameter,
-                spoofReportingMessage,
-                monitorProcessState,
-                pointAndTackIdentification,
-                remoteFileCopyReceive,
-                remoteFileCopySend,
-                remoteSystemDiscovery,
-                replicationThroughRemovableMedia
+//        | hidableAttacks
+//            -> automatedCollection,
+//                restrictedOperations,
+//                dataDestructionIncoming,
+//                dataFromInformationRepositories,
+//                modifyParameter,
+//                spoofReportingMessage,
+//                monitorProcessState,
+//                pointAndTackIdentification,
+//                remoteFileCopyReceive,
+//                remoteFileCopySend,
+//                remoteSystemDiscovery,
+//                replicationThroughRemovableMedia
 
         & automatedCollection
             developer info: "T802"
@@ -88,25 +88,25 @@ category IcsLang {
         & spoofReportingMessage {I}
             developer info: "T856"
 
-        & masquerade //lowProbability
-            developer info: "T849"
-            -> hidableAttacks
-        | dontMasquerade //highProbablity
-            developer info: "T849"
-            -> hidableAttacks
-        # masqueradeNotInPlace
-            developer info: "T849"
-            -> masquerade
+//        & masquerade //lowProbability
+//            developer info: "T849"
+//            -> hidableAttacks
+//        | dontMasquerade //highProbablity
+//            developer info: "T849"
+//            -> hidableAttacks
+//        # masqueradeNotInPlace
+//            developer info: "T849"
+//            -> masquerade
 
-        & modifyAlarmSettings //lowProbability
-            developer info: "T838"
-            -> hidableAttacks
-        | dontModifyAlarmSettings //highProbabilty
-            developer info: "T838"
-            -> hidableAttacks
-        # alarmSettingsNotModified
-            developer info: "T838"
-            -> modifyAlarmSettings
+//        & modifyAlarmSettings //lowProbability
+//            developer info: "T838"
+//            -> hidableAttacks
+//        | dontModifyAlarmSettings //highProbabilty
+//            developer info: "T838"
+//            -> hidableAttacks
+//        # alarmSettingsNotModified
+//            developer info: "T838"
+//            -> modifyAlarmSettings
 
         & monitorProcessState
             developer info: "T801"
@@ -160,7 +160,7 @@ category IcsLang {
 
         # regularAuditOfSystem
             developer info: "T838,T801,T856 - Mitigation"
-            -> modifyAlarmSettings,
+            -> //modifyAlarmSettings,
                 monitorProcessState,
                 spoofReportingMessage
         # applyPasswordAuthentication
@@ -170,7 +170,7 @@ category IcsLang {
             developer info: "T809,T812,T838,T801,T850 - Mitigation"
             +> dataDestructionDefended,
                 defaultCredentials,
-                modifyAlarmSettings,
+//                modifyAlarmSettings,
                 monitorProcessState,
                 roleIdentification
         # applyMultiFactorAuthentication
@@ -181,7 +181,7 @@ category IcsLang {
             developer info: "T809,T825,T838,T801,T846,T848,T850,T856 - Mitigation"
             +> dataDestructionDefended,
                 _locationIdentificationDefended,
-                modifyAlarmSettings,
+//                modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
                 roleIdentification,
@@ -197,7 +197,7 @@ category IcsLang {
             -> _locationIdentificationDefended
         # applyIDS
             developer info: "T838,T846,T856 - Mitigation"
-            -> modifyAlarmSettings,
+            -> //modifyAlarmSettings,
                 remoteSystemDiscovery,
                 spoofReportingMessage
     }

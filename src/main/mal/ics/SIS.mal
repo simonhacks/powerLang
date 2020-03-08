@@ -5,9 +5,9 @@ category IcsLang {
                 moduleFirmware,
                 systemFirmware,
                 utilizeChangeOperatingMode,
-                dontAlarmSuppression,
+//                dontAlarmSuppression,
                 denialOfService,
-                dontModifyAlarmSettings,
+//                dontModifyAlarmSettings,
                 modifyControlLogic,
                 moduleFirmware,
                 monitorProcessState,
@@ -15,37 +15,37 @@ category IcsLang {
         | authenticatedAccess
             +> programDownload,
                 activateFirmwareUpdateMode,
-                alarmSuppression,
+//                alarmSuppression,
                 automatedCollection,
-                modifyAlarmSettings,
+//                modifyAlarmSettings,
                 programDownload,
                 remoteSystemDiscovery
         | restrictedOperations {I,A}
         | physicalImpact {I,A}
             developer info: "T836"
-        | hidableAttacks
-            -> activateFirmwareUpdateMode,
-                automatedCollection,
-                modifyControlLogic,
-                modifyParameter,
-                moduleFirmware,
-                programDownload,
-                remoteSystemDiscovery,
-                systemFirmwareDefended,
-                utilizeChangeOperatingMode
+//        | hidableAttacks
+//            -> activateFirmwareUpdateMode,
+//                automatedCollection,
+//                modifyControlLogic,
+//                modifyParameter,
+//                moduleFirmware,
+//                programDownload,
+//                remoteSystemDiscovery,
+//                systemFirmwareDefended,
+//                utilizeChangeOperatingMode
 
         & activateFirmwareUpdateMode
             developer info: "T800"
             -> restrictedOperations
 
-        & alarmSuppression //lowProbability
-            developer info: "T838"
-            -> hidableAttacks
-        | dontAlarmSuppression //highProbabilty
-            developer info: "T838"
-            -> hidableAttacks
-        # alarmSuppressionNotModified
-            -> alarmSuppression
+//        & alarmSuppression //lowProbability
+//            developer info: "T838"
+//            -> hidableAttacks
+//        | dontAlarmSuppression //highProbabilty
+//            developer info: "T838"
+//            -> hidableAttacks
+//        # alarmSuppressionNotModified
+//            -> alarmSuppression
 
         & automatedCollection
             developer info: "T802"
@@ -59,19 +59,19 @@ category IcsLang {
             developer info: "T814"
             -> restrictedOperations
 
-        | exploitationForEvasion
-            developer info: "T820"
-            -> systemFirmware
+//        | exploitationForEvasion
+//            developer info: "T820"
+//            -> systemFirmware
 
-        & modifyAlarmSettings //lowProbability
-            developer info: "T838"
-            -> hidableAttacks
-        | dontModifyAlarmSettings //highProbabilty
-            developer info: "T838"
-            -> hidableAttacks
-        # alarmSettingsNotModified
-            developer info: "T838"
-            -> modifyAlarmSettings
+//        & modifyAlarmSettings //lowProbability
+//            developer info: "T838"
+//            -> hidableAttacks
+//        | dontModifyAlarmSettings //highProbabilty
+//            developer info: "T838"
+//            -> hidableAttacks
+//        # alarmSettingsNotModified
+//            developer info: "T838"
+//            -> modifyAlarmSettings
 
         | modifyControlLogic
             developer info: "T833"
@@ -125,12 +125,12 @@ category IcsLang {
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
-            -> modifyAlarmSettings,
+            -> //modifyAlarmSettings,
                 monitorProcessState
         # applyPrincipleOfLeastPrivilege
             developer info: "T812,T838,T801,T833,T839,T857,T858 - Mitigation"
             +> defaultCredentials,
-                modifyAlarmSettings,
+//                modifyAlarmSettings,
                 monitorProcessState,
                 modifyControlLogicDefended,
                 moduleFirmware,
@@ -145,7 +145,7 @@ category IcsLang {
                 utilizeChangeOperatingMode
         # restrictedPhysicalAccess
             developer info: "T838,T801,T846,T805,T833,T839,T857,T858 - Mitigation"
-            +> modifyAlarmSettings,
+            +> //modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
                 modifyControlLogicDefended,
@@ -154,7 +154,7 @@ category IcsLang {
                 utilizeChangeOperatingMode
         # applyIDS
             developer info: "T838,T846,T805,T833,T839,T857 - Mitigation"
-            -> modifyAlarmSettings,
+            -> //modifyAlarmSettings,
                 remoteSystemDiscovery,
                 modifyControlLogicDefended,
                 moduleFirmware,

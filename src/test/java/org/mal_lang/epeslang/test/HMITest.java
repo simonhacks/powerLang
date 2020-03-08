@@ -13,8 +13,7 @@ public class HMITest extends EpesLangTest {
                 false, false,
                 false, false,
                 false, false,
-                false, false,
-                false, false
+                false
         );
 
         attacker.addAttackPoint(hmi.graphicalUserInterface);
@@ -32,8 +31,7 @@ public class HMITest extends EpesLangTest {
                 false, false,
                 false, false,
                 false, false,
-                false, false,
-                false, false
+                false
         );
 
         attacker.attack();
@@ -50,8 +48,7 @@ public class HMITest extends EpesLangTest {
                 false, false,
                 false, false,
                 false, false,
-                false, false,
-                false, false
+                false
         );
 
         attacker.attack();
@@ -68,8 +65,7 @@ public class HMITest extends EpesLangTest {
                 false, false,
                 false, false,
                 false, false,
-                false, false,
-                false, false
+                false
         );
 
         attacker.attack();
@@ -92,8 +88,7 @@ public class HMITest extends EpesLangTest {
                 false, false,
                 false, false,
                 false, false,
-                false, false,
-                false, false
+                false
         );
 
         attacker.attack();
@@ -116,8 +111,7 @@ public class HMITest extends EpesLangTest {
                 false, false,
                 false, false,
                 false, false,
-                false, false,
-                false, false
+                false
         );
 
         attacker.attack();
@@ -130,8 +124,7 @@ public class HMITest extends EpesLangTest {
                 false, false,
                 false, false,
                 false, false,
-                false, false,
-                false
+                false, false
         );
 
         network.addApplications(hmi);

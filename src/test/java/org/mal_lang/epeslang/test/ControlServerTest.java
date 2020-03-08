@@ -13,7 +13,6 @@ public class ControlServerTest extends EpesLangTest {
                 false, false,
                 false, false,
                 false, false,
-                false, false,
                 false, false
         );
 
@@ -33,7 +32,6 @@ public class ControlServerTest extends EpesLangTest {
                 false, false,
                 false, false,
                 false, false,
-                false, false,
                 false, false
         );
 
@@ -46,7 +44,6 @@ public class ControlServerTest extends EpesLangTest {
     public void testDataDestructionNotDefended() {
         Attacker attacker = new Attacker();
         ControlServer server = new ControlServer(
-                false, false,
                 false, false,
                 false, false,
                 false, false,
@@ -75,7 +72,6 @@ public class ControlServerTest extends EpesLangTest {
                 false, false,
                 false, false,
                 false, false,
-                false, false,
                 false, false
         );
 
@@ -95,7 +91,6 @@ public class ControlServerTest extends EpesLangTest {
     public void testValidAccountsNotDefended() {
         Attacker attacker = new Attacker();
         ControlServer server = new ControlServer(
-                false, false,
                 false, false,
                 false, false,
                 false, false,

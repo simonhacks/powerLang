@@ -2,25 +2,25 @@ category IcsLang {
     asset EngineeringWorkstation extends IcsAsset {
         | access
             +> defaultCredentials,
-                scripting,
-                noLossOfView
+                scripting
+//                noLossOfView
         | authenticatedAccess
             +> dataFromInformationRepositories,
                 exploitationOfRemoteService,
-                lossOfView,
+//                lossOfView,
                 manipulationOfView,
                 projectFileInfection,
                 serviceStop,
                 rogueMasterDevice,
                 modifyControlLogic
-        | hidableAttacks
-            -> exploitationOfRemoteService,
-                projectFileInfection,
-                rogueMasterDevice,
-                scripting,
-                serviceStop,
-                userExecution,
-                modifyControlLogic
+//        | hidableAttacks
+//            -> exploitationOfRemoteService,
+//                projectFileInfection,
+//                rogueMasterDevice,
+//                scripting,
+//                serviceStop,
+//                userExecution,
+//                modifyControlLogic
         | physicalImpact {I}
         | dataDestruction {I,A}
 
@@ -35,15 +35,15 @@ category IcsLang {
             developer info: "T866"
             -> networks.applications.access
 
-        & lossOfView //lowProbability
-            developer info: "T829"
-            -> hidableAttacks
-        | noLossOfView //highProbability
-            developer info: "T829"
-            -> hidableAttacks
-        # lossOfViewNotInPlace
-            developer info: "T829"
-            -> lossOfView
+//        & lossOfView //lowProbability
+//            developer info: "T829"
+//            -> hidableAttacks
+//        | noLossOfView //highProbability
+//            developer info: "T829"
+//            -> hidableAttacks
+//        # lossOfViewNotInPlace
+//            developer info: "T829"
+//            -> lossOfView
 
         | manipulationOfView
             developer info: "T832"

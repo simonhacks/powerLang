@@ -11,8 +11,7 @@ public class EngineeringWorkstationTest extends EpesLangTest {
                 false, false,
                 false, false,
                 false, false,
-                false, false,
-                false
+                false, false
         );
 
         attacker.addAttackPoint(workstation.access);

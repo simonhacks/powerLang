@@ -13,8 +13,6 @@ public class ControllerTest extends EpesLangTest {
                 false, false,
                 false, false,
                 false, false,
-                false, false,
-                false, false,
                 false, false
         );
 
@@ -29,8 +27,6 @@ public class ControllerTest extends EpesLangTest {
     public void testAuthenticatedAccessNotReached() {
         Attacker attacker = new Attacker();
         Controller controller = new Controller(
-                false, false,
-                false, false,
                 false, false,
                 false, false,
                 false, false,
