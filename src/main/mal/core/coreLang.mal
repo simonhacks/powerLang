@@ -296,9 +296,6 @@ category coreLang {
         ->  applications.deny
     }
 
-    abstract asset Proxy extends Object {
-    }
-
 }
 
 associations {
