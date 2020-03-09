@@ -8,7 +8,7 @@ category IcsLang {
                 observed.validAccountsNoAntiMalware,
                 observed[Controller].modifyControlLogicNoAntiMalware,
                 observed[SIS].modifyControlLogicNoAntiMalware,
-                observed[Controller].rootkit
+                observed[Controller].rootkitNoAntiMalware
     }
 
 }

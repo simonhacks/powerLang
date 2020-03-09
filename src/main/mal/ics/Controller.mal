@@ -208,7 +208,18 @@ category IcsLang {
                 networks.applications[HMI].rogueMasterDevice,
                 networks.applications[EngineeringWorkstation].rogueMasterDevice
 
-        & rootkit //lowProbability
+        | rootkit
+            developer info: "T859"
+            -> rootkitNoAntiMalware,
+                rootkitBypassAntiMalware
+        & rootkitNoAntiMalware
+            -> rootkitDefendedIncoming
+        | rootkitBypassAntiMalware [Bernoulli(0.9)]
+            modeler info: "Bagget (2008) Effectiveness of antivirus in detecting metasploit payloads"
+            -> rootkitDefendedIncoming
+        | rootkitDefendedIncoming
+            -> rootkitDefended
+        & rootkitDefended
             developer info: "T851"
             -> //hidableAttacks,
                 physicalImpact,
@@ -264,7 +275,7 @@ category IcsLang {
                 blockSerialCom,
                 deviceRestartShutdownDefended,
                 IOmoduleDiscovery,
-                rootkit,
+                rootkitDefended,
                 utilizeChangeOperatingMode
         # restrictedPhysicalAccess
             developer info: "T809,T838,T801,T846,T850,T805,T816,T824,T833,T839,T851,T857,T858 - Mitigation"
@@ -278,14 +289,14 @@ category IcsLang {
                 IOmoduleDiscovery,
                 modifyControlLogicDefended,
                 moduleFirmware,
-                rootkit,
+                rootkitDefended,
                 systemFirmwareDefended,
                 utilizeChangeOperatingMode
         # whitelistAllowedApplications
             developer info: "T809,T839,T851 - Mitigation"
             -> dataDestructionDefended,
                 moduleFirmware,
-                rootkit
+                rootkitDefended
         # applyPasswordRules
             developer info: "T812 - Mitigation"
             -> _defaultCredentialsDefended
