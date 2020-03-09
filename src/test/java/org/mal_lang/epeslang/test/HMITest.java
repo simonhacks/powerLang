@@ -12,7 +12,6 @@ public class HMITest extends EpesLangTest {
                 false, false,
                 false, false,
                 false, false,
-                false, false,
                 false
         );
 
@@ -26,7 +25,6 @@ public class HMITest extends EpesLangTest {
     public void testAccessNotReached() {
         Attacker attacker = new Attacker();
         HMI hmi = new HMI(
-                false, false,
                 false, false,
                 false, false,
                 false, false,
@@ -47,7 +45,6 @@ public class HMITest extends EpesLangTest {
                 false, false,
                 false, false,
                 false, false,
-                false, false,
                 false
         );
 
@@ -60,7 +57,6 @@ public class HMITest extends EpesLangTest {
     public void testValidAccountsNotReached() {
         Attacker attacker = new Attacker();
         HMI hmi = new HMI(
-                false, false,
                 false, false,
                 false, false,
                 false, false,
@@ -87,7 +83,6 @@ public class HMITest extends EpesLangTest {
                 false, false,
                 false, false,
                 false, false,
-                false, false,
                 false
         );
 
@@ -106,7 +101,6 @@ public class HMITest extends EpesLangTest {
     public void testAccessWithNetworAndWorkstationkNotReached() {
         Attacker attacker = new Attacker();
         HMI hmi = new HMI(
-                false, false,
                 false, false,
                 false, false,
                 false, false,

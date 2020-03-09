@@ -11,21 +11,19 @@ category IcsLang {
                 IOmoduleDiscovery,
                 modifyControlLogic,
                 moduleFirmware,
-                monitorProcessState,
                 roleIdentification,
                 systemFirmware,
                 utilizeChangeOperatingMode
         | authenticatedAccess
             +> dataDestructionIncoming,
                 activateFirmwareUpdateMode,
-                automatedCollection,
                 deviceRestartShutdown,
                 memoryManipulation,
                 overrideTestingFunction,
                 manipulationOfView,
                 programDownload,
-                remoteSystemDiscovery,
-                rootkit
+                rootkit,
+                networks.applications.access
         | restrictedOperations {I,A}
         | physicalImpact {I,A}
             developer info: "T836"
@@ -50,10 +48,6 @@ category IcsLang {
         & activateFirmwareUpdateMode
             developer info: "T800"
             -> restrictedOperations
-
-        & automatedCollection
-            developer info: "T802"
-            -> networks.applications.access
 
         & blockReportingMessage
             developer info: "T804"
@@ -106,13 +100,11 @@ category IcsLang {
 
         & IOmoduleDiscovery
             developer info: "T824"
-            -> IOimage,
-                networks.applications.access
+            -> IOimage
 
         & manipulateIOimage
             developer info: "T835"
-            -> //hidableAttacks,
-                physicalImpact
+            -> physicalImpact
         | memoryManipulation
             -> manipulateIOimage
         | overrideTestingFunction
@@ -144,21 +136,12 @@ category IcsLang {
         & moduleFirmware
             developer info: "T839"
             -> restrictedOperations,
-                networks.applications.access,
                 authenticatedAccess
-
-        & monitorProcessState
-            developer info: "T801"
-            -> networks.applications.access
 
         & programDownload
             developer info: "T843"
             -> physicalImpact,
                 restrictedOperations
-
-        & remoteSystemDiscovery
-            developer info: "T846"
-            -> networks.applications.access
 
         & roleIdentification
             developer info: "T850"
@@ -205,7 +188,6 @@ category IcsLang {
             developer info: "T809,T812,T838,T801,T850,T816,T833,T839,T857,T858 - Mitigation"
             +> dataDestructionDefended,
                 _defaultCredentialsDefended,
-                monitorProcessState,
                 roleIdentification,
                 deviceRestartShutdownDefended,
                 modifyControlLogicDefended,
@@ -227,8 +209,6 @@ category IcsLang {
         # restrictedPhysicalAccess
             developer info: "T809,T838,T801,T846,T850,T805,T816,T824,T833,T839,T851,T857,T858 - Mitigation"
             +> dataDestructionDefended,
-                monitorProcessState,
-                remoteSystemDiscovery,
                 roleIdentification,
                 blockSerialCom,
                 deviceRestartShutdownDefended,
@@ -248,8 +228,7 @@ category IcsLang {
             -> _defaultCredentialsDefended
         # applyIDS
             developer info: "T838,T846,T805,T816,T833,T839,T857,T855 - Mitigation"
-            -> remoteSystemDiscovery,
-                blockSerialCom,
+            -> blockSerialCom,
                 deviceRestartShutdownDefended,
                 modifyControlLogicDefended,
                 moduleFirmware,

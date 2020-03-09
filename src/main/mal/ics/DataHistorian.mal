@@ -5,23 +5,13 @@ category IcsLang {
                 roleIdentification
         | authenticatedAccess
             +> dataFromInformationRepositories,
-                exploitationOfRemoteService,
-                monitorProcessState,
                 pointAndTackIdentification,
                 remoteFileCopySend,
-                remoteSystemDiscovery,
-                serviceStop
+                serviceStop,
+                networks.applications.access
 
         | dataFromInformationRepositories {C}
             developer info: "T811"
-
-        | exploitationOfRemoteService
-            developer info: "T866"
-            -> networks.applications.access
-
-        & monitorProcessState
-            developer info: "T801"
-            -> networks.applications.access
 
         | pointAndTackIdentification {C}
             developer info: "T861"
@@ -34,10 +24,6 @@ category IcsLang {
             -> networks.applications[ControlServer].remoteFileCopyReceive,
                 networks.applications[HMI].remoteFileCopyReceive,
                 networks.applications[DataHistorian].remoteFileCopyReceive
-
-        & remoteSystemDiscovery
-            developer info: "T846"
-            -> networks.applications.access
 
         | replicationThroughRemovableMedia
             developer info: "T847"
@@ -62,18 +48,9 @@ category IcsLang {
 
         # restrictedPhysicalAccess
             developer info: "T801,T846,T850 - Mitigation"
-            +> monitorProcessState,
-                remoteSystemDiscovery,
-                roleIdentification
+            +> roleIdentification
         # applyPrincipleOfLeastPrivilege
             developer info: "T801,T850 - Mitigation"
-            +> monitorProcessState,
-                roleIdentification
-        # regularAuditOfSystem
-            developer info: "T801 - Mitigation"
-            -> monitorProcessState
-        # applyIDS
-            developer info: "T846 - Mitigation"
-            -> remoteSystemDiscovery
+            +> roleIdentification
     }
 }

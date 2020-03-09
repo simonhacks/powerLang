@@ -3,8 +3,8 @@ category IcsLang {
         | access
             -> MITM,
                 blockCommandMessage,
-                networkSniffing,
-                serialConnectionEnumeration
+                applications[Controller].access,
+                applications[SIS].access
 
         & MITM
             developer info: "T830"
@@ -29,22 +29,6 @@ category IcsLang {
             developer info: "T803"
             -> applications[Controller].restrictedOperations
 
-        & controlDeviceIdentification
-            developer info: "T808"
-            -> applications[Controller].access
-
-        & networkSniffing
-            developer info: "T824"
-            -> controlDeviceIdentification
-
-        | serialConnectionEnumeration
-            -> _serialConnectionEnumerationDefended
-
-        & _serialConnectionEnumerationDefended @hidden
-            developer info: "T854"
-            -> applications[Controller].access,
-                applications[SIS].access
-
         # encryptCommunication
             developer info: "T830,T848,T850,T856,T808,T824 - Mitigation"
             -> MITM,
@@ -55,35 +39,27 @@ category IcsLang {
                 applications[HMI].roleIdentification,
                 applications[DataHistorian].roleIdentification,
                 applications[Controller].roleIdentification,
-                applications[ControlServer].spoofReportingMessage,
-                controlDeviceIdentification,
-                networkSniffing
+                applications[ControlServer].spoofReportingMessage
         # challengeResponseAuthentication
             developer info: "T830,T859,T824 - Mitigation"
             -> MITM,
-                applications[IcsAsset]._validAccountsDefended,
-                networkSniffing
+                applications[IcsAsset]._validAccountsDefended
         # restrictedPhysicalAccess
             developer info: "T830,T803,T804,T808,T824,T854 - Mitigation"
             -> MITM,
                 blockCommandMessage,
                 applications[Controller].blockReportingMessage,
-                applications[IOServer].blockReportingMessage,
-                controlDeviceIdentification,
-                networkSniffing,
-                _serialConnectionEnumerationDefended
+                applications[IOServer].blockReportingMessage
         # applyIDS
             developer info: "T830,T859,T803,T804,T824 - Mitigation"
             -> MITM,
                 applications[IcsAsset]._validAccountsDefended,
                 blockCommandMessage,
                 applications[Controller].blockReportingMessage,
-                applications[IOServer].blockReportingMessage,
-                networkSniffing
+                applications[IOServer].blockReportingMessage
         # whitelistAllowedDevices
             -> applications[ControlServer]._rogueMasterDeviceDefended,
                 applications[HMI]._rogueMasterDeviceDefended,
-                applications[EngineeringWorkstation]._rogueMasterDeviceDefended,
-                networkSniffing
+                applications[EngineeringWorkstation]._rogueMasterDeviceDefended
     }
 }

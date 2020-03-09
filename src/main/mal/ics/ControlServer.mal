@@ -7,19 +7,13 @@ category IcsLang {
                 roleIdentification
         | authenticatedAccess
             +> dataDestructionIncoming,
-                automatedCollection,
                 dataFromInformationRepositories,
                 modifyParameter,
-                monitorProcessState,
                 pointAndTackIdentification,
                 remoteFileCopySend,
-                remoteSystemDiscovery,
                 rogueMasterDevice,
-                serviceStop
-
-        & automatedCollection
-            developer info: "T802"
-            -> networks.applications.access
+                serviceStop,
+                networks.applications.access
 
         | bruteForceIO
             developer info: "T806"
@@ -55,13 +49,6 @@ category IcsLang {
             developer info: "T822"
             -> access
 
-        | locationIdentification
-            -> _locationIdentificationDefended
-
-        & _locationIdentificationDefended @hidden
-            developer info: "T825"
-            -> access
-
         & modifyParameter {I}
             developer info: "T836"
             -> physicalImpact
@@ -70,10 +57,6 @@ category IcsLang {
 
         & spoofReportingMessage {I}
             developer info: "T856"
-
-        & monitorProcessState
-            developer info: "T801"
-            -> networks.applications.access
 
         & pointAndTackIdentification {C}
             developer info: "T861"
@@ -86,10 +69,6 @@ category IcsLang {
             -> networks.applications[ControlServer].remoteFileCopyReceive,
                 networks.applications[HMI].remoteFileCopyReceive,
                 networks.applications[DataHistorian].remoteFileCopyReceive
-
-        & remoteSystemDiscovery
-            developer info: "T846"
-            -> networks.applications.access
 
         & replicationThroughRemovableMedia
             developer info: "T847"
@@ -123,8 +102,7 @@ category IcsLang {
 
         # regularAuditOfSystem
             developer info: "T838,T801,T856 - Mitigation"
-            -> monitorProcessState,
-                spoofReportingMessage
+            -> spoofReportingMessage
         # applyPasswordAuthentication
             developer info: "T809 - Mitigation"
             -> dataDestructionDefended
@@ -132,7 +110,6 @@ category IcsLang {
             developer info: "T809,T812,T838,T801,T850 - Mitigation"
             +> dataDestructionDefended,
                 defaultCredentials,
-                monitorProcessState,
                 roleIdentification
         # applyMultiFactorAuthentication
             developer info: "T809,T812 - Mitigation"
@@ -141,9 +118,6 @@ category IcsLang {
         # restrictedPhysicalAccess
             developer info: "T809,T825,T838,T801,T846,T848,T850,T856 - Mitigation"
             +> dataDestructionDefended,
-                _locationIdentificationDefended,
-                monitorProcessState,
-                remoteSystemDiscovery,
                 roleIdentification,
                 spoofReportingMessage
         # whitelistAllowedApplications
@@ -152,12 +126,8 @@ category IcsLang {
         # applyPasswordRules
             developer info: "T812 - Mitigation"
             -> defaultCredentials
-        # keepLocationInformationSecret
-            developer info: "T825 - Mitigation"
-            -> _locationIdentificationDefended
         # applyIDS
             developer info: "T838,T846,T856 - Mitigation"
-            -> remoteSystemDiscovery,
-                spoofReportingMessage
+            -> spoofReportingMessage
     }
 }

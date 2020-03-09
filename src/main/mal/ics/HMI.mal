@@ -2,7 +2,6 @@ category IcsLang {
     asset HMI extends IcsAsset {
         | access
             +> defaultCredentials,
-                monitorProcessState,
                 remoteFileCopyReceive,
                 roleIdentification,
                 pointAndTackIdentification,
@@ -10,15 +9,13 @@ category IcsLang {
         | authenticatedAccess
             +> dataDestructionIncoming,
                 dataFromInformationRepositories,
-                exploitationOfRemoteService,
                 manipulationOfView,
                 modifyParameter,
-                networkConnectionEnumeration,
                 projectFileInfection,
                 remoteFileCopySend,
-                remoteSystemDiscovery,
                 rogueMasterDevice,
-                serviceStop
+                serviceStop,
+                networks.applications.access
 
         | dataDestructionIncoming
             developer info: "T809"
@@ -47,10 +44,6 @@ category IcsLang {
             developer info: "T812"
             -> authenticatedAccess
 
-        & exploitationOfRemoteService
-            developer info: "T866"
-            -> networks.applications.access
-
         | graphicalUserInterface
             -> _graphicalUserInterfaceDefended
 
@@ -65,14 +58,6 @@ category IcsLang {
         & modifyParameter {I}
             developer info: "T836"
             -> physicalImpact
-
-        & monitorProcessState
-            developer info: "T801"
-            -> networks.applications.access
-
-        & networkConnectionEnumeration
-            developer info: "T840"
-            -> networks.applications.access
 
         & pointAndTackIdentification {C}
             developer info: "T861"
@@ -89,10 +74,6 @@ category IcsLang {
             -> networks.applications[ControlServer].remoteFileCopyReceive,
                 networks.applications[HMI].remoteFileCopyReceive,
                 networks.applications[DataHistorian].remoteFileCopyReceive
-
-        & remoteSystemDiscovery
-            developer info: "T846"
-            -> networks.applications.access
 
         | replicationThroughRemovableMedia
             developer info: "T847"
@@ -126,9 +107,6 @@ category IcsLang {
             developer info: "T863"
             -> authenticatedAccess
 
-        # regularAuditOfSystem
-            developer info: "T838,T801 - Mitigation"
-            -> monitorProcessState
         # applyPasswordAuthentication
             developer info: "T809,T823 - Mitigation"
             -> dataDestructionDefended,
@@ -137,7 +115,6 @@ category IcsLang {
             developer info: "T809,T812,T838,T801,T850 - Mitigation"
             +> dataDestructionDefended,
                 defaultCredentials,
-                monitorProcessState,
                 roleIdentification
         # applyMultiFactorAuthentication
             developer info: "T809,812 - Mitigation"
@@ -146,12 +123,9 @@ category IcsLang {
         # restrictedPhysicalAccess
             developer info: "T809,T838,T801,T846,T848,T850,T823,T840 - Mitigation"
             +> dataDestructionDefended,
-                monitorProcessState,
-                remoteSystemDiscovery,
                 _rogueMasterDeviceDefended,
                 roleIdentification,
-                _graphicalUserInterfaceDefended,
-                networkConnectionEnumeration
+                _graphicalUserInterfaceDefended
         # whitelistAllowedApplications
             developer info: "T809,T823 - Mitigation"
             -> dataDestructionDefended,
@@ -159,9 +133,5 @@ category IcsLang {
         # applyPasswordRules
             developer info: "T812 - Mitigation"
             -> defaultCredentials
-        # applyIDS
-            developer info: "T838,T846,T840 - Mitigation"
-            -> remoteSystemDiscovery,
-                networkConnectionEnumeration
     }
 }

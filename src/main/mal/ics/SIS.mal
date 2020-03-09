@@ -8,14 +8,12 @@ category IcsLang {
                 denialOfService,
                 modifyControlLogic,
                 moduleFirmware,
-                monitorProcessState,
                 utilizeChangeOperatingMode
         | authenticatedAccess
             +> programDownload,
                 activateFirmwareUpdateMode,
-                automatedCollection,
                 programDownload,
-                remoteSystemDiscovery
+                networks.applications.access
         | restrictedOperations {I,A}
         | physicalImpact {I,A}
             developer info: "T836"
@@ -23,10 +21,6 @@ category IcsLang {
         & activateFirmwareUpdateMode
             developer info: "T800"
             -> restrictedOperations
-
-        & automatedCollection
-            developer info: "T802"
-            -> networks.applications.access
 
         & defaultCredentials
             developer info: "T812"
@@ -58,21 +52,12 @@ category IcsLang {
         & moduleFirmware
             developer info: "T839"
             -> restrictedOperations,
-                networks.applications.access,
                 authenticatedAccess
-
-        & monitorProcessState
-            developer info: "T801"
-            -> networks.applications.access
 
         | programDownload
             developer info: "T843"
             -> physicalImpact,
                 restrictedOperations
-
-        & remoteSystemDiscovery
-            developer info: "T846"
-            -> networks.applications.access
 
         | systemFirmware
             developer info: "T857"
@@ -86,13 +71,9 @@ category IcsLang {
             -> physicalImpact,
                 authenticatedAccess
 
-        # regularAuditOfSystem
-            developer info: "T838,T801 - Mitigation"
-            -> monitorProcessState
         # applyPrincipleOfLeastPrivilege
             developer info: "T812,T838,T801,T833,T839,T857,T858 - Mitigation"
             +> defaultCredentials,
-                monitorProcessState,
                 modifyControlLogicDefended,
                 moduleFirmware,
                 systemFirmwareDefended,
@@ -106,16 +87,13 @@ category IcsLang {
                 utilizeChangeOperatingMode
         # restrictedPhysicalAccess
             developer info: "T838,T801,T846,T805,T833,T839,T857,T858 - Mitigation"
-            +> monitorProcessState,
-                remoteSystemDiscovery,
-                modifyControlLogicDefended,
+            +> modifyControlLogicDefended,
                 moduleFirmware,
                 systemFirmwareDefended,
                 utilizeChangeOperatingMode
         # applyIDS
             developer info: "T838,T846,T805,T833,T839,T857 - Mitigation"
-            -> remoteSystemDiscovery,
-                modifyControlLogicDefended,
+            -> modifyControlLogicDefended,
                 moduleFirmware,
                 systemFirmwareDefended
         # useCryptographyKeyForFirmware

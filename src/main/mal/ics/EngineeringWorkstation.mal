@@ -5,12 +5,12 @@ category IcsLang {
                 scripting
         | authenticatedAccess
             +> dataFromInformationRepositories,
-                exploitationOfRemoteService,
                 manipulationOfView,
                 projectFileInfection,
                 serviceStop,
                 rogueMasterDevice,
-                modifyControlLogic
+                modifyControlLogic,
+                networks.applications.access
         | physicalImpact {I}
         | dataDestruction {I,A}
 
@@ -20,10 +20,6 @@ category IcsLang {
         & defaultCredentials
             developer info: "T812"
             -> credentials
-
-        & exploitationOfRemoteService
-            developer info: "T866"
-            -> networks.applications.access
 
         | manipulationOfView
             developer info: "T832"

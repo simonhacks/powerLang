@@ -5,25 +5,6 @@ import org.junit.jupiter.api.Test;
 
 public class ControlServerTest extends EpesLangTest {
     @Test
-    public void testAutomatedCollectionNoDefense() {
-        Attacker attacker = new Attacker();
-        ControlServer server = new ControlServer(
-                false, false,
-                false, false,
-                false, false,
-                false, false,
-                false, false,
-                false, false
-        );
-
-        attacker.addAttackPoint(server.access);
-        attacker.addAttackPoint(server.credentials);
-        attacker.attack();
-
-        server.automatedCollection.assertCompromisedInstantaneously();
-    }
-
-    @Test
     public void testAccessNotReached() {
         Attacker attacker = new Attacker();
         ControlServer server = new ControlServer(
@@ -32,7 +13,7 @@ public class ControlServerTest extends EpesLangTest {
                 false, false,
                 false, false,
                 false, false,
-                false, false
+                false
         );
 
         attacker.attack();
@@ -49,7 +30,7 @@ public class ControlServerTest extends EpesLangTest {
                 false, false,
                 false, false,
                 false, false,
-                false, false
+                false
         );
 
         AntiVirus av = new AntiVirus(false);
@@ -72,7 +53,7 @@ public class ControlServerTest extends EpesLangTest {
                 false, false,
                 false, false,
                 false, false,
-                false, false
+                false
         );
 
         AntiVirus av = new AntiVirus(true);
@@ -96,7 +77,7 @@ public class ControlServerTest extends EpesLangTest {
                 false, false,
                 false, false,
                 false, false,
-                false, false
+                false
         );
 
         AntiVirus av = new AntiVirus(false);

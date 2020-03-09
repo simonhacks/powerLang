@@ -13,7 +13,7 @@ public class SISTest extends EpesLangTest {
                 false, false,
                 false, false,
                 false, false,
-                false, false
+                false
         );
 
         attacker.addAttackPoint(sis.access);
