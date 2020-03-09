@@ -2,17 +2,31 @@ category IcsLang {
     asset Firewall extends IcsAsset {
         | access
            +> commonlyUsedPort
-        & commonlyUsedPort
+
+        | commonlyUsedPort
             developer info: "T885"
-            -> bypass
-        | bypass
+            -> commonlyUsedPortNoIDS,
+                commonlyUsedPortBypassIDS
+        & commonlyUsedPortNoIDS
+            -> commonlyUsedPortDefendedIncoming
+        | commonlyUsedPortBypassIDS [Exponential(3.5)]
+            modeler info: "Sommestad (2012) Quantifying the effectiveness of intrusion detection systems in operation through domain experts (+ two more)"
+            -> commonlyUsedPortDefendedIncoming
+        | commonlyUsedPortDefendedIncoming
+            -> commonlyUsedPortDefended
+        & commonlyUsedPortDefended
+            developer info: "T885"
+            -> bypassFirewall
+
+        | bypassFirewall
             -> networks.applications.access
+
         # applyWhitelist
             developer info: "T885 - Mitigation"
-            -> commonlyUsedPort
+            -> commonlyUsedPortDefended
         # justAllowVPN
             developer info: "T885 - Mitigation"
-            -> commonlyUsedPort
+            -> commonlyUsedPortDefended
         # applyIDS
             developer info: "T885 - Mitigation"
             -> commonlyUsedPort
