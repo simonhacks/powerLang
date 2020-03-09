@@ -2,9 +2,6 @@ category IcsLang {
     asset HMI extends IcsAsset {
         | access
             +> defaultCredentials,
-//                noLossOfView,
-//                dontMasquerade,
-//                dontModifyAlarmSettings,
                 monitorProcessState,
                 remoteFileCopyReceive,
                 roleIdentification,
@@ -14,10 +11,7 @@ category IcsLang {
             +> dataDestructionIncoming,
                 dataFromInformationRepositories,
                 exploitationOfRemoteService,
-//                lossOfView,
                 manipulationOfView,
-//                masquerade,
-//                modifyAlarmSettings,
                 modifyParameter,
                 networkConnectionEnumeration,
                 projectFileInfection,
@@ -25,22 +19,6 @@ category IcsLang {
                 remoteSystemDiscovery,
                 rogueMasterDevice,
                 serviceStop
-//        | hidableAttacks
-//            -> dataDestructionIncoming,
-//                dataFromInformationRepositories,
-//                exploitationOfRemoteService,
-//                manipulationOfView,
-//                modifyParameter,
-//                monitorProcessState,
-//                networkConnectionEnumeration,
-//                pointAndTackIdentification,
-//                projectFileInfection,
-//                remoteFileCopyReceive,
-//                remoteFileCopySend,
-//                remoteSystemDiscovery,
-//                _rogueMasterDeviceDefended,
-//                roleIdentification,
-//                serviceStop
 
         | dataDestructionIncoming
             developer info: "T809"
@@ -80,39 +58,9 @@ category IcsLang {
             developer info: "T823"
             -> access
 
-//        & lossOfView //lowProbability
-//            developer info: "T829"
-//            -> hidableAttacks
-//        | noLossOfView //highProbability
-//            developer info: "T829"
-//            -> hidableAttacks
-//        # lossOfViewNotInPlace
-//            developer info: "T829"
-//            -> lossOfView
-
         | manipulationOfView
             developer info: "T832"
             -> physicalImpact
-
-//        & masquerade //lowProbability
-//            developer info: "T849"
-//            -> hidableAttacks
-//        | dontMasquerade //highProbablity
-//            developer info: "T849"
-//            -> hidableAttacks
-//        # masqueradeInPlace
-//            developer info: "T849"
-//            -> masquerade
-
-//        & modifyAlarmSettings //lowProbability
-//            developer info: "T838"
-//            -> hidableAttacks
-//        | dontModifyAlarmSettings //highProbabilty
-//            developer info: "T838"
-//            -> hidableAttacks
-//        # alarmSettingsNotModified
-//            developer info: "T838"
-//            -> modifyAlarmSettings
 
         & modifyParameter {I}
             developer info: "T836"
@@ -180,8 +128,7 @@ category IcsLang {
 
         # regularAuditOfSystem
             developer info: "T838,T801 - Mitigation"
-            -> //modifyAlarmSettings,
-                monitorProcessState
+            -> monitorProcessState
         # applyPasswordAuthentication
             developer info: "T809,T823 - Mitigation"
             -> dataDestructionDefended,
@@ -190,7 +137,6 @@ category IcsLang {
             developer info: "T809,T812,T838,T801,T850 - Mitigation"
             +> dataDestructionDefended,
                 defaultCredentials,
-//                modifyAlarmSettings,
                 monitorProcessState,
                 roleIdentification
         # applyMultiFactorAuthentication
@@ -200,7 +146,6 @@ category IcsLang {
         # restrictedPhysicalAccess
             developer info: "T809,T838,T801,T846,T848,T850,T823,T840 - Mitigation"
             +> dataDestructionDefended,
-//                modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
                 _rogueMasterDeviceDefended,
@@ -216,8 +161,7 @@ category IcsLang {
             -> defaultCredentials
         # applyIDS
             developer info: "T838,T846,T840 - Mitigation"
-            -> //modifyAlarmSettings,
-                remoteSystemDiscovery,
+            -> remoteSystemDiscovery,
                 networkConnectionEnumeration
     }
 }

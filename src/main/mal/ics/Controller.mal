@@ -2,7 +2,6 @@ category IcsLang {
     asset Controller extends IcsAsset {
         | access
             +> bruteForceIO,
-//                dontAlarmSuppression,
                 blockSerialCom,
                 changeProgramState,
                 denialOfService,
@@ -12,40 +11,21 @@ category IcsLang {
                 IOmoduleDiscovery,
                 modifyControlLogic,
                 moduleFirmware,
-//                dontModifyAlarmSettings,
                 monitorProcessState,
                 roleIdentification,
-//                noRootkit,
                 systemFirmware,
                 utilizeChangeOperatingMode
         | authenticatedAccess
             +> dataDestructionIncoming,
                 activateFirmwareUpdateMode,
-//                alarmSuppression,
                 automatedCollection,
                 deviceRestartShutdown,
                 memoryManipulation,
                 overrideTestingFunction,
                 manipulationOfView,
-//                modifyAlarmSettings,
                 programDownload,
                 remoteSystemDiscovery,
                 rootkit
-//        | hidableAttacks
-//            -> activateFirmwareUpdateMode,
-//                automatedCollection,
-//                blockReportingMessage,
-//                blockSerialCom,
-//                bruteForceIO,
-//                changeProgramState,
-//                modifyControlLogic,
-//                modifyParameter,
-//                moduleFirmware,
-//                programDownload,
-//                remoteSystemDiscovery,
-//                systemFirmwareDefended,
-//                unauthorizedCommandMessage,
-//                utilizeChangeOperatingMode
         | restrictedOperations {I,A}
         | physicalImpact {I,A}
             developer info: "T836"
@@ -70,15 +50,6 @@ category IcsLang {
         & activateFirmwareUpdateMode
             developer info: "T800"
             -> restrictedOperations
-
-//        & alarmSuppression //lowProbability
-//            developer info: "T838"
-//            -> hidableAttacks
-//        | dontAlarmSuppression //highProbabilty
-//            developer info: "T838"
-//            -> hidableAttacks
-//        # alarmSuppressionNotModified
-//            -> alarmSuppression
 
         & automatedCollection
             developer info: "T802"
@@ -129,10 +100,6 @@ category IcsLang {
             developer info: "T871"
             -> changeProgramState
 
- //       | exploitationForEvasion
- //           developer info: "T820"
- //           -> systemFirmware
-
         | IOimage
             developer info: "T877"
             -> manipulateIOimage
@@ -154,15 +121,6 @@ category IcsLang {
         | manipulationOfView
             developer info: "T832"
             -> physicalImpact
-
- //       & modifyAlarmSettings //lowProbability
- //           developer info: "T838"
- //           -> hidableAttacks
-//        | dontModifyAlarmSettings //highProbabilty
- //           developer info: "T838"
-//            -> hidableAttacks
-//        # alarmSettingsNotModified
-//            -> modifyAlarmSettings
 
         | modifyControlLogic
             developer info: "T833"
@@ -221,14 +179,8 @@ category IcsLang {
             -> rootkitDefended
         & rootkitDefended
             developer info: "T851"
-            -> //hidableAttacks,
-                physicalImpact,
+            -> physicalImpact,
                 restrictedOperations
-//        | noRootkit //highProbabilty
-//            developer info: "T851"
-//            -> hidableAttacks
-//        # rootkitNotInPlace
-//            -> rootkit
 
         | systemFirmware
             developer info: "T857"
@@ -246,10 +198,6 @@ category IcsLang {
             -> physicalImpact,
                 authenticatedAccess
 
-//        # regularAuditOfSystem
-//            developer info: "T838,T801 - Mitigation"
-//            -> //modifyAlarmSettings,
-//                monitorProcessState
         # applyPasswordAuthentication
             developer info: "T809 - Mitigation"
             -> dataDestructionDefended
@@ -257,7 +205,6 @@ category IcsLang {
             developer info: "T809,T812,T838,T801,T850,T816,T833,T839,T857,T858 - Mitigation"
             +> dataDestructionDefended,
                 _defaultCredentialsDefended,
-//                modifyAlarmSettings,
                 monitorProcessState,
                 roleIdentification,
                 deviceRestartShutdownDefended,
@@ -280,7 +227,6 @@ category IcsLang {
         # restrictedPhysicalAccess
             developer info: "T809,T838,T801,T846,T850,T805,T816,T824,T833,T839,T851,T857,T858 - Mitigation"
             +> dataDestructionDefended,
-//                modifyAlarmSettings,
                 monitorProcessState,
                 remoteSystemDiscovery,
                 roleIdentification,
@@ -302,8 +248,7 @@ category IcsLang {
             -> _defaultCredentialsDefended
         # applyIDS
             developer info: "T838,T846,T805,T816,T833,T839,T857,T855 - Mitigation"
-            -> //modifyAlarmSettings,
-                remoteSystemDiscovery,
+            -> remoteSystemDiscovery,
                 blockSerialCom,
                 deviceRestartShutdownDefended,
                 modifyControlLogicDefended,

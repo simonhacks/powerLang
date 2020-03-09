@@ -3,24 +3,14 @@ category IcsLang {
         | access
             +> defaultCredentials,
                 scripting
-//                noLossOfView
         | authenticatedAccess
             +> dataFromInformationRepositories,
                 exploitationOfRemoteService,
-//                lossOfView,
                 manipulationOfView,
                 projectFileInfection,
                 serviceStop,
                 rogueMasterDevice,
                 modifyControlLogic
-//        | hidableAttacks
-//            -> exploitationOfRemoteService,
-//                projectFileInfection,
-//                rogueMasterDevice,
-//                scripting,
-//                serviceStop,
-//                userExecution,
-//                modifyControlLogic
         | physicalImpact {I}
         | dataDestruction {I,A}
 
@@ -34,16 +24,6 @@ category IcsLang {
         & exploitationOfRemoteService
             developer info: "T866"
             -> networks.applications.access
-
-//        & lossOfView //lowProbability
-//            developer info: "T829"
-//            -> hidableAttacks
-//        | noLossOfView //highProbability
-//            developer info: "T829"
-//            -> hidableAttacks
-//        # lossOfViewNotInPlace
-//            developer info: "T829"
-//            -> lossOfView
 
         | manipulationOfView
             developer info: "T832"
