@@ -55,7 +55,18 @@ category IcsLang {
         | physicalImpact {I}
             developer info: "T836"
 
-        & spoofReportingMessage {I}
+        | spoofReportingMessage
+            developer info: "T856"
+            -> spoofReportingMessageNoIDS,
+                spoofReportingMessageBypassIDS
+        & spoofReportingMessageNoIDS
+            -> spoofReportingMessageDefendedIncoming
+        | spoofReportingMessageBypassIDS [Exponential(3.5)]
+            modeler info: "Sommestad (2012) Quantifying the effectiveness of intrusion detection systems in operation through domain experts (+ two more)"
+            -> spoofReportingMessageDefendedIncoming
+        | spoofReportingMessageDefendedIncoming
+            -> spoofReportingMessageDefended
+        & spoofReportingMessageDefended {I}
             developer info: "T856"
 
         & pointAndTackIdentification {C}
@@ -128,6 +139,6 @@ category IcsLang {
             -> defaultCredentials
         # applyIDS
             developer info: "T838,T846,T856 - Mitigation"
-            -> spoofReportingMessage
+            -> spoofReportingMessageNoIDS
     }
 }

@@ -29,6 +29,6 @@ category IcsLang {
             -> commonlyUsedPortDefended
         # applyIDS
             developer info: "T885 - Mitigation"
-            -> commonlyUsedPort
+            -> commonlyUsedPortNoIDS
     }
 }
