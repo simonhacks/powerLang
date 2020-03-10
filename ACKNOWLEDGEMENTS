@@ -1,19 +1,160 @@
-Icon exampleLang/src/main/resources/icons/Host.svg
-(originally laptop.svg)
-made by Freepik <https://www.freepik.com/home>
+Icons coreLang/src/main/resources/icons/Exploit.svg
+(originally 022-biohazard-1.svg from Nuclear Pack)
+made by Eucalyp <https://www.flaticon.com/authors/eucalyp>
 from Flaticon <https://www.flaticon.com/>
 
-Icon exampleLang/src/main/resources/icons/Network.svg
-(originally network.svg)
-made by SmashIcons <https://www.flaticon.com/authors/smashicons>
+Icons coreLang/src/main/resources/icons/Vulnerability.svg
+(originally 019-shield.svg from Broken Pack)
+made by Those Icons <https://www.flaticon.com/authors/those-icons>
 from Flaticon <https://www.flaticon.com/>
 
-Icon exampleLang/src/main/resources/icons/Password.svg
-(originally password.svg)
-made by Freepik <https://www.freepik.com/home>
+Icon coreLang/src/main/resources/icons/Application.svg
+(originally 018-operation.svg from Logistics Pack)
+made by geotatah <https://www.flaticon.com/authors/geotatah>
 from Flaticon <https://www.flaticon.com/>
 
-Icon exampleLang/src/main/resources/icons/User.svg
-(originally user.svg)
-made by Freepik <https://www.freepik.com/home>
+Icon coreLang/src/main/resources/icons/System.svg
+(originally 033-laptop-1.svg from IT & Components Pack)
+made by Those Icons <https://www.flaticon.com/authors/those-icons>
 from Flaticon <https://www.flaticon.com/>
+
+Icon coreLang/src/main/resources/icons/Network.svg
+(originally 014-network-1.svg from Network Icon Pack)
+made by Those Icons <https://www.flaticon.com/authors/those-icons>
+from Flaticon <https://www.flaticon.com/>
+
+Icon coreLang/src/main/resources/icons/RoutingFirewall.svg
+(originally 001-router-2.svg from Network Icon Pack)
+made by Those Icons <https://www.flaticon.com/authors/those-icons>
+from Flaticon <https://www.flaticon.com/>
+
+Icon coreLang/src/main/resources/icons/Data.svg
+(originally 049-file.svg from File Icon Pack)
+made by Freepik <https://www.flaticon.com/authors/freepik>
+from Flaticon <https://www.flaticon.com/>
+
+Icon coreLang/src/main/resources/icons/Information.svg
+(originally 034-file.svg from File Icon Pack)
+made by Freepik <https://www.flaticon.com/authors/freepik>
+from Flaticon <https://www.flaticon.com/>
+
+Icon coreLang/src/main/resources/icons/Connection.svg
+(originally 013-track.svg from Maps and Navigation Icon Pack)
+made by Good Ware <https://www.flaticon.com/authors/good-ware>
+from Flaticon <https://www.flaticon.com/>
+
+Icon coreLang/src/main/resources/icons/Identity.svg
+(originally 006-card.svg from User Icon Pack)
+made by iconixar <https://www.flaticon.com/authors/iconixar>
+from Flaticon <https://www.flaticon.com/>
+
+Icon coreLang/src/main/resources/icons/User.svg
+(originally 001-user.svg from User Icon Pack)
+made by iconixar <https://www.flaticon.com/authors/iconixar>
+from Flaticon <https://www.flaticon.com/>
+
+Icons coreLang/src/main/resources/icons/*VulnerabilityExtensionPoint.svg
+(originally plug.svg from Electronic and web element collection pack)
+made by Freepik <https://www.flaticon.com/authors/freepik>
+from Flaticon <https://www.flaticon.com/>
+
+Icon coreLang/src/main/resources/icons/PhysicalZone.svg
+(originally zone.svg from Architecture pack)
+made by Eucalyp <https://www.flaticon.com/authors/eucalyp>
+from Flaticon <https://www.flaticon.com/>
+
+Icon coreLang/src/main/resources/icons/Credentials.svg
+(originally key.svg from Miscellaneous Elements pack)
+made by Freepik <https://www.flaticon.com/authors/freepik>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/AntirVirus.svg
+(originally 027-biohazard.svg from Nuclear pack)
+made by Eucalyp <https://www.flaticon.com/authors/eucalyp>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/DMZ.svg
+(originally 014-network-1.svg from Network Icon Pack)
+made by Those Icons <https://www.flaticon.com/authors/those-icons>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/BMS.svg
+(originally smart-house.svg from Smart Home Pack)
+made by wanicon <https://www.flaticon.com/authors/wanicon>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/SmartMeter.svg
+(originally electric-meter.svg from Electricial Tools and Meters pack)
+made by Freepik <https://www.flaticon.com/authors/freepik>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/HCI.svg
+(originally control-system.svg from Industry Icon pack)
+made by Freepik <https://www.flaticon.com/authors/freepik>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/DataHistorian.svg
+(originally servers.svg from Servers Pack)
+made by Pixel perfect <https://www.flaticon.com/authors/pixel-perfect>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/ControlServer.svg
+(originally servers.svg from Servers Pack) 
+made by Pixel perfect <https://www.flaticon.com/authors/pixel-perfect>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/Firewall.svg
+(originally firewall.svg from Coding pack)
+made by Pixel perfect <https://www.flaticon.com/authors/pixel-perfect>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/EngineeringWorkstation.svg
+(originally workstation.svg from Computer Hardware pack)
+made by Vitaly Gorbachev <https://www.flaticon.com/authors/vitaly-gorbachev>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/icsAsset.svg
+(originally 045-cpu-5.svg from IT & Components Pack)
+made by Those Icons <https://www.flaticon.com/authors/those-icons>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/Transformer.svg
+(originally power.svg from Electrician Tools and Elements pack)
+made by Freepik <https://www.flaticon.com/authors/freepik>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/Substation.svg
+(originally tower.svg from Ecology pack)
+made by Freepik <https://www.flaticon.com/authors/freepik>
+from Flaticon <https://www.flaticon.com/> 
+
+Icon src/main/resources/icons/RTU.svg
+(originally server.svg from Servers pack)
+made by Pixel perfect <https://www.flaticon.com/authors/pixel-perfect>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/Terninal.svg
+(originally computer.svg from Interface pack)
+made by xnimrodx <https://www.flaticon.com/authors/xnimrodx>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/Clock.svg
+(originally clock.svg from Office pack)
+made by Freepik <https://www.flaticon.com/authors/freepik>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/Router.svg
+(originally 001-router-2.svg from Network Icon Pack)
+made by Those Icons <https://www.flaticon.com/authors/those-icons>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/AccessPoint.svg
+(originally plug.svg from Electronic and web element collection pack)
+made by Freepik <https://www.flaticon.com/authors/freepik>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/bay.svg
+(originally server.svg from Web Hosting pack)
+made by Eucalyp <https://www.flaticon.com/authors/eucalyp>
+from Flaticon <https://www.flaticon.com/>
+
