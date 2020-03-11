@@ -113,4 +113,28 @@ public class ControlServerTest extends EpesLangTest {
 
         server.spoofReportingMessageDefended.assertUncompromised();
     }
+
+    @Test
+    public void testSpoofingMessageWithNetworkNoDefense() {
+        Attacker attacker = new Attacker();
+        ControlServer server = new ControlServer(
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false
+        );
+
+        IcsNetwork network = new IcsNetwork(
+                false, false,
+                false, false,
+                false
+        );
+
+        network.addApplications(server);
+        attacker.attack();
+
+        server.spoofReportingMessageDefended.assertUncompromised();
+    }
 }

@@ -39,7 +39,7 @@ category IcsLang {
                 applications[HMI].roleIdentification,
                 applications[DataHistorian].roleIdentification,
                 applications[Controller].roleIdentification,
-                applications[ControlServer].spoofReportingMessage
+                applications[ControlServer].spoofReportingMessageDefended
         # challengeResponseAuthentication
             developer info: "T830,T859,T824 - Mitigation"
             -> MITM,
