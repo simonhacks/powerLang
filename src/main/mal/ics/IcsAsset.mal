@@ -41,12 +41,12 @@ category Ics {
             -> _validAccountsDefended
         # restrictedAccessToConfigurationSettings
             developer info: "T885 - Mitigation"
-            -> networks.applications[Firewall].commonlyUsedPort
+            -> networks.applications[Firewall].commonlyUsedPortDefended
         # restrictiveSettings
             developer info: "T885 - Mitigation"
-            -> networks.applications[Firewall].commonlyUsedPort
+            -> networks.applications[Firewall].commonlyUsedPortDefended
         # assessedAndSecured
             developer info: "T885 - Mitigation"
-            -> networks.applications[Firewall].commonlyUsedPort
+            -> networks.applications[Firewall].commonlyUsedPortDefended
     }
 }
