@@ -113,7 +113,7 @@ Icon src/main/resources/icons/EngineeringWorkstation.svg
 made by Vitaly Gorbachev <https://www.flaticon.com/authors/vitaly-gorbachev>
 from Flaticon <https://www.flaticon.com/>
 
-Icon src/main/resources/icons/icsAsset.svg
+Icon src/main/resources/icons/IcsAsset.svg
 (originally 045-cpu-5.svg from IT & Components Pack)
 made by Those Icons <https://www.flaticon.com/authors/those-icons>
 from Flaticon <https://www.flaticon.com/>
@@ -149,8 +149,8 @@ made by Those Icons <https://www.flaticon.com/authors/those-icons>
 from Flaticon <https://www.flaticon.com/>
 
 Icon src/main/resources/icons/AccessPoint.svg
-(originally plug.svg from Electronic and web element collection pack)
-made by Freepik <https://www.flaticon.com/authors/freepik>
+(originally entry.svg from Social Media pack)
+made by Good Ware <https://www.flaticon.com/authors/good-ware>
 from Flaticon <https://www.flaticon.com/>
 
 Icon src/main/resources/icons/bay.svg
@@ -158,3 +158,52 @@ Icon src/main/resources/icons/bay.svg
 made by Eucalyp <https://www.flaticon.com/authors/eucalyp>
 from Flaticon <https://www.flaticon.com/>
 
+Icon src/main/resources/icons/SubstationData.svg
+(originally 049-file.svg from File Icon Pack)
+made by Freepik <https://www.flaticon.com/authors/freepik>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/VoltageLevel.svg
+(originally meter.svg from Transport pack)
+made by Cursor Creative <https://www.flaticon.com/authors/cursor-creative>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/ConnectivityNode.svg
+(originally connectivity.svg from Infographics Elements pack)
+made by Freepik <https://www.flaticon.com/authors/freepik>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/Function.svg
+(originally gear.svg from Research & Science pack)
+made by Freepik <https://www.flaticon.com/authors/freepik>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/Subfunction.svg
+(originally gear.svg from Research & Science pack)
+made by Freepik <https://www.flaticon.com/authors/freepik>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/SubEquipment.svg
+(originally gear.svg from Research & Science pack)
+made by Freepik <https://www.flaticon.com/authors/freepik>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/LogicalDevice.svg
+(originally 045-cpu-5.svg from IT & Components Pack)
+made by Those Icons <https://www.flaticon.com/authors/those-icons>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/LogicalNode.svg
+(originally 045-cpu-5.svg from IT & Components Pack)
+made by Those Icons <https://www.flaticon.com/authors/those-icons>
+from Flaticon <https://www.flaticon.com/>
+
+Icon coreLang/src/main/resources/icons/SubNetwork.svg
+(originally 014-network-1.svg from Network Icon Pack)
+made by Those Icons <https://www.flaticon.com/authors/those-icons>
+from Flaticon <https://www.flaticon.com/>
+
+Icon src/main/resources/icons/Internet.svg
+(originally internet.svg from Banking & Finance pack)
+made by Freepik <https://www.flaticon.com/authors/freepik>
+from Flaticon <https://www.flaticon.com/>
