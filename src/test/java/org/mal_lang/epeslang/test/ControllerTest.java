@@ -20,4 +20,21 @@ public class ControllerTest extends EpesLangTest {
 
         controller.authenticatedAccess.assertUncompromised();
     }
+
+    @Test
+    public void testUnauthorizedCommandMessageNotReached() {
+        Attacker attacker = new Attacker();
+        Controller controller = new Controller(
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false
+        );
+
+        attacker.attack();
+
+        controller.unauthorizedCommandMessage.assertUncompromised();
+    }
 }

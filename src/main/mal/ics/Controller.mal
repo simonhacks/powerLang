@@ -172,7 +172,9 @@ category IcsLang {
             developer info: "T857"
             -> authenticatedAccess
 
-        & unauthorizedCommandMessage
+        | unauthorizedCommandMessage
+            -> unauthorizedCommandMessageDefended
+        & unauthorizedCommandMessageDefended
             developer info: "T855"
             -> physicalImpact
 
@@ -233,7 +235,7 @@ category IcsLang {
                 modifyControlLogicDefended,
                 moduleFirmware,
                 systemFirmwareDefended,
-                unauthorizedCommandMessage
+                unauthorizedCommandMessageDefended
         # implementChallengeResponseAuthentication
             developer info: "T858 - Mitigation"
             -> utilizeChangeOperatingMode
