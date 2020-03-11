@@ -1,4 +1,4 @@
-category IcsLang {
+category Ics {
     asset HMI extends IcsAsset {
         | access
             +> defaultCredentials,

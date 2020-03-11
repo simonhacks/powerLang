@@ -10,7 +10,7 @@ include "ics/IcsNetwork.mal"
 include "ics/IOServer.mal"
 include "ics/SIS.mal"
 
-category IcsLang {
+category Ics {
     asset DMZ {
 
     }

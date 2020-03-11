@@ -1,4 +1,4 @@
-category IcsLang {
+category Ics {
     asset Controller extends IcsAsset {
         | access
             +> bruteForceIO,

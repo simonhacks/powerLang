@@ -1,4 +1,4 @@
-category IcsLang {
+category Ics {
     asset IOServer extends IcsAsset {
         | access
             +> systemFirmware,

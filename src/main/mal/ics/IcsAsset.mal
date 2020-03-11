@@ -1,4 +1,4 @@
-category IcsLang {
+category Ics {
     abstract asset IcsAsset extends Application {
         | authenticate
             +> authenticatedAccess

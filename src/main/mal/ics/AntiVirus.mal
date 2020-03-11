@@ -1,4 +1,4 @@
-category IcsLang {
+category Ics {
     asset AntiVirus {
         # maliciousFileDetectionActivated
             developer info: "T809,T859 - Mitigation"

@@ -1,4 +1,4 @@
-category IcsLang {
+category Ics {
     asset EngineeringWorkstation extends IcsAsset {
         | access
             +> defaultCredentials,

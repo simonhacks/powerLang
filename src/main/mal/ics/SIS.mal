@@ -1,4 +1,4 @@
-category IcsLang {
+category Ics {
     asset SIS extends IcsAsset {
         | access
             +> modifyControlLogic,

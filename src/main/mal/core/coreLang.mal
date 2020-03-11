@@ -2,7 +2,7 @@ include "coreVulnerability.mal"
 include "VulnerabilityManual.mal"
 //include "VulnerabilityAutomatic.mal"
 
-category coreLang {
+category core {
 
     abstract asset Object
       developer info: "An object is the simplest form of an asset that can be compromised by a vulnerability."
