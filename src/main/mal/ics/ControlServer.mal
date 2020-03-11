@@ -113,7 +113,7 @@ category IcsLang {
 
         # regularAuditOfSystem
             developer info: "T838,T801,T856 - Mitigation"
-            -> spoofReportingMessage
+            -> spoofReportingMessageDefended
         # applyPasswordAuthentication
             developer info: "T809 - Mitigation"
             -> dataDestructionDefended
@@ -130,7 +130,7 @@ category IcsLang {
             developer info: "T809,T825,T838,T801,T846,T848,T850,T856 - Mitigation"
             +> dataDestructionDefended,
                 roleIdentification,
-                spoofReportingMessage
+                spoofReportingMessageDefended
         # whitelistAllowedApplications
             developer info: "T809 - Mitigation"
             -> dataDestructionDefended

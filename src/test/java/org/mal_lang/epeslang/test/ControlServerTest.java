@@ -96,4 +96,21 @@ public class ControlServerTest extends EpesLangTest {
 
         server.authentication.assertCompromisedInstantaneously();
     }
+
+    @Test
+    public void testSpoofingMessageNoDefense() {
+        Attacker attacker = new Attacker();
+        ControlServer server = new ControlServer(
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false, false,
+                false
+        );
+
+        attacker.attack();
+
+        server.spoofReportingMessageDefended.assertUncompromised();
+    }
 }
