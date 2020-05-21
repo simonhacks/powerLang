@@ -13,7 +13,7 @@ category Ics {
             +> programDownload,
                 activateFirmwareUpdateMode,
                 programDownload,
-                networks.applications.access
+                networks.applications.fullAccess
         | restrictedOperations {I,A}
         | physicalImpact {I,A}
             developer info: "T836"

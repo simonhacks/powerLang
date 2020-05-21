@@ -19,7 +19,7 @@ category Ics {
             -> bypassFirewall
 
         | bypassFirewall
-            -> networks.applications.access
+            -> networks.applications.fullAccess
 
         # applyWhitelist
             developer info: "T885 - Mitigation"

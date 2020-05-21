@@ -10,7 +10,7 @@ category Ics {
                 serviceStop,
                 rogueMasterDevice,
                 modifyControlLogic,
-                networks.applications.access
+                networks.applications.fullAccess
         | physicalImpact {I}
         | dataDestruction {I,A}
 

@@ -8,7 +8,7 @@ category Ics {
                 pointAndTackIdentification,
                 remoteFileCopySend,
                 serviceStop,
-                networks.applications.access
+                networks.applications.fullAccess
 
         | dataFromInformationRepositories {C}
             developer info: "T811"
