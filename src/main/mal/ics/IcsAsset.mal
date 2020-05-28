@@ -7,7 +7,8 @@ category Ics {
         & authentication
             -> authenticatedAccess
         | authenticatedAccess
-            -> networks.access
+            -> networks.access,
+               fullAccess
         | stealCredentials [Bernoulli(0.05)]
             developer info: "T859"
             modeler info: "Sommestad (2011) Password authentication attacks: a survey of attacks and when they will succeed"

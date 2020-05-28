@@ -13,7 +13,7 @@ category Ics {
                 remoteFileCopySend,
                 rogueMasterDevice,
                 serviceStop,
-                networks.applications.access
+                networks.applications.fullAccess
 
         | bruteForceIO
             developer info: "T806"

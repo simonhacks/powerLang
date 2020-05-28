@@ -15,7 +15,7 @@ category Ics {
                 remoteFileCopySend,
                 rogueMasterDevice,
                 serviceStop,
-                networks.applications.access
+                networks.applications.fullAccess
 
         | dataDestructionIncoming
             developer info: "T809"

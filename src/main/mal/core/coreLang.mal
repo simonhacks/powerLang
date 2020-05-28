@@ -1,301 +1,504 @@
+/*
+ * Copyright 2019-2020 coreLang contributors <https://mal-lang.org/coreLang/contributors.html>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 include "coreVulnerability.mal"
 include "VulnerabilityManual.mal"
 //include "VulnerabilityAutomatic.mal"
 
 category core {
 
-    abstract asset Object
-      developer info: "An object is the simplest form of an asset that can be compromised by a vulnerability."
-    {
-      //& specificAccess
+  abstract asset Object
+    developer info: "An object is the simplest form of an asset that can be compromised by a vulnerability."
+  {
+    | attemptUseVulnerability
+      ->  objvulnerabilities.attemptAbuse
 
-      //& fullAccess
+    | deny {A}
+      user info: "The attacker can deny some or all functionality of an object."
 
-      | attemptUseVulnerability
-        ->  vulnerabilities.incoming
-    }
+    | bypassAccessControl @hidden {C, I}
+      user info: "The attacker can bypass the access control and gain full access after a vulnerability is abused."
+  }
 
-    asset System extends Object
-      developer info: "A system specifies the hardware on which applications can run. The attacker can DoS everything that is running on it and access (using physical control) on the OS after effort."
-    {
-      | connect
-        user info: "The attacker can connect to the instance, e.g., through a shell, but has not yet authenticated."
-        ->  fullAccess,
-            specificAccess,
-            attemptUseVulnerability
+  asset System extends Object
+    user info: "A system specifies the hardware on which applications can run."
+    developer info: "The attacker can DoS everything that is running on it and access (using physical control) on the OS after effort."
+  {
+    | connect
+      user info: "The attacker can connect to the instance, e.g., through a shell, but has not yet authenticated."
+      ->  attemptGainFullAccess,
+          specificAccess,
+          attemptUseVulnerability
 
-      | allPrivilegeAuthenticate @hidden
-        ->  fullAccess // This will provide access on all privileges connected with the system
+    | allPrivilegeAuthenticate @hidden
+      ->  attemptGainFullAccess
 
-      | individualPrivilegeAuthenticate @hidden
-        ->  specificAccess
+    | individualPrivilegeAuthenticate @hidden
+      ->  specificAccess
 
-      & fullAccess {C,I,A}
-        ->  sysExecutedApps.access,
-            highPrivSysIds.assume,
-            lowPrivSysIds.assume,
-            sysData.access
+    & attemptGainFullAccess
+      developer info: "This is an intermediate step to ensure connection is possible before gaining full access."
+      ->  fullAccess
 
-      & specificAccess
-        ->  sysExecutedApps.localConnect // I do not know what more we need here...
+    | fullAccess {C,I,A}
+      user info: "Full access on a system allows the compromise or legitimate access on everything/all the privillges of the system: identities, applications, data, etc."
+      ->  sysExecutedApps.fullAccess,
+          highPrivSysIds.assume,
+          lowPrivSysIds.assume,
+          sysData.attemptAccess
 
-      | physicalAccess
-        user info: "Attacker has physical access on the location where the system is physically deployed."
-        ->  denialOfService,
-            connect
+    & specificAccess
+      user info: "Specific access only allows the local connection (through localhost) to the hosted applications."
+      ->  sysExecutedApps.localConnect
 
-      | denialOfService {A}
-        ->  sysExecutedApps.deny
-    }
+    | physicalAccess
+      user info: "Attacker has physical access on the location where the system is physically deployed."
+      ->  deny,
+          connect
 
-    asset Application extends Object
-      developer info: "An application specifies pretty much everything that is executed or can execute other applications."
-    {
-      | localConnect
-        user info: "An attacker with low-privilege access on the executing instance is assumed to be able to locally (on the same host i.e. using loopback) interact with the application."
-        ->  localAccess,
-            connectLocalInteraction,
-            attemptUseVulnerability//, // Connection to all possible vulnerabilities that might be connected to the Application
-            //appExecutedApps.localConnect // But also achieve localConnect on all child applications (this is something that needs to be reviewed again at a later stage)
+    | deny {A}
+      ->  sysExecutedApps.deny
 
-      | connectLocalInteraction @hidden
-        developer info: "This intermediate step is used to represent that at least one type of connect has happened before being able to interact locally."
-        ->  localInteraction
+    | bypassAccessControl @hidden {C, I}
+      user info: "The attacker can bypass the access control and gain full access after being able to connect to the system and a vulnerability is abused."
+      ->  fullAccess
+  }
 
-      | identityLocalInteraction @hidden
-        developer info: "This intermediate step is needed because if no LowApplicationPrivileges Identity is associated then localInteraction would be instantly compromised after connect"
-        ->  localInteraction
+  asset SoftwareProduct
+    user info: "A software product is a specific type of software/application which can be associated with specific vulnerabilities."
+    developer info: "This asset is only introduces in order to imrpove the usability of the language."
+  {
 
-      & localInteraction
-        user info: "An attacker with low-privilege access on the executing instance is assumed to be able to locally (on the same host i.e. using loopback) interact with the executed applications."
-        ->  appExecutedApps.localConnect, // But also achieve localConnect on all child applications (this is something that needs to be reviewed again at a later stage)
-            attemptUseVulnerability   // Connection to all possible vulnerabilities that might be connected to the Application
+  }
 
-      | attemptUseVulnerability
-        ->  extensionPoint.incoming
+  asset Application extends Object
+    user info: "An application models pretty much everything that is executed or can execute other applications."
+  {
+    let allManualVulnerabilities = vulnerabilities[ManuallyModeledVulnerability] \/ appSoftProduct.softProductVulnerabilities[ManuallyModeledVulnerability]
+    let allUnknownVulnerabilities = vulnerabilities[UnknownVulnerability] \/ appSoftProduct.softProductVulnerabilities[UnknownVulnerability]
+    let allAutomaticVulnerabilities = (vulnerabilities \/ appSoftProduct.softProductVulnerabilities) - allManualVulnerabilities() - allUnknownVulnerabilities()
 
-      | networkConnect
-        user info: "An attacker can connect to any network exposed application."
-        ->  networkAccess,
-            connectLocalInteraction,
-            attemptUseVulnerability // Connection to all possible vulnerabilities that might be connected to the Application
+    | localConnect
+      user info: "An attacker with low-privilege access on the executing instance is assumed to be able to locally (on the same host i.e. using loopback) interact with the application."
+      ->  localAccess,
+          specificAccessFromConnection,
+          attemptUseVulnerability, // Connection to all possible (manual) vulnerabilities that might be connected to the Application
+          attemptLocalConnectVuln // And connection to automatically modeled vulnerabilities
 
-      | accessNetworkAndConnections
-        user info: "An attacker is also possible to access the network(s) and connections to which this application is connected to."
-        ->  networks.access,
-            appConnections.applications.networkConnect
+    | attemptUseVulnerability
+      user info: "Attempt to use the connected 'manual' vulnerabilities, when able to locally or via network connect to the application or when local interaction is possible."
+      ->  allManualVulnerabilities().attemptAbuse
 
-      | networkRequestConnect
-        user info: "The attacker has successfully sent a request to the application."
-        -> networkConnect
+    | attemptLocalConnectVuln
+      user info: "An attacker with low-privilege access on the executing instance is assumed to be able to locally interact with the service."
+      developer info: "Adopted from awsLang."
+      // -> allAutomaticVulnerabilities()[LLNNVulnerability].attemptAbuse,
+      //    allAutomaticVulnerabilities()[LLNRVulnerability].attemptAbuse,
+      //    allAutomaticVulnerabilities()[LLLNVulnerability].attemptAbuse,
+      //    allAutomaticVulnerabilities()[LLLRVulnerability].attemptAbuse,
+      //    allAutomaticVulnerabilities()[LLHNVulnerability].attemptAbuse,
+      //    allAutomaticVulnerabilities()[LLHRVulnerability].attemptAbuse,
+      //    allAutomaticVulnerabilities()[LHNNVulnerability].attemptAbuse,
+      //    allAutomaticVulnerabilities()[LHNRVulnerability].attemptAbuse,
+      //    allAutomaticVulnerabilities()[LHLNVulnerability].attemptAbuse,
+      //    allAutomaticVulnerabilities()[LHLRVulnerability].attemptAbuse,
+      //    allAutomaticVulnerabilities()[LHHNVulnerability].attemptAbuse,
+      //    allAutomaticVulnerabilities()[LHHRVulnerability].attemptAbuse
 
-      | networkRespondConnect [Exponential(0.001)]
-        user info: "An attacker may be able to respond to requests submitted by an application."
+    | attemptNetworkRequestRespondConnectVuln
+      developer info: "Adopted from awsLang."
+      // -> allAutomaticVulnerabilities()[NLNNVulnerability].attemptAbuse,
+      //    allAutomaticVulnerabilities()[NLNRVulnerability].attemptAbuse,
+      //    allAutomaticVulnerabilities()[NLLNVulnerability].attemptAbuse,
+      //    allAutomaticVulnerabilities()[NLLRVulnerability].attemptAbuse,
+      //    allAutomaticVulnerabilities()[NLHNVulnerability].attemptAbuse,
+      //    allAutomaticVulnerabilities()[NLHRVulnerability].attemptAbuse,
+      //    allAutomaticVulnerabilities()[NHNNVulnerability].attemptAbuse,
+      //    allAutomaticVulnerabilities()[NHNRVulnerability].attemptAbuse,
+      //    allAutomaticVulnerabilities()[NHLNVulnerability].attemptAbuse,
+      //    allAutomaticVulnerabilities()[NHLRVulnerability].attemptAbuse,
+      //    allAutomaticVulnerabilities()[NHHNVulnerability].attemptAbuse,
+      //    allAutomaticVulnerabilities()[NHHRVulnerability].attemptAbuse
 
-      | authenticate
-        user info: "The attacker is able to authenticate with the appropriate credentials."
-        ->  localAccess,
-            networkAccess
+    | networkConnect
+      user info: "An attacker can connect to any network exposed application."
+      ->  networkAccess,
+          specificAccessFromConnection,
+          attemptUseVulnerability // Connection to all possible vulnerabilities that might be connected to the Application
 
-      & localAccess @hidden
+    | accessNetworkAndConnections
+      user info: "An attacker is also possible to access the network(s) and connections to which this application is connected to."
+      ->  networks.access,
+          appConnections.transmit,
+          appConnections.transmitResponse,
+          appConnections.data.attemptAccess
+    
+    | networkRequestConnect
+      user info: "The attacker has successfully sent a request to the application."
+      developer info: "Adopted from awsLang."
+      ->  attemptNetworkRequestRespondConnectVuln,
+          networkConnect
+
+    | networkRespondConnect [Exponential(0.001)]
+      user info: "An attacker may be able to respond to requests submitted by an application."
+      developer info: "Adopted from awsLang."
+      ->  attemptNetworkRequestRespondConnectVuln,
+          networkConnect
+
+    | specificAccessFromConnection @hidden
+      developer info: "This intermediate step is used to represent that at least one type of connect has happened before being able to get 'specificAccess'."
+      ->  specificAccess
+
+    | specificAccessFromIdentity @hidden
+      developer info: "This intermediate step is needed because if no LowApplicationPrivileges Identity is associated then 'specificAccess' would be instantly compromised after connect."
+      ->  specificAccess
+
+    & specificAccess
+      user info: "This level of access models a low-privilege access and requires all other privileges to be modeled separately."
+      developer info: "An attacker with low-privilege access on the executing instance is assumed to be able to locally (on the same host i.e. using loopback) interact with the executed applications."
+      ->  appExecutedApps.localConnect, // But also achieve localConnect on all child applications (this is something that needs to be reviewed again at a later stage)
+          attemptUseVulnerability,   // Connection to all possible vulnerabilities that might be connected to the Application
+          attemptLocalConnectVuln, // And connection to automatically modeled vulnerabilities
+          containedData.attemptAccessFromIdentity, // This also enables the use of compromised identites but only after specificAccess is reached
+          accessNetworkAndConnections  // and access the network(s) and connections on/to which the app is connected
+
+    | authenticate
+      user info: "The attacker is able to authenticate with the appropriate credentials."
+      ->  localAccess,
+          networkAccess
+
+    & localAccess @hidden
+      ->  fullAccess
+
+    & networkAccess @hidden
+      ->  fullAccess
+
+    | fullAccess {C,I,A}
+      user info: "Legitimate (or not i.e. 0wned) full access on the Application, as root/administrator."
+      ->  read,
+          modify,
+          deny,
+          appExecutedApps.fullAccess, // Gain access on all applications executed by this (host) application
+          containedData.attemptAccess,   // and access on all the contained data
+          accessNetworkAndConnections,  // and access the network(s) and connections on/to which the app is connected
+          hostApp.localConnect    // and localConnect on the host application
+
+    | codeExecution
+      user info: "Vulnerabilities in the application could allow an attacker to inject code into the service process, thus assuming the service's privileges on the hosting instance. An attacker could under these circumstances influence other applications or the underlying operating system itself."
+      developer info: "This attack steps specifically models the type of code injections which result in arbitrary code executions (e.g., buffer overflows), where the attacker can redirect the flow of execution, for example, by modifying program counter/instruction pointer of the host. (See CWE-94 on code injection <https://cwe.mitre.org/data/definitions/94.html> and, for example, CAPEC-100 on overflowing buffers <https://capec.mitre.org/data/definitions/100.html>). Adopted from awsLang."
+      ->  fullAccess,
+          executionPrivIds.assume,
+          modify
+
+    | read {C}
+      user info: "The attacker can read some or all of this service's code and data."
+      developer info: "We don't model the services data, as we do not expect that information will be available to the parser. We also don't differentiate between service administrators and service users (e.g., mail service admins and users), as we have no information about the services. Adopted from awsLang."
+      ->  containedData.attemptRead
+
+    | modify {I}
+      user info: "The attacker can modify some or all of this service's data. Adopted from awsLang."
+      ->  containedData.attemptAccess
+
+    | deny {A}
+      user info: "The attacker can deny some or all functionality and data pertaining to this service. Adopted from awsLang."
+      ->  containedData.deny
+
+  }
+
+  asset PhysicalZone
+    user info: "A physical zone is the location where systems are physically deployed."
+  {
+    | gainPhysicalAccess
+      ->  systems.physicalAccess
+  }
+}
+
+category core {
+
+  asset Information
+    user info: "Represents any type of information that might be contained inside Data."
+  {
+    | attemptAccess
+      user info: "The attacker is attempting to access the information."
+  }
+
+  asset Data
+    user info: "Any form of data that can be stored or transmitted."
+    developer info: "Adopted from awsLang."
+  {
+      | attemptAccess
+        user info: "Attempt to access the data, this might fail if the dataNotExist defense is used."
         ->  access
 
-      & networkAccess @hidden
-        ->  access
+      | attemptAccessFromIdentity
+        user info: "Access the data through a compormised identity."
+        ->  identityRead,
+            identityWrite,
+            identityDelete
 
-      | access {C,I,A}
-        user info: "Legitimate access, as user or as administrator."
-        ->  read,
-            modify,
-            deny,
-            // shellInstance.connect
-            appExecutedApps.access, // Gain access on all applications executed by this (host) application
-            containedData.access,   // and access on all the contained data
-            accessNetworkAndConnections,  // and access the network(s) and connections on/to which the app is connected
-            hostApp.localConnect    // and localConnect on the host application
+      & access
+        user info: "Access the data."
+        ->  attemptRead,
+            attemptWrite,
+            attemptDelete
 
-      | codeExecution
-        user info: "Vulnerabilities in the application could allow an attacker to inject code into the service process, thus assuming the service's privileges on the hosting instance. An attacker could under these circumstances influence other applications or the underlying operating system itself."
-        developer info: "This attack steps specifically models the type of code injections which result in arbitrary code executions (e.g., buffer overflows), where the attacker can redirect the flow of execution, for example, by modifying program counter/instruction pointer of the host. (See CWE-94 on code injection <https://cwe.mitre.org/data/definitions/94.html> and, for example, CAPEC-100 on overflowing buffers <https://capec.mitre.org/data/definitions/100.html>)"
+      !E dataEncrypted @hidden
+        user info: "If the data are encrypted then accessing them requires the associated encryption credentials/key."
+        developer info: "Data will be considered as encrypted if there is at least one Credentials instance associated with it. Otherwise, 'decryptData' is reached."
+        <-  encryptCreds
+        ->  decryptData
+
+      | decryptData
         ->  access,
-            // nonShellInstance.connect,
-            executionPrivIds.assume,
-            modify
+            readContainedInformationAndData,
+            read,
+            write,
+            delete
 
-      | read {C}
-        user info: "The attacker can read some or all of this service's code and data."
-        developer info: "We don't model the services data, as we do not expect that information will be available to the parser. We also don't differentiate between service administrators and service users (e.g., mail service admins and users), as we have no information about the services."
-        ->  containedData.read
+      # dataNotExist
+        user info: "It models the probability of data actually not existing on the connected container (i.e. System, Application, Connection, etc.)."
+        ->  access,
+            readContainedInformationAndData,
+            read,
+            write,
+            delete
 
-      | modify {I}
-        user info: "The attacker can modify some or all of this service's data."
-        ->  containedData.access
+      & readContainedInformationAndData
+        user info: "From the data, attempt to access also the contained information/data, if exists."
+        ->  information.attemptAccess,
+            containedData.attemptAccess
+
+      | attemptRead
+        user info: "Attempt to read the data."
+        ->  read
+
+      | identityAttemptRead
+        user info: "Attempt to read the data through a compormised identity."
+        ->  identityRead
+
+      & identityRead @hidden
+        developer info: "Intermediate attack step to only allow operations on data after both access and identity assume is compromised."
+        ->  attemptRead
+
+      | attemptWrite
+        user info: "Attempt to write on the data."
+        ->  write
+
+      | identityAttemptWrite
+        user info: "Attempt to write the data through a compormised identity."
+        ->  identityWrite
+
+      & identityWrite @hidden
+        developer info: "Intermediate attack step to only allow operations on data after both access and identity assume is compromised."
+        ->  attemptWrite
+
+      | attemptDelete
+         user info: "Attempt to delete the data."
+        -> delete
+
+      | identityAttemptDelete
+        user info: "Attempt to delete the data through a compormised identity."
+        ->  identityDelete
+
+      & identityDelete @hidden
+        developer info: "Intermediate attack step to only allow operations on data after both access and identity assume is compromised."
+        ->  attemptDelete
+
+      & read {C}
+        user info: "The attacker can read the data."
+        ->  containedData.attemptRead,
+            readContainedInformationAndData
+
+      & write {I}
+        user info: "The attacker can write to the location of the data, effectively deleting it."
+        ->  containedData.attemptWrite,
+            attemptDelete
+
+      & delete {I,A}
+        user info: "The attacker can delete the data."
+        ->  containedData.attemptDelete
 
       | deny {A}
-        user info: "The attacker can deny some or all functionality and data pertaining to this service."
-        ->  containedData.delete
+        user info: "If a DoS is performed data are denied, it has the same effects as deleting the data."
+        ->  containedData.deny
+  }
+}
 
-    }
+category core {
 
-    asset PhysicalZone
-      developer info: "A physical zone is the location where systems are physically deployed."
-    {
-      | gainPhysicalAccess
-        ->  systems.connect,
-            systems.physicalAccess
-    }
+  asset Identity
+    user info: "An identity models an IAM identity that should then be associated with privileges on other instances."
+    developer info: "An identity can be visualised as a user group that can be associated with many credentials."
+  {
+      # twoFactorAuthentication
+        user info: "Two Factor Authentication (2FA). This defense, if enabled, should block all atempts to assume identity illegitimately."
+        ->  successfulAssume
 
-    abstract asset Information
-      user info: "Represents any type of information that might be contained inside Data."
-    {
-      | attemptAccess
-        user info: "The attacker is attempting to access the information."
-    }
+      | attemptAssume
+        ->  successfulAssume
 
-    asset Data
-      user info: "Any form of data that can be stored or transmitted."
-    {
-        & access
-          ->  read,
-              write,
-              delete,
-              credentialsExist
+      & successfulAssume @hidden
+        ->  assume
 
-        | credentialsExist [Exponential(0.1)]
-          ->  information.attemptAccess
+      | assume {C,I,A}
+        developer info: "After authentication or compromise of an account/identity, assume its privileges. This is both legitimate and illegitimate access!"
+        ->  parentId*.lowPrivManagedSystems.individualPrivilegeAuthenticate,
+            parentId*.highPrivManagedSystems.allPrivilegeAuthenticate,
+            parentId*.execPrivApps.authenticate,
+            parentId*.highPrivApps.authenticate,
+            parentId*.lowPrivApps.specificAccessFromIdentity,
+            parentId*.readPrivData.identityAttemptRead,
+            parentId*.writePrivData.identityAttemptWrite,
+            parentId*.deletePrivData.identityAttemptDelete
+  }
 
-        | read {C}
-          user info: "The attacker can read the data."
-          ->  containedData.read,
-              credentialsExist
+  asset Credentials extends Information
+    user info: "A credential is used to get access as an Identity but it can also be used as an encryption key for Data."
+  {
+    | use {C}
+      user info: "Someone is using the credentials to perform a legitimate authentication."
+      ->  identities.attemptAssume,
+          encryptedData.decryptData,
+          identities.users.attemptSteal2FAtoken
 
-        | write {I}
-          user info: "The attacker can write to the location of the data, effectively deleting it."
-          ->  containedData.write,
-              delete
+    | attemptAccess
+      user info: "The attacker is attempting to access the credentials."
+      -> use
 
-        | delete {I,A}
-          user info: "The attacker can delete the data."
-          ->  containedData.delete
-    }
+    | credentialTheft
+      user info: "The attacker is able to steal the credentials."
+      -> use
+  }
+}
 
-    asset Identity
-      developer info: "An identity can be visualised as a user group that can be associated with many credentials."
-    {
-        | assume {C,I,A}
-          developer info: "After authentication or compromise of an account/identity, assume its privileges. This is both legitimate and illegitimate access!"
-          ->  lowPrivManagedSystems.individualPrivilegeAuthenticate,
-              highPrivManagedSystems.allPrivilegeAuthenticate,
-              execPrivApps.authenticate,
-              highPrivApps.authenticate,
-              lowPrivApps.identityLocalInteraction,
-              readPrivData.read,
-              writePrivData.write,
-              deletePrivData.delete
-    }
+category core {
 
-    asset Credentials extends Information
-    {
-      | use {C}
-        user info: "Someone is using the credentials to perform a legitimate authentication."
-        ->  identities.assume
+  asset User
+    user info: "This asset represents the user himself. It is the suitable attack surface for social engineering attacks!"
+  {
+      | attemptSocialEngineering
+        user info: "An attacker can try to perform social engineering techiniques such as phishing."
+        developer info: "In the future, other social engineering techiniques should be connected to this attack step."
+        ->  phishUser,
+            steal2FAtoken
 
-      | attemptAccess
-        user info: "The attacker is attempting to access the credentials."
-        -> use
+      | attemptCredentialTheft
+        user info: "Trick the user to provide his/her credentials."
+        ->  credentialTheft
 
-      | credentialTheft
-        user info: "The attacker is able to steal the credentials."
-        -> identities.assume
-    }
+      | credentialTheft [Exponential(0.02)]
+        developer info: "This attack is hard to happen but not harder than reverseTakeover. The probability and its value are subject to change."
+        ->  userIds.credentials.credentialTheft
 
-    asset User
-    {
-        | attemptSocialEngineering [Exponential(0.01)]
-          user info: "An attacker can try to perform social engineering techiniques such as phishing."
-          developer info: "In the future, other social engineering techiniques should be connected to this attack step."
-          ->  phishUser
+      | attemptReverseTakeover
+        user info: "After a successful social enginnering attack on a user, a reverse connection can be established on the applications executed by its identity."
+        ->  reverseTakeover
 
-        | attemptCredentialTheft [Exponential(0.01)]
-          ->  userIds.credentials.credentialTheft
+      | reverseTakeover [Exponential(0.01)]
+        developer info: "This attack is harder to happen because it requires more bad effort from the victim. The probability and its value are subject to change."
+        ->  userIds.execPrivApps.networkConnect
 
-        | attemptReverseTakeover [Exponential(0.01)]
-          user info: "After a sucessfull social enginnering attack on a user, a reverse connection can be established on the applications executed by its identity."
-          ->  userIds.execPrivApps.networkConnect
+      | phishUser
+        user info: "The attacker can phish the user to gain access to his/her credentials or to make him run a malicous payload that will lead to reverse connection/takeover."
+        ->  attemptCredentialTheft,
+            attemptReverseTakeover
 
-        | phishUser
-          user info: "The attacker can phish the user to gain access to his/her credentials or to make him run a malicous payload that will lead to reverse connection/takeover."
-          ->  attemptCredentialTheft,
-              attemptReverseTakeover
+      | attemptSteal2FAtoken @hidden
+        developer info: "This intermediate attack step is needed in order to block steal 2FA attacks when no credential is on the model."
+        ->  steal2FAtoken
 
-        | compromise {C}
-          ->  userIds.assume
-    }
+      & steal2FAtoken [Exponential(0.02)]
+        user info: "Trick the user to provide the 2FA token. This practically 'bypasses' the 2FA protection. The probability and its value are subject to change."
+        developer info: "This attack is hard to happen but not harder than reverseTakeover."
+        ->  userIds.assume
 
-    // If you have access to a network zone, you shall be able to connect (not log in) to any other service on the same network. (nmap scan) (Joar)
-    // If you have managed to log in to and use a proxy, transparent or not, you shall be able to access any service protected by that proxy. (Joar)
+      | compromise {C}
+        ->  userIds.attemptAssume
+  }
+}
 
-    asset Network
-      developer info: "A network zone is a set of network accessible applications."
-    {
+category core {
 
-      let allowedNetworks =  (netConnections.routerFirewalls.connectionRules.networks /\ netConnections.networks) \/ (outgoingNetConnections.routerFirewalls.connectionRules.inNetworks /\ outgoingNetConnections.inNetworks)
-      let allowedApplications = (netConnections.routerFirewalls.connectionRules.applications /\ netConnections.applications) \/ (outgoingNetConnections.routerFirewalls.connectionRules.applications /\ outgoingNetConnections.applications)
-      let allNetConnections = netConnections \/ ingoingNetConnections \/ outgoingNetConnections
+  asset Network
+    user info: "A network zone is a set of network accessible applications."
+  {
+    let allowedNetworks =  (netConnections.routerFirewalls.connectionRules.networks /\ netConnections.networks) \/ (outgoingNetConnections.routerFirewalls.connectionRules.inNetworks /\ outgoingNetConnections.inNetworks)
+    let allowedApplications = (netConnections.routerFirewalls.connectionRules.applications /\ netConnections.applications) \/ (outgoingNetConnections.routerFirewalls.connectionRules.applications /\ outgoingNetConnections.applications)
+    let allNetConnections = netConnections \/ ingoingNetConnections \/ outgoingNetConnections
 
-      // Physical access atack vector
-      // iLOs are also reachable from here
-      | physicalAccess {A}
-        developer info: "Attacker has physical access on the network. This means he can cut wires/fibers and also connect using iLOs."
-        ->  denialOfService
+    | physicalAccess {A}
+      developer info: "Attacker has physical access on the network. This means he can cut wires/fibers and also connect using iLOs."
+      ->  denialOfService
 
-      | access
-        user info: "Access provides connect to all reachable applications."
-        ->  applications.networkConnect,
-            //netConnections.networks.access // This has the same effect as the line below! (or so I think, update: I was thinking wrong!)
-            //netConnections.routerFirewalls.forwarding, // This was used initialy but it gave access everywhere so it was wrong.
-            networkForwarding,
-            denialOfService
+    | access
+      user info: "Access provides connect to all reachable applications."
+      ->  applications.networkConnect,
+          networkForwarding,
+          denialOfService
 
-      | networkForwarding
-        developer info: "By using the allowed connections, forwarding from one network to another can happen."
-          ->  allowedNetworks().access,
-              allowedApplications().networkConnect
+    | networkForwarding
+      developer info: "By using the allowed connections, forwarding from one network to another can happen. The RoutingFirewall can also be reached."
+        ->  allowedNetworks().access,
+            allowedApplications().networkConnect,
+            allNetConnections().routerFirewalls.connect
 
-      | denialOfService {A}
-        user info: "If a DoS is performed it affects, the applications communicatiing over the network as well as the connected application."
-        ->  allNetConnections().denialOfService,
-            applications.deny
-    }
+    | denialOfService {A}
+      user info: "If a DoS is performed it affects, the applications communicatiing over the network as well as the connected application."
+      ->  allNetConnections().denialOfService,
+          applications.deny
+  }
 
-    asset RoutingFirewall extends System
-      developer info: "A routing firewall specifies a router with firewall capabilities that connects many networks."
-    {
+  asset RoutingFirewall extends System 
+    user info: "A routing firewall specifies a router with firewall capabilities that connects many networks."
+  {
+    
+    | denialOfService {A}
+     user info: "A DoS attack should cascade on the connected networks and associated connections"
+      ->  connectionRules.denialOfService
 
-      | denialOfService {A}
-        // This should cascade the DoS attack on the connected networks and connected connections.
-        ->  connectionRules.denialOfService
+    | fullAccess {I, A}
+      developer info: "If full access is achieved on RoutingFirewall then it is 0wned and all connections can be allowed!"
+      +>  (connectionRules.networks \/ connectionRules.outNetworks \/ connectionRules.inNetworks).access,
+          connectionRules.applications.networkConnect,
+          connectionRules.intercept
 
-      & fullAccess {I, A}
-        developer info: "If full access is achieved on RoutingFirewall then it is 0wned and all connections can be allowed!"
-        +>  (connectionRules.networks \/ connectionRules.outNetworks \/ connectionRules.inNetworks).access,
-            connectionRules.applications.networkConnect
+  }
 
-    }
+  asset Connection
+    user info: "This asset is used to model firewall rules between Applications and/or Networks."
+    developer info: "This asset is mainly used to model the functionality of a network connection through a firewall."
+  {
+    | intercept {C}
+      user info: "By intercepting a connection, access on the contained data can be gained."
+      ->  data.attemptAccess
 
-    asset Connection{
+    | transmitResponse {I}
+      user info: "By transmitting a response towards a network application/service a connection to the application can be achieved."
+      developer info: "Adopted from awsLang."
+      ->  applications.networkRespondConnect
 
-      | intercept {C} // Maybe this is not the correct name
-        ->  data.access
+    | transmit {I}
+      user info: "By transmitting over a connection towards a network application a connection to the application can be achieved."
+      developer info: "Adopted from awsLang."
+      ->  applications.networkRequestConnect
 
-      | transmitResponse
-
-      | transmit
-
-      | denialOfService {A}
-        ->  applications.deny
-    }
-
+    | denialOfService {A}
+      ->  applications.deny,
+          data.deny
+  }
 }
 
 associations {
@@ -303,12 +506,13 @@ associations {
       developer info: "System is the hardware on which Applications are running. The host system is not mandatory to be specified but if it is, it adds on the model!"
   Application      [hostApp]           0..1 <-- AppExecution          --> *   [appExecutedApps]        Application
       developer info: "Application 1 runs application 2 runs application 3! (Where application 1 can be an OS, application 2 is a VM and application 3 is app running on the VM."
-
+  SoftwareProduct  [appSoftProduct]    0..1 <-- AppSoftwareProduct    --> *   [softApplications]       Application
+        developer info: "An application can be associated with a software product that has some specific characteristics such as specific Vulnerabilities."
   // ### Networking associations
-  PhysicalZone     [physicalZone]         * <-- ZoneInclusion         --> *   [systems]                System
+  PhysicalZone     [physicalZone]      0..1 <-- ZoneInclusion         --> *   [systems]                System
       developer info: "Access on PhysicalZone will give physicalAccess on the deployed Systems but access on a System does not always provide access to the physical zone (e.g. iLOs)."
 
-  RoutingFirewall  [routerFirewalls]      * <-- ConnectionRule        --> *   [connectionRules]        Connection
+  RoutingFirewall  [routerFirewalls]   0..1 <-- ConnectionRule        --> *   [connectionRules]        Connection
       developer info: "A routing firewall has routing or firewall rules specified by connections between networks or applications respectively."
   Network          [networks]             * <-- NetworkExposure       --> *   [applications]           Application
       developer info: "An application can communicate / be exposed on a network.  A network zone is a set of network accessible applications."
@@ -318,12 +522,11 @@ associations {
       developer info: "Two or more networks can also be inter-connected via a bidirectional connection."
   Network          [outNetworks]          * <-- OutNetworkConnection --> *    [outgoingNetConnections] Connection
       developer info: "Two or more networks can also be inter-connected via a uni-directional connection."
-  Network          [inNetworks]           * <-- InNetworkConnection  --> *    [ingoingNetConnections]   Connection
+  Network          [inNetworks]           * <-- InNetworkConnection  --> *    [ingoingNetConnections]  Connection
       developer info: "Two or more networks can also be inter-connected via a uni-directional connection."
-  Connection       [connection]        0..1 <-- DataInTransit         --> *   [data]                   Data
-      developer info: "And a connection can have data in transit."
+  Connection       [connection]        0..1 <-- DataInTransit         --> *   [data]                   Data 
+      developer info: "And a connection can have data in transit. Effectively working as a dataflow."
   //Network          [networks]             * <-- NetworkExposure       --> *   [systems]                System  // Systems should be connected to Physical Zones and not to networks. This assumption should also be tested!
-
   // ### Data related associations
   Data             [containingData]       * <-- DataContainment       --> *   [containedData]          Data
       user info: "Data can be contained inside other data."
@@ -332,24 +535,25 @@ associations {
   System           [system]            0..1 <-- DataHosting           --> *   [sysData]                Data
       user info: "A system can host data."
   Data             [containerData]        * <-- InfoContainment       --> *   [information]            Information
-      user info: "Data can contain information, as for example credentials."
-
+      user info: "Data can contain information, as for example credentials." 
+  Data             [encryptedData]        * <-- EncryptionCredentials --> 0..1[encryptCreds]           Credentials
+      user info: "Encrypted data can be associated with the relevant encryption credentials." 
   // ### Access Control happens below
   Identity         [identities]           * <-- IdentityCredentials   --> *   [credentials]            Credentials
   Identity         [userIds]              * <-- UserAssignedIdentities--> *   [users]                  User
+  Identity         [parentId]             * <-- IdentityHierarchy     --> *   [childId]                Identity
   // First on system level
-  Identity         [highPrivSysIds]       * <-- HighAccessPrivileges  --> *   [highPrivManagedSystems] System
-      user info: "High access privileges on a System result in the compromise of all the privileges assigned to that system."
-  Identity         [lowPrivSysIds]        * <-- LowAccessPrivileges   --> *   [lowPrivManagedSystems]  System
-      user info: "Low access privileges on a System provide individual identity access on the system."
+  Identity         [highPrivSysIds]       * <-- HighPrivilegeAccess  --> *   [highPrivManagedSystems]  System
+      user info: "High privilege access on a System results in the compromise of all the privileges assigned to that system."
+  Identity         [lowPrivSysIds]        * <-- LowPrivilegeAccess   --> *   [lowPrivManagedSystems]   System
+      user info: "Low privilege access on a System provides individual identity access on the system."
   // Then, Access Control on application level
-  // Bad idea: have two types of identities, the specific one (associations are needed) and the "god mode" one (that does not need to be explicitly connected, you just get all the privs.) This is a problem with AD.
-  Identity         [executionPrivIds]     * <-- ExecutionPrivileges   --> *   [execPrivApps]           Application
+  Identity         [executionPrivIds]     * <-- ExecutionPrivilegeAccess  --> *   [execPrivApps]       Application
       user info: "Every application executes on a system with privileges of a specified identity on the system. If the application is compromised then the privileges should be compromised."
-  Identity         [highPrivAppIds]       * <-- HighApplicationPrivileges --> * [highPrivApps]         Application
-      user info: "High application privileges on an Application result in the compromise of all the child applications."
-  Identity         [lowPrivAppIds]        * <-- LowApplicationPrivileges  --> * [lowPrivApps]          Application
-      user info: "Low application privileges on an Application allow only the local interaction with the application."
+  Identity         [highPrivAppIds]       * <-- HighPrivilegeApplicationAccess --> * [highPrivApps]    Application
+      user info: "High privilege application access on an Application results in the compromise of all the child applications."
+  Identity         [lowPrivAppIds]        * <-- LowPrivilegeApplicationAccess  --> * [lowPrivApps]     Application
+      user info: "Low privilege application access on an Application allows only the local interaction with the application."
   // Finally, Access control on data
   Identity         [readingIds]           *   <-- ReadPrivileges      --> *   [readPrivData]           Data
   Identity         [writingIds]           *   <-- WritePrivileges     --> *   [writePrivData]          Data
