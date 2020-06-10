@@ -19,7 +19,7 @@ public class FirewallTest extends EpesLangTest {
         IcsNetwork network = new IcsNetwork(
                 false, false,
                 false, false,
-                false
+                false, false
         );
 
         HMI hmi = new HMI(

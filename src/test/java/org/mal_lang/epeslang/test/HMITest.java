@@ -68,7 +68,7 @@ public class HMITest extends EpesLangTest {
 
         IcsNetwork network = new IcsNetwork(false, false,
                 false, false,
-                false);
+                false, false);
 
         network.addApplications(hmi);
 
@@ -90,7 +90,7 @@ public class HMITest extends EpesLangTest {
 
         IcsNetwork network = new IcsNetwork(false, false,
                 false, false,
-                false);
+                false, false);
 
         network.addApplications(hmi);
 
@@ -112,7 +112,7 @@ public class HMITest extends EpesLangTest {
 
         IcsNetwork network = new IcsNetwork(false, false,
                 false, false,
-                false);
+                false, false);
 
         EngineeringWorkstation workstation = new EngineeringWorkstation(
                 false, false,

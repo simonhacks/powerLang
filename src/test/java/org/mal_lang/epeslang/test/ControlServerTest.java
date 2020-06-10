@@ -86,7 +86,7 @@ public class ControlServerTest extends EpesLangTest {
         IcsNetwork network = new IcsNetwork(
                 false, false,
                 false, false,
-                false);
+                false, false);
 
         network.addApplications(server);
 
@@ -129,7 +129,7 @@ public class ControlServerTest extends EpesLangTest {
         IcsNetwork network = new IcsNetwork(
                 false, false,
                 false, false,
-                false
+                false, false
         );
 
         network.addApplications(server);
