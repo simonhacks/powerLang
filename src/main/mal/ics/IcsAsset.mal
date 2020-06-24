@@ -2,6 +2,8 @@ category Ics {
     abstract asset IcsAsset extends Application {
         | authenticate
             +> authenticatedAccess
+        | networkConnect
+            +> access
         | access
             -> authentication
         & authentication
