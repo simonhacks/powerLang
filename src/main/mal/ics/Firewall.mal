@@ -18,7 +18,7 @@ category Ics {
             developer info: "T885"
             -> bypassFirewall
 
-        | bypassFirewall
+        | bypassFirewall [Gamma(0.33,74)]
             -> networks.applications.fullAccess
 
         # applyWhitelist
