@@ -6,7 +6,7 @@ category Ics {
                 applications[Controller].access,
                 applications[SIS].access
 
-        & MITM
+        & MITM [Bernoulli(0.01)]
             developer info: "T830"
             -> blockReportingMessage,
                 modifyParameter,
@@ -29,7 +29,7 @@ category Ics {
             developer info: "T803"
             -> applications[Controller].restrictedOperations
 
-        # encryptCommunication
+        # encryptCommunication [Bernoulli(0.99)]
             developer info: "T830,T848,T850,T856,T808,T824 - Mitigation"
             -> MITM,
                 applications[ControlServer]._rogueMasterDeviceDefended,
