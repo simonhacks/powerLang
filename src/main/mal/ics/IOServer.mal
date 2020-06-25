@@ -5,9 +5,10 @@ category Ics {
                 blockSerialCom,
                 systemFirmware
         | authenticatedAccess
+            +> controller.authenticatedAccess
 
         | restrictedOperations {I,A}
-
+            -> controller.restrictedOperations
         & blockReportingMessage
             developer info: "T804"
             -> restrictedOperations
