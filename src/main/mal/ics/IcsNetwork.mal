@@ -4,7 +4,8 @@ category Ics {
             -> MITM,
                 blockCommandMessage,
                 applications[Controller].access,
-                applications[SIS].access
+                applications[SIS].access,
+                applications.networkConnect
 
         & MITM [Bernoulli(0.01)]
             developer info: "T830"
